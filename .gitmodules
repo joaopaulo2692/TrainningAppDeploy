@@ -1,0 +1,3 @@
+[submodule "Trainning.Core"]
+	path = Trainning.Core
+	url = https://github.com/joaopaulo2692/TrainningAppDeploy.git
