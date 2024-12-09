@@ -7,21 +7,13 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
-    <MudAppBar Elevation="1">
+    <MudAppBar Elevation="1" Color="Color.Primary">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudText Typo="Typo.h5" Class="ml-3">TrainningApp</MudText>
         <MudSpacer />
-         @if (ShowSearchCustomer)
-        {
-            @if (_isDarkMode)
-            {
-                <SearchCustomer IsLightMode=false></SearchCustomer>
-            }
-            @if (!_isDarkMode) {
-                <SearchCustomer IsLightMode=true></SearchCustomer>
-            }
-        } 
-        
+            <SearchCustomer></SearchCustomer>
+
+
         <MudSpacer />
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
@@ -44,7 +36,7 @@
 
 @code {
     private bool _drawerOpen = true;
-    private bool _isDarkMode = true;
+    private bool _isDarkMode = false;
     private MudTheme? _theme = null;
     public bool ShowSearchCustomer { get; set; } = true;
 
@@ -80,17 +72,20 @@
     //         GrayLight = "#e8e8e8",
     //         GrayLighter = "#f9f9f9",
     //     };
-
     private readonly PaletteLight _lightPalette = new()
         {
-            Black = "#110e2d",
-            AppbarText = "#424242",
-            AppbarBackground = "rgba(255,255,255,0.8)",
-            DrawerBackground = "#ffffff",
-            GrayLight = "#e8e8e8", // Ajuste aqui a cor do cinza claro
-            GrayLighter = "#f9f9f9", // Ajuste aqui o cinza mais claro, se necessário
-            Background = "#dcdcdc" // Cor cinza para o fundo no modo claro
+            Black = "#110e2d", // Mantém o preto
+            AppbarText = "#424242", // Texto da barra de aplicativos
+            AppbarBackground = "rgba(255,255,255,0.8)", // Fundo translúcido
+            DrawerBackground = "#f5f5f5", // Cinza claro para o Drawer
+            Background = "#f2f2f2", // Fundo geral da página em cinza suave
+            Surface = "#e0e0e0", // Superfícies elevadas como cards
+            GrayLight = "#d6d6d6", // Um cinza médio
+            GrayLighter = "#ebebeb", // Um cinza ainda mais claro
+            TextPrimary = "#333333", // Cor do texto principal
+            TextSecondary = "#555555" // Cor do texto secundário
         };
+
 
     private readonly PaletteDark _darkPalette = new()
         {

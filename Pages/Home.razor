@@ -1,7 +1,89 @@
 ﻿@page "/"
+@inject NavigationManager Navigation
+@attribute [Layout(typeof(UserLayout))]
+
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudCarousel Class="mud-width-full" Style="height:300px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+    <MudCarouselItem Transition="transition" Color="@Color.Primary">
+        <MudImage Src="images/treino-edit.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Secondary">
+        <MudImage Src="images/treino-edit3.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
+        <MudImage Src="images/treino-edit2.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        @*  <div class="d-flex" style="height:100%">
 
-Welcome to your new app.
+
+        <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
+        </div>  *@
+    </MudCarouselItem>
+</MudCarousel>
+
+
+@* <MudPaper Height="400px" Width="100%">
+    <MudText Typo="Typo.h2" Align="Align.Center">Seu novo App de Treinamentos!</MudText>
+    <MudText Typo="Typo.h4" Align="Align.Center">Escolha o seu perfil:</MudText>
+    <MudContainer MaxWidth="MaxWidth.Small" Style="margin-top: 40px;">
+
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudButton @onclick="@NavigateToStudent" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Aluno</MudButton>
+            </MudItem>
+            <MudItem>
+                <MudButton @onclick="@NavigateToPersonal" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Personal</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudPaper> *@
+
+<MudPaper Height="400px" Width="100%">
+    <MudText Typo="Typo.h2" Align="Align.Center">Seu novo App de Treinamentos!</MudText>
+    <MudText Typo="Typo.h4" Align="Align.Center">Escolha o seu perfil:</MudText>
+    <MudContainer MaxWidth="MaxWidth.Small" Style="margin-top: 40px;">
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudButton @onclick="@NavigateToStudent" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Aluno</MudButton>
+            </MudItem>
+            <MudItem>
+                <MudButton @onclick="@NavigateToPersonal" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Personal</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudPaper>
+
+
+<style>
+    /* Aplica o efeito de aumento nos botões quando o mouse passa por cima */
+    .spacing:hover {
+        transform: scale(1.1); /* Aumenta o tamanho em 10% */
+        transition: transform 0.3s ease-in-out; /* Transição suave */
+    }
+
+    .spacing {
+        transition: transform 0.3s ease-in-out; /* Define uma transição suave para todos os botões */
+    }
+
+</style>
+
+
+
+
+@code {
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool enableSwipeGesture = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Slide;
+
+    private void NavigateToStudent()
+    {
+        Navigation.NavigateTo("/aluno");
+    }
+    private void NavigateToPersonal()
+    {
+        Navigation.NavigateTo("/personal");
+    }
+}
