@@ -47,7 +47,7 @@ jobs:
         run: dotnet build --no-restore
   
       - name: Publish .NET Core Project
-        run: dotnet publish TrainningDeploy.csproj -c:Release -o docs --nologo
+        run: dotnet publish ./TrainningDeploy/TrainningDeploy.csproj -c:Release -o docs --nologo
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
