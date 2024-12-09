@@ -1,0 +1,26 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1">@ContentText</MudText>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="ConfirmDelete" Color="Color.Error">@ButtonText</MudButton>
+            <MudButton OnClick="CancelDelete">Cancelar</MudButton>
+        </DialogActions>
+    </MudDialog>
+
+    @code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string ContentText { get; set; }
+    [Parameter] public string ButtonText { get; set; }
+    [Parameter] public Color Color { get; set; }
+
+    private void ConfirmDelete()
+    {
+        MudDialog.Close(DialogResult.Ok(true));  // Indica que a ação foi confirmada
+    }
+
+    private void CancelDelete()
+    {
+        MudDialog.Close(DialogResult.Cancel());  // Indica que a ação foi cancelada
+    }
+}

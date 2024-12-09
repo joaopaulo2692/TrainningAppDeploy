@@ -1,0 +1,136 @@
+﻿@page "/musculos"
+@using TrainningApp.Core.DTO.Muscle
+
+
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <MudButton Variant="Variant.Filled" Color="Color.Success">Novo Músculo</MudButton>
+</div>
+<br />
+<br />
+<div style="display: flex; justify-content: center; padding: 10px;">
+    <MudPaper Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+        @foreach (var muscle in musclesList)
+        {
+            <!-- Contêiner externo para hover e MudDivider -->
+            <div class="hover-container"
+                 Style="transition: background-color 0.3s ease; padding: 0; margin-bottom: 2px; cursor: pointer;">
+
+                <MudGrid AlignItems="AlignItems.Center"
+                         Class="profile-container"
+                         Style="padding: 20px 30px 5px 30px;">
+                    <!-- Menos espaço inferior -->
+                    <!-- Nome do exercício com ícone de edição ao lado -->
+                    <MudItem Class="profile-text" Style="width: 100%;">
+                        <MudGrid Class="d-flex align-items-center" Style="width: 100%;">
+
+                            <!-- MudText ocupa o espaço até o ícone de edição -->
+                            <MudText Typo="Typo.h6" Class="font-weight-bold" Style="flex-grow: 1;">@muscle.Name</MudText>
+
+                                <!-- Ícone de edição alinhado à direita -->
+                                 <div class="action-icons">
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Style="margin-left: 16px;" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                </div>
+                            </MudGrid>
+                        </MudItem>
+                    </MudGrid>
+
+                    <!-- Divisor alinhado com menos espaço -->
+                    <MudDivider Class="mt-0" Style="margin-top: -2px;" />
+                </div>
+        }
+    </MudPaper>
+</div>
+
+
+<style>
+    /* Oculta os ícones inicialmente */
+    .hover-container .action-icons {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* Mostra os ícones quando em hover */
+    .hover-container:hover .action-icons {
+        visibility: visible;
+        opacity: 1;
+    }
+    .hover-container {
+        background-color: transparent; /* Sem fundo inicial */
+    }
+
+        .hover-container:hover {
+            background-color: #2a2a3d; /* Cor de destaque no hover */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+        }
+
+        .hover-container .mud-divider {
+            background-color: #e0e0e0; /* Ajuste a cor do divisor conforme necessário */
+        }
+
+    .profile-container.hoverable {
+        background-color: transparent; /* Sem fundo padrão */
+    }
+
+        .profile-container.hoverable:hover {
+            background-color: #f5f5f5; /* Cor de destaque no hover */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve opcional */
+            transition: background-color 0.3s ease;
+        }
+
+    .profile-container .mud-grid {
+        margin-bottom: 0 !important;
+    }
+
+    .profile-container .mud-alert {
+        margin-bottom: 0 !important;
+    }
+
+    .profile-container .mud-divider {
+        margin-top: 4px !important;
+        margin-bottom: 0 !important;
+    }
+</style>
+
+
+@code {
+    List<MuscleVO> musclesList = new List<MuscleVO>();
+
+    protected override void OnInitialized()
+    {
+        musclesList = new List<MuscleVO>()
+{
+    new MuscleVO { Id = 1, Name = "Abdômen" },
+    new MuscleVO { Id = 2, Name = "Aeróbico" },
+    new MuscleVO { Id = 3, Name = "Agilidade" },
+    new MuscleVO { Id = 4, Name = "Alongamento" },
+    new MuscleVO { Id = 5, Name = "Antebraço" },
+    new MuscleVO { Id = 6, Name = "Aquecimento" },
+    new MuscleVO { Id = 7, Name = "Bíceps" },
+    new MuscleVO { Id = 8, Name = "Cardiovasculares" },
+    new MuscleVO { Id = 9, Name = "Coordenação motora" },
+    new MuscleVO { Id = 10, Name = "Core" },
+    new MuscleVO { Id = 11, Name = "Dorsal" },
+    new MuscleVO { Id = 12, Name = "Funcionais" },
+    new MuscleVO { Id = 13, Name = "Glúteo" },
+    new MuscleVO { Id = 14, Name = "Lombar" },
+    new MuscleVO { Id = 15, Name = "Mobilidade" },
+    new MuscleVO { Id = 16, Name = "Movimentos complexos" },
+    new MuscleVO { Id = 17, Name = "Movimentos cíclicos" },
+    new MuscleVO { Id = 18, Name = "Ombro" },
+    new MuscleVO { Id = 19, Name = "Outros" },
+    new MuscleVO { Id = 20, Name = "Panturrilha" },
+    new MuscleVO { Id = 21, Name = "Peitoral" },
+    new MuscleVO { Id = 22, Name = "Perna" },
+    new MuscleVO { Id = 23, Name = "Punho" },
+    new MuscleVO { Id = 24, Name = "Quadril" },
+    new MuscleVO { Id = 25, Name = "Resistência" },
+    new MuscleVO { Id = 26, Name = "Tornozelo" },
+    new MuscleVO { Id = 27, Name = "Trapézio" },
+    new MuscleVO { Id = 28, Name = "Tríceps" }
+};
+
+    }
+}

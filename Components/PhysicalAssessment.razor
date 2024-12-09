@@ -1,0 +1,313 @@
+﻿@using TrainningApp.Core.DTO.PhysicalAssessment
+@inject IDialogService DialogService
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <MudButton OnClick="()=>CreatePhysical()" Variant="Variant.Filled" Color="Color.Success">Novo Avaliação</MudButton>
+</div>
+<br />
+<br />
+
+
+@foreach (var physical in physicalList)
+{
+    <div class="hover-container" style="display: flex; justify-content: center; margin-bottom: 10px;">
+        <MudPaper class="hover-paper" Height="80px" Width="75%" Style="padding: 20px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-sizing: border-box;">
+
+            <!-- Container de textos -->
+            <div>
+                <!-- Responsável -->
+                <div style="margin-bottom: 10px;">
+                    <MudText>
+                        <span class="bold-label">Responsável:</span>
+                        <span class="normal-text">@physical.PersonalName</span>
+                    </MudText>
+                </div>
+
+                <!-- Data -->
+                <div>
+                    <MudText>
+                        <span class="bold-label">Data:</span>
+                        <span class="normal-text">@physical.AssessmentDate.Value.ToString("yyyy/MM/dd")</span>
+                    </MudText>
+                </div>
+            </div>
+
+            <!-- Ícone -->
+            <div class="action-icons">
+                <MudIconButton OnClick="()=>EditPhysical(physical)" Icon="@Icons.Material.Filled.MedicalInformation" Style="font-size: 68px; color: var(--mud-palette-primary);" />
+
+                <MudIconButton OnClick="()=>DeleteDialogAsync(physical)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+
+                @* <MudIcon Icon="@Icons.Material.Filled.MedicalInformation"  Style="font-size: 48px; color: var(--mud-palette-primary);" /> *@
+            </div>
+
+        </MudPaper>
+    </div>
+}
+
+<style>
+    .hover-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Adiciona limite ao hover */
+    .hover-paper {
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer; /* Indica que é clicável */
+    }
+
+        /* Efeito de seleção */
+        .hover-paper:hover {
+            background-color: #2a2a3d; /* Cor de destaque no hover */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra opcional */
+        }
+
+        /* Ícone invisível por padrão */
+        .hover-paper .action-icons {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Exibe o ícone no hover */
+        .hover-paper:hover .action-icons {
+            visibility: visible;
+            opacity: 1;
+        }
+</style>
+
+
+   
+
+
+@code {
+
+    private async Task DeleteDialogAsync(PhysicalAssessmentVO physicalToRemove)
+    {
+        var parameters = new DialogParameters
+    {
+        { nameof(DialogRemove.ContentText), "Você quer realmente apagar essa avaliação?" },
+        { nameof(DialogRemove.ButtonText), "Deletar" },
+        { nameof(DialogRemove.Color), Color.Error }
+    };
+
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        // Exibe o diálogo e aguarda o resultado
+        var dialogReference = DialogService.Show<DialogRemove>("Deletar", parameters, options);
+
+        var dialogResult = await dialogReference.Result; // Aguarda até o usuário interagir com o diálogo
+
+        // Verifica se o resultado foi cancelado
+        if (dialogResult.Canceled)
+        {
+            Console.WriteLine("Ação cancelada.");
+        }
+        else
+        {
+            Console.WriteLine("Ação confirmada. Excluindo treino...");
+            RemovePhysicalToList(physicalToRemove); // Executa a ação de exclusão
+        }
+    }
+
+    private List<PhysicalAssessmentVO> physicalList = new List<PhysicalAssessmentVO>();
+
+    // private PhysicalAssessmentVO physicalSelected { get; set; }
+
+    private void RemovePhysicalToList(PhysicalAssessmentVO physicalToRemove)
+    {
+        physicalList.Remove(physicalToRemove);
+    }
+    
+
+    private void EditPhysicalToList(PhysicalAssessmentVO physicalToEdit)
+    {
+        for (int i = 0; i < physicalList.Count; i++)
+        {
+            if (physicalList[i].Id == physicalToEdit.Id)
+            {
+                physicalList[i] = physicalToEdit;
+                break;
+            }
+        }
+    }
+
+    private void CreatePhysicalToList(PhysicalAssessmentVO physicalToCreate)
+    {
+        physicalList.Add(physicalToCreate);
+    }
+
+    private async Task CreatePhysical()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters
+        {
+            { "OnSavePhysical", EventCallback.Factory.Create<PhysicalAssessmentVO>(this, CreatePhysicalToList) },
+        };
+
+        // Mostra o diálogo e passa os parâmetros
+        var dialog = DialogService.Show<PhysicalDialog>("Criar Avaliação", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // // Pega o dado retornado pelo DialogResult
+            // var exerciseToSave = (ExerciseVO)result.Data;
+            // if (exerciseToSave != null)
+            // {
+            //     EditExerciseToList(exerciseToSave);
+            // }
+        }
+    }
+
+    private async Task EditPhysical(PhysicalAssessmentVO physicalSelected)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters
+        {
+            { "OnEditPhysical", EventCallback.Factory.Create<PhysicalAssessmentVO>(this, EditPhysicalToList) },
+            {"Physical", physicalSelected}
+        };
+
+        // Mostra o diálogo e passa os parâmetros
+        var dialog = DialogService.Show<PhysicalDialog>("Editar Avaliação", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // // Pega o dado retornado pelo DialogResult
+            // var exerciseToSave = (ExerciseVO)result.Data;
+            // if (exerciseToSave != null)
+            // {
+            //     EditExerciseToList(exerciseToSave);
+            // }
+        }
+    }
+
+
+    protected override void OnInitialized()
+    {
+        physicalList = new List<PhysicalAssessmentVO>
+        {
+            new PhysicalAssessmentVO
+            {
+                Id = 1,
+                PersonalName = "Carlos Souza",
+                Height = 1.75m, // Altura constante
+                Weight = 80.0m,
+                Chest = 95.0m,
+                Waist = 90.0m,
+                Hips = 94.0m,
+                Neck = 38.0m,
+                RightForearm = 26.0m,
+                LeftForearm = 26.0m,
+                RightArmRelaxed = 32.0m,
+                LeftArmRelaxed = 31.5m,
+                RightArmFlexed = 36.0m,
+                LeftArmFlexed = 35.5m,
+                RightThigh = 55.0m,
+                LeftThigh = 54.5m,
+                RightCalf = 38.0m,
+                LeftCalf = 37.5m,
+                BodyFatPercentage = 18.0m,
+                AssessmentDate = new DateTime(2024, 1, 15)
+            },
+            new PhysicalAssessmentVO
+            {
+                Id = 2,
+                PersonalName = "Carlos Souza",
+                Height = 1.75m,
+                Weight = 81.2m, // Aumento gradual de peso
+                Chest = 96.0m, // Evolução no peito
+                Waist = 89.0m, // Leve redução na cintura
+                Hips = 94.5m,
+                Neck = 38.5m,
+                 RightForearm = 26.0m,
+                LeftForearm = 26.0m,
+                RightArmRelaxed = 32.5m,
+                LeftArmRelaxed = 32.0m,
+                RightArmFlexed = 36.5m,
+                LeftArmFlexed = 36.0m,
+                RightThigh = 55.5m,
+                LeftThigh = 55.0m,
+                RightCalf = 38.2m,
+                LeftCalf = 37.8m,
+                BodyFatPercentage = 17.5m,
+                AssessmentDate = new DateTime(2024, 3, 15)
+            },
+            new PhysicalAssessmentVO
+            {
+                Id = 3,
+                PersonalName = "Carlos Souza",
+                Height = 1.75m,
+                Weight = 82.0m,
+                Chest = 97.5m,
+                Waist = 88.0m,
+                Hips = 95.0m,
+                Neck = 39.0m,
+                 RightForearm = 26.0m,
+                LeftForearm = 26.0m,
+                RightArmRelaxed = 33.0m,
+                LeftArmRelaxed = 32.5m,
+                RightArmFlexed = 37.0m,
+                LeftArmFlexed = 36.5m,
+                RightThigh = 56.0m,
+                LeftThigh = 55.5m,
+                RightCalf = 38.5m,
+                LeftCalf = 38.0m,
+                BodyFatPercentage = 17.0m,
+                AssessmentDate = new DateTime(2024, 5, 15)
+            },
+            new PhysicalAssessmentVO
+            {
+                Id = 4,
+                PersonalName = "Carlos Souza",
+                Height = 1.75m,
+                Weight = 83.0m,
+                Chest = 98.5m,
+                Waist = 87.5m,
+                Hips = 95.5m,
+                Neck = 39.5m,
+                 RightForearm = 26.0m,
+                LeftForearm = 26.0m,
+                RightArmRelaxed = 33.5m,
+                LeftArmRelaxed = 33.0m,
+                RightArmFlexed = 37.5m,
+                LeftArmFlexed = 37.0m,
+                RightThigh = 56.5m,
+                LeftThigh = 56.0m,
+                RightCalf = 38.8m,
+                LeftCalf = 38.3m,
+                BodyFatPercentage = 16.8m,
+                AssessmentDate = new DateTime(2024, 7, 15)
+            },
+            new PhysicalAssessmentVO
+            {
+                Id = 5,
+                PersonalName = "Carlos Souza",
+                Height = 1.75m,
+                Weight = 84.0m,
+                Chest = 100.0m,
+                Waist = 87.0m,
+                Hips = 96.0m,
+                Neck = 40.0m,
+                 RightForearm = 26.0m,
+                LeftForearm = 26.0m,
+                RightArmRelaxed = 34.0m,
+                LeftArmRelaxed = 33.5m,
+                RightArmFlexed = 38.0m,
+                LeftArmFlexed = 37.5m,
+                RightThigh = 57.0m,
+                LeftThigh = 56.5m,
+                RightCalf = 39.0m,
+                LeftCalf = 38.5m,
+                BodyFatPercentage = 16.5m,
+                AssessmentDate = new DateTime(2024, 9, 15)
+            }
+        };
+    }
+
+}

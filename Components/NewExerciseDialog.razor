@@ -1,0 +1,190 @@
+﻿@using TrainningApp.Core.DTO.Exercise
+@using TrainningApp.Core.DTO.Muscle
+<MudDialog MaxWidth="MaxWidth.ExtraLarge" FullWidth="true" Class="custom-dialog rounded-lg">
+    <DialogContent>
+        <div class="d-flex flex-column py-1" style="min-height: @dialogScreen;">
+
+                <MudTextField Label="Nome" Variant="Variant.Text" @bind-Value="name"></MudTextField>
+                <MudStack Spacing="2">
+                    <MudButton OnClick="OnExpandCollapseClick">@(_expanded ? "Esconder" : "Selecionar Grupos Musculares")</MudButton>
+                    <MudDivider />
+                    <MudCollapse Expanded="_expanded">
+                        <MudGrid GutterSize="0" Spacing="1">
+                            @foreach (var muscle in musclesList)
+                            {
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudCheckBox @bind-Value="musclesSelected[muscle.Name]"
+                                                 Label="@muscle.Name"
+                                                 Color="Color.Primary" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudCollapse>
+                </MudStack>
+                <MudSelect T="string" Label="Selecionar Nível" @bind-Value="selectedLevel">
+                    @foreach (var level in levels)
+                    {
+                        <MudSelectItem Value="@level">@level</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudTextField Label="Descrição" Variant="Variant.Text" @bind-Value="description"></MudTextField>
+                <MudTextField Label="Link Vídeo" Variant="Variant.Text" @bind-Value="link"></MudTextField>
+
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveExerciseAsync">Salvar</MudButton>
+        <MudButton Color="Color.Primary" OnClick="CloseDialog">Fechar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+<style>
+    .custom-dialog {
+        max-width: 800px;
+        margin: 20px auto; /* Adiciona 20px de margem superior e inferior e centraliza horizontalmente */
+        width: 90%; /* Ajusta a largura para 90% */
+    }
+
+    .custom-grid {
+        row-gap: 0.5rem; /* Controla o espaçamento entre linhas */
+    }
+
+    .custom-item {
+        padding: 0; /* Remove espaçamento interno */
+        margin-bottom: 0; /* Remove espaçamento inferior */
+    }
+</style>
+
+@code 
+{
+    [Parameter]
+    public EventCallback<ExerciseVO> OnAddExercise { get; set; }
+    [Parameter]
+    public EventCallback<ExerciseVO> OnEditExercise { get; set; }
+    [Parameter]
+    public ExerciseVO ExerciseToEdit { get; set; }
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private string dialogScreen = "420px";
+
+    // Lista de músculos disponíveis
+    private List<MuscleVO> musclesList = new List<MuscleVO>();
+    private string selectedLevel;
+    private string description;
+    private string link;
+    private string name;
+    List<string> levels = new List<string>();
+    List<string> selectedMuscles = new List<string>();
+
+    // Dicionário para armazenar o estado dos checkboxes
+    private Dictionary<string, bool> musclesSelected = new Dictionary<string, bool>();
+
+    private bool _expanded = false;
+
+    protected override void OnInitialized()
+    {
+        if (ExerciseToEdit != null)
+        {
+            selectedLevel = ExerciseToEdit.Level;
+            description = ExerciseToEdit.Description;
+            name = ExerciseToEdit.Name;
+            link = ExerciseToEdit.Video;
+            selectedMuscles = ExerciseToEdit.Muscles == null ? new List<string>() : ExerciseToEdit.Muscles;
+
+        }
+        levels = new List<string>()
+        {
+            "Fácil", "Intermediário", "Difícil"
+        };
+
+        musclesList = new List<MuscleVO>()
+{
+    new MuscleVO { Id = 1, Name = "Abdômen" },
+    new MuscleVO { Id = 2, Name = "Aeróbico" },
+    new MuscleVO { Id = 3, Name = "Agilidade" },
+    new MuscleVO { Id = 4, Name = "Alongamento" },
+    new MuscleVO { Id = 5, Name = "Antebraço" },
+    new MuscleVO { Id = 6, Name = "Aquecimento" },
+    new MuscleVO { Id = 7, Name = "Bíceps" },
+    new MuscleVO { Id = 8, Name = "Cardiovasculares" },
+    new MuscleVO { Id = 9, Name = "Coordenação motora" },
+    new MuscleVO { Id = 10, Name = "Core" },
+    new MuscleVO { Id = 11, Name = "Dorsal" },
+    new MuscleVO { Id = 12, Name = "Funcionais" },
+    new MuscleVO { Id = 13, Name = "Glúteo" },
+    new MuscleVO { Id = 14, Name = "Lombar" },
+    new MuscleVO { Id = 15, Name = "Mobilidade" },
+    new MuscleVO { Id = 16, Name = "Movimentos complexos" },
+    new MuscleVO { Id = 17, Name = "Movimentos cíclicos" },
+    new MuscleVO { Id = 18, Name = "Ombro" },
+    new MuscleVO { Id = 19, Name = "Outros" },
+    new MuscleVO { Id = 20, Name = "Panturrilha" },
+    new MuscleVO { Id = 21, Name = "Peitoral" },
+    new MuscleVO { Id = 22, Name = "Perna" },
+    new MuscleVO { Id = 23, Name = "Punho" },
+    new MuscleVO { Id = 24, Name = "Quadril" },
+    new MuscleVO { Id = 25, Name = "Resistência" },
+    new MuscleVO { Id = 26, Name = "Tornozelo" },
+    new MuscleVO { Id = 27, Name = "Trapézio" },
+    new MuscleVO { Id = 28, Name = "Tríceps" }
+};
+        // Inicializa o dicionário com valores padrão
+        foreach (var muscle in musclesList)
+        {
+            if (selectedMuscles.Contains(muscle.Name)) musclesSelected[muscle.Name] = true;
+            else
+            {
+                musclesSelected[muscle.Name] = false; // Inicializa como não selecionado
+            }
+
+        }
+
+    }
+
+    private void OnExpandCollapseClick()
+    {
+        _expanded = !_expanded;
+    }
+
+
+
+    private async Task SaveExerciseAsync()
+    {
+        selectedMuscles = musclesSelected
+            .Where(kv => kv.Value) // Filtra apenas os selecionados
+            .Select(kv => kv.Key) // Obtém os nomes (chaves)
+            .ToList();
+        ValidateExercise(name, selectedMuscles, selectedLevel);
+        ExerciseVO exerciseToSave = new ExerciseVO()
+            {
+                Name = name,
+                Description = description,
+                Level = selectedLevel,
+                Muscles = selectedMuscles,
+                Video = link,
+                Id = ExerciseToEdit == null ? 0 : ExerciseToEdit.Id
+            };
+
+        if (ExerciseToEdit != null)
+        {
+
+            await OnEditExercise.InvokeAsync(exerciseToSave);
+            MudDialog.Close(DialogResult.Ok(exerciseToSave));
+        }
+        
+        else if (ExerciseToEdit == null) await OnAddExercise.InvokeAsync(exerciseToSave);
+        MudDialog.Close(DialogResult.Ok(exerciseToSave));
+    }
+
+    private bool ValidateExercise(string nameModel, List<string> listMuscleModel, string levelModel)
+    {
+        if (nameModel == string.Empty || levelModel == string.Empty || listMuscleModel.Count == 0) return false;
+        return true;
+    }
+
+    private void CloseDialog()
+    {
+        MudDialog.Close();
+    }
+}

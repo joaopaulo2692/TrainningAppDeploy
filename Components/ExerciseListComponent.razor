@@ -1,0 +1,316 @@
+﻿@page "/exercicios"
+@using TrainningApp.Core.DTO.Exercise
+@inject IDialogService DialogService
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <MudButton Variant="Variant.Filled" OnClick="AddExercise" Color="Color.Success">Novo Exercício</MudButton>
+</div>
+<br />
+<br />
+
+
+<div style="display: flex; justify-content: center; padding: 10px;">
+    <MudPaper Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+        @foreach (var exercise in exercisesList)
+        {
+            <!-- Contêiner externo para hover e MudDivider -->
+            <div class="hover-container"
+                 style="transition: background-color 0.3s ease; padding: 0; margin-bottom: 2px; cursor: pointer;">
+
+                <MudGrid AlignItems="AlignItems.Center"
+                         Class="profile-container"
+                         Style="padding: 20px 30px 5px 30px;">
+                    <!-- Menos espaço inferior -->
+                    <!-- Nome e alertas -->
+                    <MudItem Class="profile-text" Style="width: 100%;">
+                        <MudGrid>
+                            <MudText Typo="Typo.h6" Class="font-weight-bold">@exercise.Name</MudText>
+                            </MudGrid>
+
+                            <!-- Alertas e botão alinhados -->
+                            <MudGrid Item Class="d-flex align-items-center" Style="margin-top: 8px; width: 100%;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    @foreach (var muscle in exercise.Muscles)
+                                {
+                                    <MudAlert NoIcon="true"
+                                              Severity="Severity.Info"
+                                              HideIcon="true"
+                                              Square="false"
+                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                        @muscle
+                                    </MudAlert>
+                                }
+
+                                <!-- Ícones que aparecem no hover -->
+                                <div class="action-icons">
+                                    <MudIconButton OnClick="()=>EditExercise(exercise)" Icon="@Icons.Material.Outlined.Edit" />
+                                    <MudIconButton OnClick="()=>DeleteDialogAsync(exercise)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                </div>
+                            </div>
+                        </MudGrid>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- Divisor alinhado com menos espaço -->
+                <MudDivider Class="mt-0" Style="margin-top: -2px;" />
+            </div>
+        }
+    </MudPaper>
+
+
+
+
+</div>
+
+<style>
+
+        /* Estiliza o contêiner para hover */
+    .hover-container {
+        position: relative;
+    }
+
+    /* Oculta os ícones inicialmente */
+    .hover-container .action-icons {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* Mostra os ícones quando em hover */
+    .hover-container:hover .action-icons {
+        visibility: visible;
+        opacity: 1;
+    }
+    .hover-container {
+        background-color: transparent; /* Sem fundo inicial */
+    }
+
+        .hover-container:hover {
+            background-color: #2a2a3d; /* Cor de destaque no hover */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+        }
+
+
+        
+
+
+
+
+        .hover-container .mud-divider {
+            background-color: #e0e0e0; /* Ajuste a cor do divisor conforme necessário */
+        }
+
+    .profile-container.hoverable {
+        background-color: transparent; /* Sem fundo padrão */
+    }
+
+   
+        .profile-container.hoverable:hover {
+            background-color: #f5f5f5; /* Cor de destaque no hover */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve opcional */
+            transition: background-color 0.3s ease;
+        }
+
+    .profile-container .mud-grid {
+        margin-bottom: 0 !important;
+    }
+
+    .profile-container .mud-alert {
+        margin-bottom: 0 !important;
+    }
+
+    .profile-container .mud-divider {
+        margin-top: 4px !important;
+        margin-bottom: 0 !important;
+    }
+        .custom-alert {
+        border-radius: 8px;
+        padding: 2px 6px;
+        font-size: 12px;
+        line-height: 1;
+        margin-right: 6px;
+        /* Caso o componente tenha margens internas invisíveis */
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .hoverable {
+        transition: background-color 0.3s ease;
+    }
+
+        .hoverable:hover {
+            background-color: #f0f0f0; /* Altere a cor conforme desejado */
+            cursor: pointer;
+        }
+
+</style>
+@code {
+    List<ExerciseVO> exercisesList = new List<ExerciseVO>();
+
+
+    private async Task DeleteDialogAsync(ExerciseVO exerciseToRemove)
+    {
+        var parameters = new DialogParameters
+    {
+        { nameof(DialogRemove.ContentText), "Você quer realmente apagar esse exercício?" },
+        { nameof(DialogRemove.ButtonText), "Deletar" },
+        { nameof(DialogRemove.Color), Color.Error }
+    };
+
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        // Exibe o diálogo e aguarda o resultado
+        var dialogReference = DialogService.Show<DialogRemove>("Deletar", parameters, options);
+
+        var dialogResult = await dialogReference.Result; // Aguarda até o usuário interagir com o diálogo
+
+        // Verifica se o resultado foi cancelado
+        if (dialogResult.Canceled)
+        {
+            Console.WriteLine("Ação cancelada.");
+        }
+        else
+        {
+            Console.WriteLine("Ação confirmada. Excluindo treino...");
+            RemoveExercise(exerciseToRemove); // Executa a ação de exclusão
+        }
+    }
+
+    private void RemoveExercise(ExerciseVO exerciseToRemove)
+    {
+        exercisesList.Remove(exerciseToRemove);
+    }
+
+    private void AddExerciseToList(ExerciseVO exerciseToAdd)
+    {
+        exercisesList.Add(exerciseToAdd);
+
+    }
+
+    private void EditExerciseToList(ExerciseVO exerciseToEdit)
+    {
+        for (int i = 0; i < exercisesList.Count; i++)
+        {
+            if (exercisesList[i].Id == exerciseToEdit.Id)
+            {
+                exercisesList[i] = exerciseToEdit;
+                break;
+            }
+        }
+    }
+
+    private async Task AddExercise()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters
+        {
+            { "OnAddExercise", EventCallback.Factory.Create<ExerciseVO>(this, AddExerciseToList) }
+        };
+
+        // Mostra o diálogo e passa os parâmetros
+        var dialog = DialogService.Show<NewExerciseDialog>("Adicionar Exercício", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // Pega o dado retornado pelo DialogResult
+            // var exerciseToSave = (ExerciseVO)result.Data;
+            // if (exerciseToSave != null)
+            // {
+            //     AddExerciseToList(exerciseToSave);
+            // }
+        }
+     
+    }
+
+    private async Task EditExercise(ExerciseVO exerciseToEditModel)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters
+        {
+            { "OnEditExercise", EventCallback.Factory.Create<ExerciseVO>(this, EditExerciseToList) },
+            {"ExerciseToEdit", exerciseToEditModel}
+        };
+
+        // Mostra o diálogo e passa os parâmetros
+        var dialog = DialogService.Show<NewExerciseDialog>("Editar Exercício", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // // Pega o dado retornado pelo DialogResult
+            // var exerciseToSave = (ExerciseVO)result.Data;
+            // if (exerciseToSave != null)
+            // {
+            //     EditExerciseToList(exerciseToSave);
+            // }
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        exercisesList = new List<ExerciseVO>
+{
+    new ExerciseVO
+    {
+        Id = 1,
+        Name = "Supino",
+        Muscles = new List<string> { "Peitoral", "Tríceps" }
+    },
+    new ExerciseVO
+    {
+        Id = 2,
+        Name = "Agachamento",
+        Muscles = new List<string> { "Pernas", "Glúteos", "Quadríceps" }
+    },
+    new ExerciseVO
+    {
+        Id = 3,
+        Name = "Rosca Direta",
+        Muscles = new List<string> { "Bíceps" }
+    },
+    new ExerciseVO
+    {
+        Id = 4,
+        Name = "Levantamento Terra",
+        Muscles = new List<string> { "Dorsais", "Glúteos", "Pernas" }
+    },
+    new ExerciseVO
+    {
+        Id = 5,
+        Name = "Desenvolvimento com Halteres",
+        Muscles = new List<string> { "Ombros", "Tríceps" }
+    },
+    new ExerciseVO
+    {
+        Id = 6,
+        Name = "Remada Curvada",
+        Muscles = new List<string> { "Costas", "Bíceps" }
+    },
+    new ExerciseVO
+    {
+        Id = 7,
+        Name = "Cadeira Extensora",
+        Muscles = new List<string> { "Quadríceps" }
+    },
+    new ExerciseVO
+    {
+        Id = 8,
+        Name = "Flexão de Braço",
+        Muscles = new List<string> { "Peito", "Tríceps", "Ombros" }
+    },
+    new ExerciseVO
+    {
+        Id = 9,
+        Name = "Crucifixo",
+        Muscles = new List<string> { "Peito" }
+    },
+    new ExerciseVO
+    {
+        Id = 10,
+        Name = "Abdominal",
+        Muscles = new List<string> { "Abdômen" }
+    }
+};
+
+    }
+}

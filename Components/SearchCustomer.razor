@@ -1,0 +1,203 @@
+﻿@using TrainningApp.Core.DTO.User
+@inject NavigationManager Navigation
+
+ <MudAutocomplete T="string"
+                 Label="Buscar aluno"
+                 Value="@customerSelected"
+                 ValueChanged="OnCustomerSelected"
+                 SearchFunc="@SearchuCustomer"
+                 ResetValueOnEmptyText="@resetValueOnEmptyText"
+                 MaxItems="50"
+                 CoerceText="@coerceText"
+                 CoerceValue="@coerceValue"
+                 Class="@(IsLightMode == true ? "custom-autocompleteLightMode" : "custom-autocomplete")" /> 
+
+
+
+<style>
+    /* Estilo para o modo escuro */
+    .custom-autocomplete {
+        margin-top: -10px; /* Ajuste este valor para mover o componente para cima */
+    }
+
+        .custom-autocomplete .mud-input-root,
+        .custom-autocomplete .mud-input-label,
+        .custom-autocomplete .mud-input-control,
+        .custom-autocomplete .mud-input-underline {
+            background-color: #2a2a3d !important; /* Cor de fundo para o modo escuro */
+            color: white !important; /* Cor do texto */
+            border-color: antiquewhite !important; /* Cor da borda */
+        }
+
+    /* Estilo para o modo claro */
+    .custom-autocompleteLightMode {
+        margin-top: -10px; /* Ajuste este valor para mover o componente para cima */
+    }
+
+        .custom-autocompleteLightMode .mud-input-root,
+        .custom-autocompleteLightMode .mud-input-label,
+        .custom-autocompleteLightMode .mud-input-control,
+        .custom-autocompleteLightMode .mud-input-underline {
+            background-color: #dcdcdc !important; /* Cor de fundo para o modo claro */
+            color: black !important; /* Cor do texto */
+            border-color: grey !important; /* Cor da borda */
+        }
+</style>
+
+@code {
+
+    [Parameter]
+    public bool IsLightMode { get; set; }
+
+    private string customerSelected { get; set; }
+    private bool resetValueOnEmptyText;
+    private bool coerceText;
+    private bool coerceValue;
+
+    private async Task OnCustomerSelected(string customer)
+    {
+        Navigation.NavigateTo("/cliente");
+    }
+
+    private async Task<IEnumerable<string>> SearchuCustomer(string value, CancellationToken token)
+    {
+
+        if (string.IsNullOrEmpty(value))
+        {
+            // return users.Select(x => x.Name);
+            return users.Select(x => x.Name).OrderBy(name => name);
+        }
+        UserVO userSelected = users.Where(x => x.Name == value).FirstOrDefault();
+        customerSelected = userSelected.Name;
+      
+        return users.Select(x => x.Name).OrderBy(name => name).Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        StateHasChanged();
+
+        // return exerciseList.Select(x => x.Name).Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+  
+    }
+
+    List<UserVO> users = new List<UserVO>()
+    {
+       new UserVO()
+    {
+        Name = "João",
+        Age = 32,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Letícia",
+        Age = 27,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Carlos",
+        Age = 45,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Mariana",
+        Age = 22,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Pedro",
+        Age = 38,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Sofia",
+        Age = 29,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Gabriel",
+        Age = 34,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Ana",
+        Age = 24,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Lucas",
+        Age = 31,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Camila",
+        Age = 28,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Ricardo",
+        Age = 41,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Beatriz",
+        Age = 26,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Mateus",
+        Age = 35,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Larissa",
+        Age = 30,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Felipe",
+        Age = 39,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Isabela",
+        Age = 25,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "Thiago",
+        Age = 37,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Patrícia",
+        Age = 33,
+        Gender = "Feminino"
+    },
+    new UserVO()
+    {
+        Name = "André",
+        Age = 40,
+        Gender = "Masculino"
+    },
+    new UserVO()
+    {
+        Name = "Juliana",
+        Age = 36,
+        Gender = "Feminino"
+    }
+    };
+}

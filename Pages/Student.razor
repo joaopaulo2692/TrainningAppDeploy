@@ -1,0 +1,76 @@
+﻿@page "/aluno"
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+
+
+<MudCarousel Class="mud-width-full" Style="height:300px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+    <MudCarouselItem Transition="transition" Color="@Color.Primary">
+        <MudImage Src="images/treino-edit.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Secondary">
+        <MudImage Src="images/treino-edit3.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
+        <MudImage Src="images/treino-edit2.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+    </MudCarouselItem>
+</MudCarousel>
+
+
+
+<br />
+<MudText Style="animation-delay" Typo="Typo.h3" Align="Align.Center">COMO FUNCIONA?</MudText>
+<br />
+<br />
+<br />
+
+<br />
+
+ 
+
+<MudPaper Height="400px" Width="100%">
+    <MudContainer MaxWidth="MaxWidth.Medium">
+        <MudGrid>
+            <!-- Usando 5 unidades para cada coluna -->
+            <MudItem xs="5" class="image-item">
+                <MudPaper Height="370px" Width="100%" Square="true" Class="mud-paper-zoom mud-theme-primary">
+                    <MudImage Src="images/instrutor-na-academia.jpg" Style="width: 100%; height: auto;" />
+                    <MudText Typo="Typo.h5" Align="Align.Center">1º passo</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">Escolha o personal que mais se identificar, assine o melhor plano!</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="2" />
+            <MudItem xs="5" class="image-item">
+                <MudPaper Height="370px" Width="100%" Square="true" Class="mud-paper-zoom mud-theme-primary">
+                    <MudImage Src="images/instrutor-na-academia2.jpg" Style="width: 100%; height: auto;" />
+                    <MudText Typo="Typo.h5" Align="Align.Center">2º passo</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center">Aguardar o treino ser prescrito pelo seu Personal</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudPaper>
+
+
+<style>
+    .image-item:hover .mud-paper-zoom {
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .mud-paper-zoom {
+        transition: transform 0.3s ease-in-out;
+    }
+</style>
+
+
+
+
+
+
+@code {
+        private bool arrows = true;
+        private bool bullets = true;
+        private bool enableSwipeGesture = true;
+        private bool autocycle = true;
+        private Transition transition = Transition.Slide;
+}

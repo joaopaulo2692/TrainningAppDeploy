@@ -1,0 +1,141 @@
+﻿@using TrainningApp.Core.DTO.User
+<div class="parent-container">
+<h2>Dados do Usuário</h2>
+</div>
+<div class="parent-container">
+  
+ 
+    <MudPaper Class="pa-8 ma-2 custom-size custom-padding" Elevation="3">
+        <MudGrid>
+            <!-- Linha 1: Nome, CPF e Telefone -->
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Nome" @bind-Value="name" Typo="Typo.input" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudTextField T="string" Label="CPF" @bind-Value="cpf" Typo="Typo.input" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Telefone" @bind-Value="phone" Typo="Typo.input" />
+            </MudItem>
+
+            <!-- Linha 2: Data Nascimento, Objetivo e Email -->
+            <MudItem xs="4">
+                <MudDatePicker Label="Data Nascimento" @bind-Date="birthDay" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudSelect Label="Objetivo" @bind-Value="goal">
+                    @foreach (var state in typesTrainningList)
+                    {
+                        <MudSelectItem Value="state">@state</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Email" @bind-Value="email" Typo="Typo.input" />
+            </MudItem>
+
+            <!-- Linha 3: MudSwitch -->
+            <!-- Linha 4: Observação -->
+            <MudItem xs="12">
+                <MudTextField T="string" Label="Observação" @bind-Value="observation" Typo="Typo.input" />
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</div>
+<br />
+<br />
+<div class="parent-container">
+<h2>Endereço</h2>
+</div>
+<div class="parent-container">
+    
+    <MudPaper Class="pa-8 ma-2 custom-size custom-padding" Elevation="3">
+        <MudGrid>
+            <!-- Linha 1: CEP, Logradouro, Número -->
+            <MudItem xs="4">
+                <MudTextField T="string" Label="CEP" @bind-Value="cep" Typo="Typo.input" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Logradouro" @bind-Value="logradouro" Typo="Typo.input" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Número" @bind-Value="numero" Typo="Typo.input" />
+            </MudItem>
+
+            <!-- Linha 2: Complemento, Bairro, Cidade -->
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Complemento" @bind-Value="complemento" Typo="Typo.input" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Bairro" @bind-Value="bairro" Typo="Typo.input" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudTextField T="string" Label="Cidade" @bind-Value="cidade" Typo="Typo.input" />
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</div>
+
+<style>
+    .custom-padding {
+        padding-left: 16px !important; /* Menor padding à esquerda */
+        padding-right: 16px !important; /* Menor padding à direita */
+        padding-top: 16px !important; /* Padding superior */
+        padding-bottom: 22px !important; /* Padding inferior */
+    }
+
+    .custom-size {
+        max-width: 1100px; /* Ajuste a largura máxima conforme necessário */
+        width: 100%; /* Para garantir que o MudPaper seja responsivo */
+        margin-left: auto; /* Centraliza o componente horizontalmente */
+        margin-right: auto; /* Centraliza o componente horizontalmente */
+    }
+
+    .parent-container{
+        display: flex;
+        justify-content: center; /* Centraliza horizontalmente */
+    }
+</style>
+
+
+@code {
+    private UserVO user;
+    private string name;
+    private string email;
+    private string observation;
+    private string phone;
+    private string cpf;
+    private string goal;
+    private DateTime? birthDay;
+
+    private string cep;
+    private string logradouro;
+    private string numero;
+    private string complemento;
+    private string bairro;
+    private string cidade;
+
+    private List<string> typesTrainningList = new List<string>()
+    {
+        "Hipertrofia", "Emagrecimento", "Condicionamento", "Funcional"
+    };
+
+    protected override void OnInitialized()
+    {
+        user = new UserVO()
+            {
+                Age = 32,
+                Cpf = "111.111.111-11",
+                Email = "joaopaulo2692@gmail.com",
+                Goal = "Hipertrofia",
+                Name = "João Paulo",
+                Gender = "Masculino",
+                Phone = "(99)999999999"
+
+            };
+        name = user.Name;
+        email = user.Email;
+        goal = user.Goal;
+        phone = user.Phone;
+    }
+}

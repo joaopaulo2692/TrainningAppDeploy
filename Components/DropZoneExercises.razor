@@ -1,0 +1,235 @@
+﻿@typeparam T
+@using Pages
+@using TrainningApp.Core.DTO.Exercise
+@using TrainningApp.Core.DTO.TrainningExercise
+@using static TrainningDeploy.Pages.Trainning
+@inject IDialogService DialogService
+
+@* <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 30px; padding: 5px 10px; font-size: 0.75rem; width: 100px; height: 30px;">
+    Adicionar
+</MudButton> *@
+<div class="@Class">
+    <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton>
+    <MudButton Disabled=DisableTrainningRemove OnClick="RemoveTrainningDay" Variant="Variant.Filled" Color="Color.Error" Style="margin-right: 20px;">Remover Sessão</MudButton>
+    @if (TrainningExercise == null)
+    {
+        @* <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton> *@
+        <div>
+            <h3>Nenhum Exercício Adicionado</h3>
+        </div>
+
+    }
+    @if (TrainningExercise != null)
+    {
+        <MudDropContainer T="DropZoneItem" Items="_items" ItemsSelector="@((item, dropzone) => item.Zone == dropzone)"  ItemDropped="ItemUpdated" Class="4 flex-grow-1">
+            <ChildContent>
+                <MudDropContainer T="DropZone" Items="_zones" ItemsSelector="@((item, dropzone) => true)" Class="5">
+                    <ChildContent>
+                        <MudDropZone T="DropZone" AllowReorder Class="6 rounded mud-background-gray px-4 py-1 ma-4" />
+                     </ChildContent>
+                     <ItemRenderer>
+                         <MudPaper Class="pa-4 my-4">
+                             @*                      <MudText Typo="Typo.h6">@context.Name</MudText> *@
+                             @* <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar</MudButton> *@
+                             <MudDropZone T="DropZoneItem" Identifier="@context.Name" AllowReorder Class="rounded mud-background-gray px-4 py-1 ma-4" />
+                         </MudPaper>
+                     </ItemRenderer>
+                 </MudDropContainer>
+             </ChildContent>
+             <ItemRenderer>
+
+                 <MudPaper Class="pa-4 my-4 d-flex align-items-center justify-content-between" Style="width: 100%;">
+                     <MudTextField ShrinkLabel @bind-Value="context.Exercise.ExerciseName" Label="Exercício" Variant="Variant.Text" Style="max-width: 200px; height: 32px; font-size: 0.875rem; margin-right: 20px;" />
+                     <MudTextField ShrinkLabel @bind-Value="context.Exercise.Set" Label="Série" Variant="Variant.Text" Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="context.Exercise.Reps" Label="Rep" Variant="Variant.Text" Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="context.Exercise.Weight" Label="Carga" Variant="Variant.Text" Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="context.Exercise.Interval" Label="Intervalo" Variant="Variant.Text" Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="context.Exercise.Info" Label="Info" Variant="Variant.Text" Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     @* <MudTextField ShrinkLabel @bind-Value="context.Exercise.TrainningDayId" Label="Info" Variant="Variant.Text" *@
+                                  @*  Style="display: none; max-width: 100px; height: 32px; font-size: 0.875rem;" /> *@
+                     <MudButton OnClick="() => SelectEditExercise(context.Exercise)" Variant="Variant.Filled" Color="Color.Warning" Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px; margin-right: 3px;">
+                         Editar
+                     </MudButton>
+
+                     <MudButton OnClick="() => RemoveExercise(context)" Variant="Variant.Filled" Color="Color.Error" Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px; margin-right: 3px;">
+                         Deletar
+                     </MudButton>
+                 </MudPaper>
+             </ItemRenderer>
+         </MudDropContainer>
+    }
+  
+
+ </div>
+
+@code {
+
+    [Parameter]
+    // public EventCallback<TrainningExerciseVO> OnAddExercise { get; set; }
+    public EventCallback<DropZoneItem> OnAddExercise { get; set; }
+    [Parameter]
+    public EventCallback<DropZoneItem> OnRemoveExercise { get; set; }
+    [Parameter]
+    public EventCallback<DropZoneItem> OnEditExercise { get; set; }
+    [Parameter]
+    public EventCallback<string> OnRemoveTrainningDay { get; set; }
+    [Parameter]
+    public EventCallback<List<DropZoneItem>> OnEditExerciseOrdenation { get; set; }
+
+
+    [Parameter]
+    public int ParameterTrainningDay { get; set; }
+    [Parameter]
+    public int ParameterOrdenation { get; set; }
+    [Parameter]
+    public string ParameterNameZone { get; set; }
+    [Parameter] 
+    public string Class { get; set; }
+
+    [Parameter]
+    public bool DisableTrainningRemove { get; set; }
+
+    [Parameter]
+    public int TrainningDayCount { get; set; }
+
+    [Parameter]
+    public TrainningExerciseVO TrainningExercise { get; set; }
+
+
+
+    private async Task AddExercise(DropZoneItem dropZoneItem)
+    {
+        // Chame o callback passando o exercício adicionado
+        await OnAddExercise.InvokeAsync(dropZoneItem);
+    }
+
+    private async Task RemoveExercise(DropZoneItem dropZoneItem)
+    {
+        // Chame o callback passando o exercício adicionado
+        await OnRemoveExercise.InvokeAsync(dropZoneItem);
+    }
+
+    private async Task EditExercise(DropZoneItem dropZoneItem)
+    {
+        // Chame o callback passando o exercício adicionado
+        await OnEditExercise.InvokeAsync(dropZoneItem);
+    }
+
+    private async Task RemoveTrainningDay()
+    {
+        // Chame o callback passando o exercício adicionado
+        await OnRemoveTrainningDay.InvokeAsync(ParameterNameZone);
+    }
+
+    private async Task EditOrdenationExercise()
+    {
+        // Chame o callback passando o exercício adicionado
+        await OnEditExerciseOrdenation.InvokeAsync(_items);
+    }
+
+    [Parameter]
+    public List<DropZoneItem> _items { get; set; }
+
+    [Parameter]
+    public List<DropZone> _zones { get; set; }
+
+    public bool IsToEdited = false;
+
+    public TrainningExerciseVO exerciseToEdited { get; set; }
+
+    private void SelectEditExercise(TrainningExerciseVO exercise)
+    {
+        exerciseToEdited = exercise;
+        IsToEdited = true;
+        OpenDialog();
+        exerciseToEdited = null;
+        return;
+    }
+
+    protected override void OnInitialized()
+    {
+        // if (TrainningDayCount == 1) IsTrainningLetterA = true;
+
+    }
+
+    private async Task OpenDialog()
+    {
+        var parameters = new DialogParameters
+    {
+        { "EditExercise", exerciseToEdited },
+        {"EditExibition", IsToEdited}// Passa o exercício existente ou null
+    };
+
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var dialog = exerciseToEdited == null ? DialogService.Show<ExerciseComponent>("Adicionar Exercício", parameters, options) :
+        DialogService.Show<ExerciseComponent>("Editar Exercício", parameters, options);
+
+        var result = await dialog.Result;
+        // if (result.Canceled) return;
+        if (!result.Canceled)
+        {
+            // Obtenha o exercício adicionado a partir do diálogo
+            var addedExercise = (TrainningExerciseVO)result.Data;
+            if (addedExercise == null) return;
+            addedExercise.TrainningDayId = ParameterTrainningDay;
+
+            if (!IsToEdited) addedExercise.Ordenation = ParameterOrdenation + 1;
+            if (IsToEdited) addedExercise.Ordenation = ParameterOrdenation;
+            // Chame o método para adicionar o exercício ao componente pai
+            DropZoneItem dropItem = new DropZoneItem()
+                {
+                    Name = ParameterNameZone,
+                    Exercise = addedExercise,
+                    Zone = "Drop Zone 1"
+
+                };
+            if (!IsToEdited) await AddExercise(dropItem);
+            else if (IsToEdited) await EditExercise(dropItem);
+
+            IsToEdited = false;
+        }
+
+    }
+    private async Task ItemUpdated(MudItemDropInfo<DropZoneItem> dropItem)
+    {
+        // Atualiza o identificador de zona do item movido
+        dropItem.Item.Zone = dropItem.DropzoneIdentifier;
+
+        // Reorganizar a lista _items explicitamente
+        var updatedList = new List<DropZoneItem>();
+        int newTargetOrdenation = dropItem.IndexInZone + 1;
+        var exerciseTarget = _items.Where(x => x.Exercise.Ordenation == newTargetOrdenation).FirstOrDefault();
+        var exerciseMoved = _items.Where(x => x.Exercise.Ordenation == dropItem.Item.Exercise.Ordenation).FirstOrDefault();
+
+
+        foreach(var dropZone in _items)
+        {
+            if (dropZone == exerciseTarget) dropZone.Exercise.Ordenation = dropItem.Item.Exercise.Ordenation;
+            if (dropZone == exerciseMoved) dropZone.Exercise.Ordenation = newTargetOrdenation;
+        }
+
+        // Itera sobre cada dropzone para capturar os itens na ordem correta
+        // foreach (var dropzone in _zones)
+        // {
+        //     var itemsInZone = _items
+        //         .Where(item => item.Zone == dropzone.Name)
+        //         .OrderBy(item => item.Exercise.Ordenation) // ou outra lógica relevante para manter a ordem inicial
+        //         .ToList();
+
+        //     // Recalcula a ordenação para os itens desta zona
+        //     for (int i = 0; i < itemsInZone.Count; i++)
+        //     {
+        //         itemsInZone[i].Exercise.Ordenation = i + 1;
+        //         updatedList.Add(itemsInZone[i]);
+        //     }
+        // }
+
+        // Substitui a lista _items pela nova lista atualizada
+        updatedList = _items;
+        await EditOrdenationExercise();
+        // Atualiza a interface
+        StateHasChanged();
+    }
+
+    
+}

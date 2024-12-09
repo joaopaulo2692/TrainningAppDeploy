@@ -1,0 +1,189 @@
+﻿
+@using TrainningApp.Core.DTO.Trainning
+@using TrainningApp.Core.DTO.User
+@using TrainningDeploy.Pages
+
+<h3>Dados do Treino</h3>
+<div class="parent-container">
+    <MudPaper Class="pa-16 ma-2 custom-size" Elevation="3">
+        <div class="form-grid">
+            <!-- Linha 1: Nome e Responsável -->
+            <MudTextField T="string" Label="Nome" @bind-Value="nameTrainning" Typo="Typo.input" />
+            <MudAutocomplete T="string" Label="Responsável" @bind-Value="personalSelected" SearchFunc="@SearchByPersonal"
+                             ResetValueOnEmptyText="@resetValueOnEmptyText"
+                             CoerceText="@coerceText" CoerceValue="@coerceValue" Class="custom-autocomplete" TextChanged="OnChanged" />
+
+
+            <!-- Linha 2: Tipo de Treino, Nível e Frequência -->
+            <MudSelect Label="Tipo de Treino" @bind-Value="typeTrainning" TextChanged="OnChanged">
+                @foreach (var state in typesTrainningList)
+                {
+                    <MudSelectItem Value="state">@state</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudSelect Class="custom-nivel" Label="Nível" @bind-Value="levelTrainning" TextChanged="OnChanged">
+                @foreach (var level in levelsTrainningList)
+                {
+                    <MudSelectItem Value="level">@level</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudNumericField Class="custom-freq" @bind-Value="frequency" Label="Frequência" Variant="Variant.Text" Min="0" Max="10" TextChanged="OnChanged" />
+
+            <!-- Linha 3: MudSwitch -->
+            <MudSwitch @bind-Value="isActivate" Label="Ativado" Color="Color.Secondary" Class="switch-field" @oninput="OnChanged" />
+
+            <!-- Linha 4: Observação -->
+            <MudTextField Label="Observação" @bind-Value="observation" TextChanged="OnChanged" />
+        </div>
+    </MudPaper>
+</div>
+
+<style>
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Três colunas de tamanho igual */
+        gap: 16px; /* Espaçamento entre os campos */
+    }
+
+        .form-grid > *:nth-child(1) {
+            grid-column: span 1; /* Nome ocupa uma coluna */
+        }
+
+        .form-grid > *:nth-child(2) {
+            grid-column: span 2; /* Responsável ocupa as duas próximas colunas */
+        }
+
+        .form-grid > *:nth-child(3),
+        .form-grid > *:nth-child(4),
+        .form-grid > *:nth-child(5) {
+            grid-column: span 1; /* Tipo, Nível e Frequência em uma linha */
+        }
+
+    .switch-field {
+        grid-column: span 3; /* MudSwitch ocupa toda a largura */
+    }
+
+    .form-grid > *:last-child {
+        grid-column: span 3; /* Observação ocupa toda a largura */
+    }
+
+    .custom-size {
+        width: 100%;
+        max-width: 1360px;
+        height: auto;
+        box-sizing: border-box;
+    }
+
+    .custom-autocomplete {
+        width: 350px; /* Defina a largura desejada */
+    }
+
+    .custom-freq {
+        width: 150px; /* Defina a largura desejada */
+    }
+
+    .custom-nivel {
+        width: 200px; /* Defina a largura desejada */
+    }
+</style>
+
+
+
+
+@code
+{
+    [Parameter]
+    public TrainningReturnVO TrainningVO { get; set; }
+
+    [Parameter]
+    public EventCallback<TrainningReturnVO> TrainningToSave { get; set; }
+
+    private bool isActivate = false;
+    private bool resetValueOnEmptyText;
+    private bool coerceText;
+    private bool coerceValue;
+    private string personalSelected;
+    private string observation;
+    private string typeTrainning;
+    private string nameTrainning;
+    private int frequency = 0;
+    private List<string> typesTrainningList = new List<string>()
+    {
+        "Hipertrofia", "Emagrecimento", "Condicionamento", "Funcional"
+    };
+
+    private string levelTrainning;
+    private List<string> levelsTrainningList = new List<string>()
+    {
+        "Adaptativo", "Iniciante", "Intermediário", "Avançado"
+    };
+
+    private List<UserVO> PersonalUsers { get; set;}
+
+    private void OnChanged()
+    {
+        if (TrainningVO == null) TrainningVO = new TrainningReturnVO();
+        TrainningVO.PersonalName =  personalSelected;
+        TrainningVO.Observation  = observation ;
+        TrainningVO.Goal = typeTrainning ;
+        TrainningVO.FrequencyWeekly = frequency;
+        TrainningVO.Name  = nameTrainning;
+        TrainningVO.Activate = isActivate;
+        TrainningVO.PersonalName = personalSelected;
+
+        TrainningToSave.InvokeAsync(TrainningVO);
+    }
+
+    protected override void OnInitialized()
+    {
+        if (TrainningVO != null && TrainningVO.Activate) isActivate = true;
+        PersonalUsers = new List<UserVO>()
+        {
+            new UserVO
+            {
+                Id = 1,
+                Name = "João"
+            },
+             new UserVO
+            {
+                Id = 2,
+                Name = "Charlles"
+            },
+             new UserVO
+            {
+                Id = 3,
+                Name = "Giovanni"
+            },
+        };
+
+        if (TrainningVO != null)
+        {
+            personalSelected = TrainningVO.PersonalName != null ? TrainningVO.PersonalName : "";
+            observation = TrainningVO.Observation != null ? TrainningVO.Observation : "";
+            typeTrainning = TrainningVO.Goal != null ? TrainningVO.Goal : "";
+            frequency = TrainningVO.FrequencyWeekly;
+            nameTrainning = TrainningVO.Name != null ? TrainningVO.Name : "";
+        }
+    }
+
+
+    private async Task<IEnumerable<string>> SearchByPersonal(string value, CancellationToken token)
+    {
+        await Task.Delay(5, token); // Simulação de chamada assíncrona
+        if (string.IsNullOrEmpty(value))
+        {
+            personalSelected = string.Empty;
+            return PersonalUsers.Select(x => x.Name);
+        }
+
+        // if (PersonalUsers.Select(x => x.Name).Where(x => x == value).ToList() == null)
+        // {
+        //     exerciseList = exerciseListCopy;
+        // }
+        return PersonalUsers.Select(x => x.Name).Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+}
+
+

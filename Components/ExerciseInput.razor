@@ -1,0 +1,62 @@
+﻿@using MudBlazor
+
+
+
+<div class="d-flex flex-row align-items-center">
+    <MudNumericField Label="Série"
+                     Max="9"
+                     Min="0"
+                     Variant="Variant.Outlined"
+                     Style="width: 80px; height: 30px;"
+                     Class="invisible" />
+
+    <MudTextField Label="" @bind-Value="Rep[Index]"
+                  @onblur="(e => SaveRep(Rep[Index], Index))" />
+
+    <MudNumericField Label="Série"
+                     Max="9"
+                     Min="0"
+                     Variant="Variant.Outlined"
+                     Style="width: 80px; height: 30px;"
+                     Class="invisible" />
+
+    <MudTextField Label=""
+                  @bind-Value="Weight[Index]" />
+</div>
+
+@code {
+    [Parameter] public int Index { get; set; }
+    [Parameter] public List<string> Rep { get; set; }
+    [Parameter] public List<string> Weight { get; set; }
+    [Parameter] public EventCallback<List<string>> OnWeightSave { get; set; }
+    [Parameter] public EventCallback<List<string>> OnRepSave { get; set; }
+
+    private async Task SaveRep(string valor, int Index)
+    {
+        Rep[Index]= valor;
+        await OnRepSave.InvokeAsync(Rep);
+    }
+
+    private async Task SaveWeight(string valor, int Index)
+    {
+        Weight[Index] = valor;
+        await OnWeightSave.InvokeAsync(Rep);
+    }
+
+    protected override void OnInitialized()
+    {
+        // if (Weight == null) Weight = new List<string> { "", "", "" };
+        // if (Rep == null) Rep = new List<string> { "", "", "" };
+        // if (Rep.Count < Index) {
+        //     Rep.Add(string.Empty);
+        //     Rep.Add(string.Empty);
+        // }
+        // if (Weight.Count < Index){
+        //     Weight.Add(string.Empty);
+        //     Weight.Add(string.Empty);
+        // }
+    }
+
+}
+    
+

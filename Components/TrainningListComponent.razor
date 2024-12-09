@@ -1,0 +1,286 @@
+﻿@page "/listatreinos"
+
+@using TrainningApp.Core.DTO.Trainning
+@using TrainningApp.Core.DTO.TrainningDay
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <MudButton Variant="Variant.Filled" Color="Color.Success">Novo Treino</MudButton>
+</div>
+<br />
+<br />
+
+
+
+<div style="display: flex; justify-content: center; padding: 10px;">
+    <MudPaper Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+        @foreach (var trainning in trainningsList)
+        {
+            <!-- Contêiner externo para hover e MudDivider -->
+            <div class="hover-container"
+                 Style="transition: background-color 0.3s ease; padding: 0; margin-bottom: 2px; cursor: pointer;">
+
+                <MudGrid AlignItems="AlignItems.Center" Class="profile-container" Style="padding: 20px 30px 5px 30px;">
+                    <!-- Menos espaço inferior -->
+                    <!-- Nome e alertas -->
+                    <MudItem Class="profile-text" Style="width: 100%;">
+                        <MudGrid>
+                            <MudText Typo="Typo.h6" Class="font-weight-bold">@trainning.Name</MudText>
+                            </MudGrid>
+
+                            <!-- Alertas e botão alinhados -->
+                            <MudGrid Item Class="d-flex align-items-center" Style="margin-top: 8px; width: 100%;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <!-- MudAlerts lado a lado -->
+                                    <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                        @trainning.Gender
+                                </MudAlert>
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                    @trainning.PersonalName
+                                </MudAlert>
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                    @trainning.Goal
+                                </MudAlert>
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                    @trainning.Level
+                                </MudAlert>
+                                <div class="action-icons">
+                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Style="margin-left: auto;" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                </div>
+                            </div>
+                        </MudGrid>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- Divisor alinhado com menos espaço -->
+                <MudDivider Class="mt-0" Style="margin-top: -2px;" />
+            </div>
+        }
+    </MudPaper>
+</div>
+
+<style>
+    /* Oculta os ícones inicialmente */
+    .hover-container .action-icons {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* Mostra os ícones quando em hover */
+    .hover-container:hover .action-icons {
+        visibility: visible;
+        opacity: 1;
+    }
+    .hover-container {
+        background-color: transparent; /* Sem fundo inicial */
+    }
+
+        .hover-container:hover {
+            background-color: #2a2a3d; /* Cor de destaque no hover */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+        }
+.hover-container .mud-divider {
+            background-color: #e0e0e0; /* Ajuste a cor do divisor conforme necessário */
+        }
+
+    .profile-container.hoverable {
+        background-color: transparent; /* Sem fundo padrão */
+    }
+
+        .profile-container.hoverable:hover {
+            background-color: #f5f5f5; /* Cor de destaque no hover */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve opcional */
+            transition: background-color 0.3s ease;
+        }
+
+    .profile-container .mud-grid {
+        margin-bottom: 0 !important;
+    }
+
+    .profile-container .mud-alert {
+        margin-bottom: 0 !important;
+    }
+
+    .profile-container .mud-divider {
+        margin-top: 4px !important;
+        margin-bottom: 0 !important;
+    }
+</style>
+
+
+@code {
+    List<TrainningReturnVO> trainningsList = new List<TrainningReturnVO>();
+
+    protected override void OnInitialized()
+    {
+        trainningsList = new List<TrainningReturnVO>()
+{
+    new TrainningReturnVO()
+    {
+        Goal = "Musculação",
+        Level = "Intermediário",
+        Name = "ABC",
+        PersonalName = "João Paulo",
+        Gender = "Masculino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "A",
+                Ordenation = 1,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Perda de Peso",
+        Level = "Iniciante",
+        Name = "Definição",
+        PersonalName = "Mariana Silva",
+        Gender = "Feminino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "B",
+                Ordenation = 2,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Hipertrofia",
+        Level = "Avançado",
+        Name = "Push Pull Legs",
+        PersonalName = "Carlos Oliveira",
+        Gender = "Masculino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "C",
+                Ordenation = 3,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Flexibilidade",
+        Level = "Intermediário",
+        Name = "Yoga",
+        PersonalName = "Ana Clara",
+        Gender = "Feminino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "D",
+                Ordenation = 4,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Cardio",
+        Level = "Iniciante",
+        Name = "Corrida",
+        PersonalName = "Lucas Souza",
+        Gender = "Masculino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "E",
+                Ordenation = 5,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Funcional",
+        Level = "Avançado",
+        Name = "CrossFit",
+        PersonalName = "Beatriz Santos",
+        Gender = "Feminino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "F",
+                Ordenation = 6,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Reabilitação",
+        Level = "Intermediário",
+        Name = "Fisioterapia",
+        PersonalName = "Thiago Costa",
+        Gender = "Masculino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "G",
+                Ordenation = 7,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Musculação",
+        Level = "Iniciante",
+        Name = "Full Body",
+        PersonalName = "Camila Alves",
+        Gender = "Feminino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "H",
+                Ordenation = 8,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Definição",
+        Level = "Avançado",
+        Name = "HIIT",
+        PersonalName = "Felipe Lima",
+        Gender = "Masculino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "I",
+                Ordenation = 9,
+            }
+        }
+    },
+    new TrainningReturnVO()
+    {
+        Goal = "Endurance",
+        Level = "Intermediário",
+        Name = "Triathlon",
+        PersonalName = "Juliana Freitas",
+        Gender = "Feminino",
+        TrainningDays = new List<TrainningDayReturnVO>()
+        {
+            new TrainningDayReturnVO
+            {
+                Name = "J",
+                Ordenation = 10,
+            }
+        }
+    }
+};
+
+    }
+}
