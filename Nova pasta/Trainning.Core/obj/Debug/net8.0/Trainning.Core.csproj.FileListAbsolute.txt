@@ -1,4 +1,0 @@
-C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\Trainning.Core.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\Trainning.Core.AssemblyInfoInputs.cache
-C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\Trainning.Core.AssemblyInfo.cs
-C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\Trainning.Core.csproj.CoreCompileInputs.cache
