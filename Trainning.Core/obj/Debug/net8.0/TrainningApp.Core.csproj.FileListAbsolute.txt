@@ -5,6 +5,7 @@ C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\n
 C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\TrainningApp.Core.AssemblyInfoInputs.cache
 C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\TrainningApp.Core.AssemblyInfo.cs
 C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\TrainningApp.Core.csproj.CoreCompileInputs.cache
+C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\TrainningApp.Core.sourcelink.json
 C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\TrainningApp.Core.dll
 C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\refint\TrainningApp.Core.dll
 C:\Users\joaop\source\repos\tentativa\TrainningDeploy\Trainning.Core\obj\Debug\net8.0\TrainningApp.Core.pdb
