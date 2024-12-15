@@ -179,6 +179,7 @@
         // Se a sublista foi encontrada
         if (targetSublist != null)
         {
+            int contIndex = 0;
             // Usar LINQ para encontrar e atualizar o item desejado dentro da sublista
             targetSublist
                 .Where(x => x.Name == dropNewOrdenation[0].Name)
@@ -186,16 +187,17 @@
                 .ForEach(item =>
                 {
                     // Substituindo as propriedades do item
-                    item.Exercise.Ordenation = dropNewOrdenation[0].Exercise.Ordenation;
-                    item.Exercise.Set = dropNewOrdenation[0].Exercise.Set;
-                    item.Exercise.Reps = dropNewOrdenation[0].Exercise.Reps;
-                    item.Exercise.Info = dropNewOrdenation[0].Exercise.Info;
-                    item.Exercise.Weight = dropNewOrdenation[0].Exercise.Weight;
-                    item.Exercise.ExerciseId = dropNewOrdenation[0].Exercise.ExerciseId;
-                    item.Exercise.ExerciseName = dropNewOrdenation[0].Exercise.ExerciseName;
-                    item.Exercise.TrainningDayId = dropNewOrdenation[0].Exercise.TrainningDayId;
-                    item.Exercise.Interval = dropNewOrdenation[0].Exercise.Interval;
+                    item.Exercise.Ordenation = dropNewOrdenation[contIndex].Exercise.Ordenation;
+                    item.Exercise.Set = dropNewOrdenation[contIndex].Exercise.Set;
+                    item.Exercise.Reps = dropNewOrdenation[contIndex].Exercise.Reps;
+                    item.Exercise.Info = dropNewOrdenation[contIndex].Exercise.Info;
+                    item.Exercise.Weight = dropNewOrdenation[contIndex].Exercise.Weight;
+                    item.Exercise.ExerciseId = dropNewOrdenation[contIndex].Exercise.ExerciseId;
+                    item.Exercise.ExerciseName = dropNewOrdenation[contIndex].Exercise.ExerciseName;
+                    item.Exercise.TrainningDayId = dropNewOrdenation[contIndex].Exercise.TrainningDayId;
+                    item.Exercise.Interval = dropNewOrdenation[contIndex].Exercise.Interval;
                     // Adicione mais atualizações conforme necessário
+                    contIndex++;
                 });
         }
 

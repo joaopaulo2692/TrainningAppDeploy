@@ -1,6 +1,7 @@
 ﻿@page "/musculos"
 @using TrainningApp.Core.DTO.Muscle
-
+@using TrainningApp.Core.Entities
+@inject DbMusclesAndExercises DbMusclesAndExercises
 
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
@@ -97,40 +98,42 @@
 
 @code {
     List<MuscleVO> musclesList = new List<MuscleVO>();
+    
 
     protected override void OnInitialized()
     {
-        musclesList = new List<MuscleVO>()
-{
-    new MuscleVO { Id = 1, Name = "Abdômen" },
-    new MuscleVO { Id = 2, Name = "Aeróbico" },
-    new MuscleVO { Id = 3, Name = "Agilidade" },
-    new MuscleVO { Id = 4, Name = "Alongamento" },
-    new MuscleVO { Id = 5, Name = "Antebraço" },
-    new MuscleVO { Id = 6, Name = "Aquecimento" },
-    new MuscleVO { Id = 7, Name = "Bíceps" },
-    new MuscleVO { Id = 8, Name = "Cardiovasculares" },
-    new MuscleVO { Id = 9, Name = "Coordenação motora" },
-    new MuscleVO { Id = 10, Name = "Core" },
-    new MuscleVO { Id = 11, Name = "Dorsal" },
-    new MuscleVO { Id = 12, Name = "Funcionais" },
-    new MuscleVO { Id = 13, Name = "Glúteo" },
-    new MuscleVO { Id = 14, Name = "Lombar" },
-    new MuscleVO { Id = 15, Name = "Mobilidade" },
-    new MuscleVO { Id = 16, Name = "Movimentos complexos" },
-    new MuscleVO { Id = 17, Name = "Movimentos cíclicos" },
-    new MuscleVO { Id = 18, Name = "Ombro" },
-    new MuscleVO { Id = 19, Name = "Outros" },
-    new MuscleVO { Id = 20, Name = "Panturrilha" },
-    new MuscleVO { Id = 21, Name = "Peitoral" },
-    new MuscleVO { Id = 22, Name = "Perna" },
-    new MuscleVO { Id = 23, Name = "Punho" },
-    new MuscleVO { Id = 24, Name = "Quadril" },
-    new MuscleVO { Id = 25, Name = "Resistência" },
-    new MuscleVO { Id = 26, Name = "Tornozelo" },
-    new MuscleVO { Id = 27, Name = "Trapézio" },
-    new MuscleVO { Id = 28, Name = "Tríceps" }
-};
+        musclesList = DbMusclesAndExercises.MuscleToDTO();
+        //         musclesList = new List<MuscleVO>()
+// {
+//     new MuscleVO { Id = 1, Name = "Abdômen" },
+//     new MuscleVO { Id = 2, Name = "Aeróbico" },
+//     new MuscleVO { Id = 3, Name = "Agilidade" },
+//     new MuscleVO { Id = 4, Name = "Alongamento" },
+//     new MuscleVO { Id = 5, Name = "Antebraço" },
+//     new MuscleVO { Id = 6, Name = "Aquecimento" },
+//     new MuscleVO { Id = 7, Name = "Bíceps" },
+//     new MuscleVO { Id = 8, Name = "Cardiovasculares" },
+//     new MuscleVO { Id = 9, Name = "Coordenação motora" },
+//     new MuscleVO { Id = 10, Name = "Core" },
+//     new MuscleVO { Id = 11, Name = "Dorsal" },
+//     new MuscleVO { Id = 12, Name = "Funcionais" },
+//     new MuscleVO { Id = 13, Name = "Glúteo" },
+//     new MuscleVO { Id = 14, Name = "Lombar" },
+//     new MuscleVO { Id = 15, Name = "Mobilidade" },
+//     new MuscleVO { Id = 16, Name = "Movimentos complexos" },
+//     new MuscleVO { Id = 17, Name = "Movimentos cíclicos" },
+//     new MuscleVO { Id = 18, Name = "Ombro" },
+//     new MuscleVO { Id = 19, Name = "Outros" },
+//     new MuscleVO { Id = 20, Name = "Panturrilha" },
+//     new MuscleVO { Id = 21, Name = "Peitoral" },
+//     new MuscleVO { Id = 22, Name = "Perna" },
+//     new MuscleVO { Id = 23, Name = "Punho" },
+//     new MuscleVO { Id = 24, Name = "Quadril" },
+//     new MuscleVO { Id = 25, Name = "Resistência" },
+//     new MuscleVO { Id = 26, Name = "Tornozelo" },
+//     new MuscleVO { Id = 27, Name = "Trapézio" },
+//     new MuscleVO { Id = 28, Name = "Tríceps" }
+// };
 
     }
 }

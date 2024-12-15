@@ -13,4 +13,6 @@ namespace TrainningApp.Core.Entities
 
         public virtual List<Exercise> Exercises { get; set; }
     }
+
+
 }

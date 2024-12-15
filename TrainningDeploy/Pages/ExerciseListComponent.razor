@@ -1,7 +1,10 @@
 ﻿@page "/exercicios"
 @using TrainningApp.Core.DTO.Exercise
+@using TrainningApp.Core.Entities
 @using TrainningDeploy.Components
 @inject IDialogService DialogService
+@inject DbMusclesAndExercises DbMusclesAndExercises
+
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     <MudButton Variant="Variant.Filled" OnClick="AddExercise" Color="Color.Success">Novo Exercício</MudButton>
@@ -178,25 +181,31 @@
 
     private void RemoveExercise(ExerciseVO exerciseToRemove)
     {
-        exercisesList.Remove(exerciseToRemove);
+        // exercisesList.Remove(exerciseToRemove);
+        DbMusclesAndExercises.RemoveExercise(exerciseToRemove);
+        exercisesList = DbMusclesAndExercises.ExercisesToDTO();
     }
 
     private void AddExerciseToList(ExerciseVO exerciseToAdd)
     {
-        exercisesList.Add(exerciseToAdd);
+        // exercisesList.Add(exerciseToAdd);
+        DbMusclesAndExercises.AddExercise(exerciseToAdd);
+        exercisesList = DbMusclesAndExercises.ExercisesToDTO();
 
     }
 
     private void EditExerciseToList(ExerciseVO exerciseToEdit)
     {
-        for (int i = 0; i < exercisesList.Count; i++)
-        {
-            if (exercisesList[i].Id == exerciseToEdit.Id)
-            {
-                exercisesList[i] = exerciseToEdit;
-                break;
-            }
-        }
+        // for (int i = 0; i < exercisesList.Count; i++)
+        // {
+        //     if (exercisesList[i].Id == exerciseToEdit.Id)
+        //     {
+        //         exercisesList[i] = exerciseToEdit;
+        //         break;
+        //     }
+        // }
+        DbMusclesAndExercises.EditExercise(exerciseToEdit);
+        exercisesList = DbMusclesAndExercises.ExercisesToDTO();
     }
 
     private async Task AddExercise()
@@ -220,7 +229,7 @@
             //     AddExerciseToList(exerciseToSave);
             // }
         }
-     
+
     }
 
     private async Task EditExercise(ExerciseVO exerciseToEditModel)
@@ -249,69 +258,70 @@
 
     protected override void OnInitialized()
     {
-        exercisesList = new List<ExerciseVO>
-{
-    new ExerciseVO
-    {
-        Id = 1,
-        Name = "Supino",
-        Muscles = new List<string> { "Peitoral", "Tríceps" }
-    },
-    new ExerciseVO
-    {
-        Id = 2,
-        Name = "Agachamento",
-        Muscles = new List<string> { "Pernas", "Glúteos", "Quadríceps" }
-    },
-    new ExerciseVO
-    {
-        Id = 3,
-        Name = "Rosca Direta",
-        Muscles = new List<string> { "Bíceps" }
-    },
-    new ExerciseVO
-    {
-        Id = 4,
-        Name = "Levantamento Terra",
-        Muscles = new List<string> { "Dorsais", "Glúteos", "Pernas" }
-    },
-    new ExerciseVO
-    {
-        Id = 5,
-        Name = "Desenvolvimento com Halteres",
-        Muscles = new List<string> { "Ombros", "Tríceps" }
-    },
-    new ExerciseVO
-    {
-        Id = 6,
-        Name = "Remada Curvada",
-        Muscles = new List<string> { "Costas", "Bíceps" }
-    },
-    new ExerciseVO
-    {
-        Id = 7,
-        Name = "Cadeira Extensora",
-        Muscles = new List<string> { "Quadríceps" }
-    },
-    new ExerciseVO
-    {
-        Id = 8,
-        Name = "Flexão de Braço",
-        Muscles = new List<string> { "Peito", "Tríceps", "Ombros" }
-    },
-    new ExerciseVO
-    {
-        Id = 9,
-        Name = "Crucifixo",
-        Muscles = new List<string> { "Peito" }
-    },
-    new ExerciseVO
-    {
-        Id = 10,
-        Name = "Abdominal",
-        Muscles = new List<string> { "Abdômen" }
-    }
-};
+        exercisesList = DbMusclesAndExercises.ExercisesToDTO();
+        //         exercisesList = new List<ExerciseVO>
+// {
+//     new ExerciseVO
+//     {
+//         Id = 1,
+//         Name = "Supino",
+//         Muscles = new List<string> { "Peitoral", "Tríceps" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 2,
+//         Name = "Agachamento",
+//         Muscles = new List<string> { "Pernas", "Glúteos", "Quadríceps" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 3,
+//         Name = "Rosca Direta",
+//         Muscles = new List<string> { "Bíceps" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 4,
+//         Name = "Levantamento Terra",
+//         Muscles = new List<string> { "Dorsais", "Glúteos", "Pernas" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 5,
+//         Name = "Desenvolvimento com Halteres",
+//         Muscles = new List<string> { "Ombros", "Tríceps" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 6,
+//         Name = "Remada Curvada",
+//         Muscles = new List<string> { "Costas", "Bíceps" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 7,
+//         Name = "Cadeira Extensora",
+//         Muscles = new List<string> { "Quadríceps" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 8,
+//         Name = "Flexão de Braço",
+//         Muscles = new List<string> { "Peito", "Tríceps", "Ombros" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 9,
+//         Name = "Crucifixo",
+//         Muscles = new List<string> { "Peito" }
+//     },
+//     new ExerciseVO
+//     {
+//         Id = 10,
+//         Name = "Abdominal",
+//         Muscles = new List<string> { "Abdômen" }
+//     }
+// };
 
     }
 }

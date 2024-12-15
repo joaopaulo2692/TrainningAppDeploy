@@ -1,6 +1,9 @@
 ﻿@page "/clientes"
 @inject NavigationManager NavigationManager
 @using TrainningApp.Core.DTO.User
+@using TrainningApp.Core.Entities
+@inject UsersDb UserDbService
+
 
 <div style="display: flex; justify-content: center;">
     <MudButton  Variant="Variant.Filled" Color="Color.Success">Novo Usuário</MudButton>
@@ -74,129 +77,130 @@
     }
     protected override void OnInitialized()
     {
-        users = new List<UserVO>()
-{
-    new UserVO()
-    {
-        Name = "João",
-        Age = 32,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Letícia",
-        Age = 27,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Carlos",
-        Age = 45,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Mariana",
-        Age = 22,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Pedro",
-        Age = 38,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Sofia",
-        Age = 29,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Gabriel",
-        Age = 34,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Ana",
-        Age = 24,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Lucas",
-        Age = 31,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Camila",
-        Age = 28,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Ricardo",
-        Age = 41,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Beatriz",
-        Age = 26,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Mateus",
-        Age = 35,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Larissa",
-        Age = 30,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Felipe",
-        Age = 39,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Isabela",
-        Age = 25,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "Thiago",
-        Age = 37,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Patrícia",
-        Age = 33,
-        Gender = "Feminino"
-    },
-    new UserVO()
-    {
-        Name = "André",
-        Age = 40,
-        Gender = "Masculino"
-    },
-    new UserVO()
-    {
-        Name = "Juliana",
-        Age = 36,
-        Gender = "Feminino"
-    }
-};
+        users = UserDbService.CustomersToDTO();
+        //         users = new List<UserVO>()
+// {
+//     new UserVO()
+//     {
+//         Name = "João",
+//         Age = 32,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Letícia",
+//         Age = 27,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Carlos",
+//         Age = 45,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Mariana",
+//         Age = 22,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Pedro",
+//         Age = 38,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Sofia",
+//         Age = 29,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Gabriel",
+//         Age = 34,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Ana",
+//         Age = 24,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Lucas",
+//         Age = 31,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Camila",
+//         Age = 28,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Ricardo",
+//         Age = 41,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Beatriz",
+//         Age = 26,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Mateus",
+//         Age = 35,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Larissa",
+//         Age = 30,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Felipe",
+//         Age = 39,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Isabela",
+//         Age = 25,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Thiago",
+//         Age = 37,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Patrícia",
+//         Age = 33,
+//         Gender = "Feminino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "André",
+//         Age = 40,
+//         Gender = "Masculino"
+//     },
+//     new UserVO()
+//     {
+//         Name = "Juliana",
+//         Age = 36,
+//         Gender = "Feminino"
+//     }
+// };
         users = users.OrderBy(x => x.Name).ToList();
     }
 }

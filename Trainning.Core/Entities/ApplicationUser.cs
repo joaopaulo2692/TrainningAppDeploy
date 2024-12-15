@@ -10,6 +10,7 @@ namespace TrainningApp.Core.Entities
 {
     public class ApplicationUser 
     {
+        public string Id { get; set; }
         public string? Name { get; set; }
         public int? Age { get; set; }
         public float? Heigth { get; set; }
@@ -30,6 +31,25 @@ namespace TrainningApp.Core.Entities
         public virtual List<Trainning> Trainings { get; set; } // Relacionamento como Personal
         public virtual List<Management> Managements { get; set; }
         public virtual Gym? Gym { get; set; }
-    
+
+
+
+        public List<ApplicationUser> GetAllPersonal()
+        {
+            return new List<ApplicationUser>() { new ApplicationUser() {
+                Id = "1",
+                Name = "José"},
+            new ApplicationUser()
+            {
+                Id = "2",
+                Name = "Gustavo"
+            },
+            new ApplicationUser(){
+                Id = "3",
+                Name = "Rodrigo"
+                }
+            };
+        }
+
     }
 }
