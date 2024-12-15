@@ -12,7 +12,7 @@
 <TrainningInfoBasicComponent TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
 
 <h3>Sessões do treino</h3>
-<div class="parent-container">
+@* <div class="parent-container">
     <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small">
         @foreach (var drop in DropzoneList)
         {
@@ -23,7 +23,7 @@
             <MudTabPanel Text=@drop[0].Name Key="@drop.GetHashCode()">
                 @if (drop[0].Exercise == null)
                 {
-                  @*   <h3>Nenhum exercício Adicionado na Sessão</h3> *@
+                  @*   <h3>Nenhum exercício Adicionado na Sessão</h3> 
                     <DropZoneExercises OnAddExercise="HandleAddExercise"
                                        T="DropZoneItem"
                                        _items="drop"
@@ -56,15 +56,17 @@
         }
         <MudTabPanel Text="Adicionar Sessão" OnClick="() => AddNewTrainningDay()">
             <!-- Conteúdo da aba (opcional) -->
-            @* <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton> *@
+            @* <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton> 
         </MudTabPanel>
        <br/>
        <br/>
        <br/>
         <MudButton OnClick="OnSaveTrainning" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton>
     </MudTabs>
-</div>
-@* <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton> *@
+</div> *@
+
+
+<Teste></Teste>
 
 
 
