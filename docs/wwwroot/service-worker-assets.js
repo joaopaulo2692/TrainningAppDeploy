@@ -57,8 +57,12 @@
       "url": "images\/treino.jpg"
     },
     {
-      "hash": "sha256-acUG02TuYWu7IDVNUCVeg8NteovO\/LJBLKS9MllTm5k=",
+      "hash": "sha256-T4J3LxGjy2N4swMznz4bYof9FgSwUiDB\/leg0Wt7JHc=",
       "url": "index.html"
+    },
+    {
+      "hash": "sha256-oPFPse+df6k18ANRrj11v9lxsQMFbKmUGggwRlmX33k=",
+      "url": "js\/site.js"
     },
     {
       "hash": "sha256-K951j6t484WsWuNvZAaYTDbsksBYJrNGCxAEFPJrnN4=",
@@ -93,7 +97,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-JwTpwH7okmTuG2C6\/JZhPNacPc8XzspKwuERY6gRyxw=",
+      "hash": "sha256-y4gwHM+1erlnVaGqfSCymzfqh9MZ3qd3cATL+O\/3yKA=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -133,7 +137,7 @@
       "url": "_framework\/Microsoft.Extensions.Configuration.wasm"
     },
     {
-      "hash": "sha256-+HfaY5z4rYG8bI3r8yFW6V97KBHOu1m2CotpZqMPOUg=",
+      "hash": "sha256-jtD8+0dHrf8Ztie7zHvyxGYQ+3GHXikLPK9pW5NVJyw=",
       "url": "_framework\/Microsoft.Extensions.DependencyInjection.Abstractions.wasm"
     },
     {
@@ -217,7 +221,7 @@
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-wZaI3cZRnAQaT8e6zUIAzl85nj8pvG9Acgi0sD0Csyk=",
+      "hash": "sha256-YIz6vIGIYaorLHICLna90HRaLZkp4d3MMCF3bgerVDc=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -253,7 +257,7 @@
       "url": "_framework\/System.Runtime.InteropServices.JavaScript.wasm"
     },
     {
-      "hash": "sha256-n4mW41\/YdyJtK8OtjB3s8QzpIF3DoeQNEdZdqUMTHkk=",
+      "hash": "sha256-mIdEIvlyc3m\/xrpYjFDkHYjEufrd6xhoj+xtQA40c+w=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -273,11 +277,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-Phg5ESsqMV9g2babuhwqytV3+NTSX0JPxcFVI5CZAE0=",
+      "hash": "sha256-ideWUx5CXlvk0pdj62SbsPASRg5akllJ7LSqvLzlc2I=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-NcKFUZT\/IJXtqeng18E2DEJkpM2JSaipLnjnwEcRHUg=",
+      "hash": "sha256-PHRRemNVp\/oozOhIIU2SEm2eOeeqCYhefyM7qnzu9RI=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -293,5 +297,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "og1cxDx3"
+  "version": "PNyHyi7M"
 };
