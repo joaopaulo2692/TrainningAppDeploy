@@ -101,3 +101,17 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    /* Oculta os campos adicionais */
+    .extra-fields {
+        display: none !important;
+        ;
+    }
+
+}
+
+
+

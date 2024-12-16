@@ -3,9 +3,10 @@
 @using TrainningApp.Core.DTO.User
 @using TrainningDeploy.Pages
 
-<h3>Dados do Treino</h3>
-<div class="parent-container">
-    <MudPaper Class="pa-16 ma-2 custom-size" Elevation="3">
+
+<div class="parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+    <h3>Dados do Treino</h3>
+    <MudPaper Class="pa-16 ma-2 custom-size" Elevation="3" Style="max-width: 70%; width: 70% ">
         <div class="form-grid">
             <!-- Linha 1: Nome e Responsável -->
             <MudTextField T="string" Label="Nome" @bind-Value="nameTrainning" Typo="Typo.input" />
