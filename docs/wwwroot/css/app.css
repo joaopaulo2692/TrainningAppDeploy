@@ -113,5 +113,22 @@ code {
 
 }
 
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: repeat(1, 1fr) !important; /* Apenas uma coluna */
+    }
+
+        .form-grid > * {
+            grid-column: span 1 !important; /* Todos os campos ocupam a largura total */
+        }
+
+    .custom-size {
+        padding: 8px !important ; /* Reduz padding interno */
+    }
+
+    .custom-autocomplete, .custom-freq, .custom-nivel {
+        width: 100% !important; /* Ajusta largura para preencher o contêiner */
+    }
+
 
 
