@@ -1,0 +1,316 @@
+﻿@page "/drag-and-drop"
+@using TrainningApp.Core.DTO.TrainningExercise
+@inject IJSRuntime JS
+@inject IDialogService DialogService
+
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+     <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton>
+    <MudButton Disabled=DisableTrainningRemove OnClick="RemoveTrainningDay" Variant="Variant.Filled" Color="Color.Error" Style="margin-right: 20px;">Remover Sessão</MudButton>
+    @if (exercises == null)
+    {
+        @* <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton> *@
+        <div>
+            <h3>Nenhum Exercício Adicionado</h3>
+        </div>
+
+    }
+</div>
+
+
+<h3 style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">Sessões do treino </h3>
+<div id="sortable-list" class="sortable-container parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+    
+    @* <MudTabPanel Text="Treino A" @* Key="@drop.GetHashCode()"> 
+     @* <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small"> *@
+    @* @foreach (var item in exercises) *@
+    @foreach (var item in ParameterTrainningExercises)
+    {
+       
+        @* <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Ordenation" Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%"> *@
+        <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Id" Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%">
+           
+
+       
+            <!-- Campo Exercício -->
+            <MudTextField ShrinkLabel @bind-Value="item.ExerciseName" Label="Exercício" Variant="Variant.Text"
+                           Style="max-width: 200px; height: 32px; font-size: 0.875rem;" />
+                 <div class="extra-fields">
+             <!-- Demais Campos -->
+             <MudTextField ShrinkLabel @bind-Value="item.Set" Label="Série" Variant="Variant.Text"
+                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+             <MudTextField ShrinkLabel @bind-Value="item.Reps" Label="Rep" Variant="Variant.Text"
+                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+             <MudTextField ShrinkLabel @bind-Value="item.Weight" Label="Carga" Variant="Variant.Text"
+                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+             <MudTextField ShrinkLabel @bind-Value="item.Interval" Label="Intervalo" Variant="Variant.Text"
+                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+             <MudTextField ShrinkLabel @bind-Value="item.Info" Label="Info" Variant="Variant.Text"
+                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+            </div>
+             <!-- Botões -->
+             <MudButton Variant="Variant.Filled" Color="Color.Warning"
+                        Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => SelectEditExercise(item)">
+                 Editar
+             </MudButton>
+             <MudButton Variant="Variant.Filled" Color="Color.Error"
+                        Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;">
+                 Deletar
+             </MudButton>
+         </MudPaper>
+         
+      
+    }
+</div>
+
+
+<style>
+.extra-fields {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap; /* Evita quebra de linha */
+    align-items: center; /* Alinha os campos verticalmente */
+}
+
+</style>
+
+
+
+
+
+
+@* <button class="btn btn-primary mt-3" @onclick="RefazerOrdem">Refazer Ordem</button> *@
+
+@code {
+
+    [Parameter]
+    public bool DisableTrainningRemove { get; set; }
+
+    [Parameter]
+    public int ParameterTrainningDay { get; set; }
+
+    [Parameter]
+    public int ParameterOrdenation { get; set; }
+
+    [Parameter]
+    public List<TrainningExerciseVO> ParameterTrainningExercises { get; set; }
+
+    [Parameter]
+    public EventCallback<List<TrainningExerciseVO>> OnEditExercise { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnRemoveTrainningDay { get; set; }
+
+
+
+    public bool IsToEdited = false;
+
+    public TrainningExerciseVO exerciseToEdited { get; set; }
+
+    public List<TrainningExerciseVO> exercises = new List<TrainningExerciseVO>();
+
+    private DotNetObjectReference<TrainningDaysComponent> _objectReference;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _objectReference = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("initializeSortable", _objectReference);
+        }
+    }
+
+    public void Dispose()
+    {
+        _objectReference?.Dispose();
+    }
+
+    private async Task RefazerOrdem()
+    {
+        // Chama o método JavaScript para refazer a ordem e atualizar a lista
+        await JS.InvokeVoidAsync("updateSortableOrder", "sortable-list");
+    }
+
+    protected override void OnInitialized()
+    {
+        exercises = new List<TrainningExerciseVO>
+        {
+            new TrainningExerciseVO { Reps = "10", Set = 3, ExerciseName = "Supino", Info = "Normal", Ordenation = 1 },
+            new TrainningExerciseVO { Reps = "10", Set = 3, ExerciseName = "Supino reto", Info = "Normal", Ordenation = 2 },
+            new TrainningExerciseVO { Reps = "10", Set = 3, ExerciseName = "Supino inclinado", Info = "Normal", Ordenation = 3 }
+        };
+    }
+
+    // [JSInvokableAttribute]
+    // public void UpdateOrdenation(string[] newOrder)
+    // {
+    //     for (int i = 0; i < newOrder.Length; i++)
+    //     {
+    //         // var item = exercises.FirstOrDefault(x => x.Ordenation.ToString() == newOrder[i]);
+    //         var item = ParameterTrainningExercises.FirstOrDefault(x => x.Ordenation.ToString() == newOrder[i]);
+    //         if (item != null)
+    //         {
+    //             item.Ordenation = i + 1; // Atualiza a ordenação
+    //         }
+    //     }
+
+    //     // Reordena a lista na memória
+    //     exercises = exercises.OrderBy(x => x.Ordenation).ToList();
+
+    //     // Atualiza a interface
+    //     StateHasChanged();
+    // }
+
+    [JSInvokableAttribute]
+    public void UpdateOrdenation(string[] newOrder)
+    {
+        // Filtra os valores nulos ou vazios
+        newOrder = newOrder.Where(item => !string.IsNullOrEmpty(item)).ToArray();
+
+        if (newOrder == null || newOrder.Length == 0)
+        {
+            Console.WriteLine("Nova ordenação está vazia ou nula.");
+            return;
+        }
+
+        // Itera sobre o array de nova ordenação
+        for (int i = 0; i < newOrder.Length; i++)
+        {
+            if (int.TryParse(newOrder[i], out int id)) // Assume que `newOrder` contém IDs, não Ordenation
+            {
+                // Busca o item pelo ID (supondo que o ID seja único)
+                var item = ParameterTrainningExercises.FirstOrDefault(x => x.Id == id);
+                if (item != null)
+                {
+                    item.Ordenation = i + 1; // Define a nova ordenação com base no índice do array
+                }
+                else
+                {
+                    Console.WriteLine($"Item com ID {id} não encontrado.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Valor inválido no índice {i}: {newOrder[i]}");
+            }
+        }
+
+        // Reordena a lista na memória com base na nova ordenação
+        ParameterTrainningExercises = ParameterTrainningExercises
+            .OrderBy(x => x.Ordenation)
+            .ToList();
+
+        // Atualiza a interface
+        InvokeAsync(StateHasChanged);
+    }
+
+
+
+    // [JSInvokableAttribute]
+    // public async Task UpdateOrdenation(string draggedId, string swappedId)
+    // {
+    //     // Converter os IDs para inteiros (ou outro tipo apropriado)
+    //     if (int.TryParse(draggedId, out var draggedExerciseId) &&
+    //         int.TryParse(swappedId, out var swappedExerciseId))
+    //     {
+    //         // Obtenha os objetos correspondentes com base nos IDs
+    //         var draggedExercise = ParameterTrainningExercises.FirstOrDefault(e => e.Id == draggedExerciseId);
+    //         var swappedExercise = ParameterTrainningExercises.FirstOrDefault(e => e.Id == swappedExerciseId);
+
+    //         if (draggedExercise != null && swappedExercise != null)
+    //         {
+
+    //             // Você pode atualizar as propriedades Ordenation ou realizar outras alterações
+    //             var tempOrdenation = draggedExercise.Ordenation;
+    //             draggedExercise.Ordenation = swappedExercise.Ordenation;
+    //             swappedExercise.Ordenation = tempOrdenation;
+
+    //             // Atualize a lista ou persista no banco de dados, se necessário
+    
+    //         }
+    //     }
+    // }
+
+
+    private async Task OpenDialog()
+    {
+        var parameters = new DialogParameters
+    {
+        { "EditExercise", exerciseToEdited },
+        {"EditExibition", IsToEdited}// Passa o exercício existente ou null
+    };
+
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var dialog = exerciseToEdited == null ? DialogService.Show<ExerciseComponent>("Adicionar Exercício", parameters, options) :
+        DialogService.Show<ExerciseComponent>("Editar Exercício", parameters, options);
+
+        var result = await dialog.Result;
+        // if (result.Canceled) return;
+        if (!result.Canceled)
+        {
+            // Obtenha o exercício adicionado a partir do diálogo
+            var addedExercise = (TrainningExerciseVO)result.Data;
+            if (addedExercise == null) return;
+            addedExercise.TrainningDayId = ParameterTrainningDay;
+
+            if (!IsToEdited) addedExercise.Ordenation = ParameterOrdenation + 1;
+            if (IsToEdited) addedExercise.Ordenation = ParameterOrdenation;
+            // Chame o método para adicionar o exercício ao componente pai
+            // DropZoneItem dropItem = new DropZoneItem()
+            //     {
+            //         Name = ParameterNameZone,
+            //         Exercise = addedExercise,
+            //         Zone = "Drop Zone 1"
+
+            //     };
+            // if (!IsToEdited) await AddExercise(dropItem);
+            // else if (IsToEdited) await EditExercise(dropItem);
+
+            EditListExercise(exercises);
+
+            IsToEdited = false;
+        }
+
+    }
+
+      private void SelectEditExercise(TrainningExerciseVO exercise)
+    {
+        exerciseToEdited = exercise;
+        IsToEdited = true;
+        OpenDialog();
+        exerciseToEdited = null;
+        return;
+    }
+
+
+       private async Task RemoveTrainningDay()
+    {
+
+        await OnRemoveTrainningDay.InvokeAsync(1);
+    }
+        private async Task EditListExercise(List<TrainningExerciseVO> trainningExerciseVOs)
+    {
+        // Chame o callback passando o exercício adicionado
+        await OnEditExercise.InvokeAsync(trainningExerciseVOs);
+    }
+
+   private void AddNewTrainningDay()
+    {
+    //     string letter = DropzoneList.Select(x => x.Select(x => x.Name)).Last().FirstOrDefault();
+    //     // char currentLetter = 'C';
+    //     char currentLetter = letter[0];
+    //     char nextLetter = (char)(currentLetter + 1);
+    //     DropzoneList.Add(new List<DropZoneItem>
+    // {
+    //     new DropZoneItem
+    //     {
+    //         Zone = "Drop Zone 1",
+    //         TrainningDayOrdenation = 3,
+    //         TrainningDayId = 3,
+    //         // Name = "C",
+    //         Name = nextLetter.ToString(),
+
+    //     }
+    // });
+        // _uniqueKey++;
+    }
+}

@@ -105,11 +105,17 @@ code {
 
 /* Responsividade */
 @media (max-width: 768px) {
+
+    .custom-size {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
     /* Oculta os campos adicionais */
     .extra-fields {
         display: none !important;
         ;
     }
+   
 
 }
 
@@ -123,12 +129,23 @@ code {
         }
 
     .custom-size {
-        padding: 8px !important ; /* Reduz padding interno */
+        padding: 8px !important; /* Reduz padding interno */
     }
 
     .custom-autocomplete, .custom-freq, .custom-nivel {
         width: 100% !important; /* Ajusta largura para preencher o contêiner */
     }
+
+    /* Estilos para telas pequenas */
+    @media (max-width: 768px) {
+        .dropzone-small {
+            width: 100% !important; /* Ajusta para 68% da largura do contêiner */
+            max-width: 1400px; /* Limite máximo de largura */
+            padding: 16px;
+            margin: 10px;
+        }
+    }
+
 
 
 

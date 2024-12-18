@@ -36,7 +36,38 @@
     </MudTabPanel>
 </MudTabs>
 
+@* <MudTabs Elevation="1" Rounded="true" PanelClass="pa-6" Class="custom-tabs">
+    <MudTabPanel Text="RESUMO" ToolTip="Resumos">
+        <CustomerResumeComponent></CustomerResumeComponent>
+    </MudTabPanel>
+    <MudTabPanel Text="TREINO" ToolTip="Treinos">
+        <TrainningsComponent></TrainningsComponent>
+    </MudTabPanel>
+    <MudTabPanel Text="AVALIAÇÕES" ToolTip="Avaliações Físicas">
+        <PhysicalAssessment></PhysicalAssessment>
+    </MudTabPanel>
+</MudTabs> *@
+
+
+
+
+
+
+
 <style>
+
+    /* Ajusta o conteúdo do MudTabPanel para ser mais compacto nos lados */
+    /* Ajusta a largura e o padding para diminuir o tamanho do MudTabPanel */
+
+
+
+
+    .responsive-tabs .mud-tab-panel {
+        padding: 16px; 
+        margin: 8px 0;
+        min-height: auto; 
+    }
+
     .profile-container {
         display: flex;
         align-items: center;

@@ -17,7 +17,7 @@
     @foreach (TrainningReturnVO trainning in trainningsList)
     {
         <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-            <MudPaper Height="220px" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-sizing: border-box;">
+            <MudPaper Height="220px" Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-sizing: border-box;">
                 <MudText Typo="Typo.h4" Style="margin-bottom: 15px;">@trainning.Name</MudText>
                     <MudDivider Style="height: 6px; margin-bottom: 15px;" />
 
@@ -282,6 +282,7 @@
                         {
                             new TrainningExerciseVO
                              {
+                                Id = 1,
                                 Reps = "10",
                                 Set = 3,
                                 ExerciseName = "Leg",
@@ -291,6 +292,7 @@
                             },
                                                         new TrainningExerciseVO
                              {
+                                Id = 2,
                                 Reps = "10",
                                 Set = 3,
                                 ExerciseName = "Cadeira",
@@ -300,6 +302,7 @@
                             },
                                                         new TrainningExerciseVO
                              {
+                                Id = 3,
                                 Reps = "10",
                                 Set = 3,
                                 ExerciseName = "Panturrilha",

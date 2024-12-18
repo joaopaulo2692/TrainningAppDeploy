@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TrainningApp.Core.DTO.Exercise;
 using TrainningApp.Core.DTO.Muscle;
+using TrainningApp.Core.DTO.Trainning;
+using TrainningApp.Core.DTO.TrainningDay;
+using TrainningApp.Core.DTO.TrainningExercise;
 using TrainningApp.Core.DTO.User;
 
 namespace TrainningApp.Core.Entities
@@ -214,5 +217,8 @@ namespace TrainningApp.Core.Entities
             };
         }
     }
+
+    
+
    
 }

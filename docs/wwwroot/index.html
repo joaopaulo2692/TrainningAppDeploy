@@ -63,24 +63,46 @@
 </script>
 
 <!--<script>
+    let sortableInstance;
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const listElement = document.getElementById('sortable-list');
-        if (!listElement) {
-            console.error("Elemento 'sortable-list' não encontrado!");
+    function initializeSortable(dotNetObject) {
+        const sortableList = document.getElementById('sortable-list');
+        if (!sortableList) {
+            console.error('Erro: Elemento com ID "sortable-list" não encontrado.');
             return;
         }
 
-        const sortable = new Sortable(listElement, {
+        sortableInstance = new Sortable(sortableList, {
             animation: 150,
-            onEnd: function (evt) {
-                console.log('Nova ordem:', Array.from(evt.from.children).map(el => el.getAttribute('data-id')));
-                const newOrder = Array.from(evt.from.children).map(el => el.getAttribute('data-id'));
-                DotNet.invokeMethodAsync('TrainningDeploy.Service', 'UpdateOrdenation', newOrder)
-                //DotNet.invokeMethodAsync('TrainningDeploy', 'TrainningDeploy.Service.OrdenationService.UpdateOrdenation', newOrder);
-                    .then(() => console.log('Ordem enviada para o Blazor.'));
+            onEnd: function (event) {
+                // Obter o novo array de ordenação e filtrar itens inválidos
+                const newOrder = Array.from(sortableList.children)
+                    .map(el => el.getAttribute('data-id'))
+                    .filter(id => id !== null && id !== "");
+
+                // Verificar inconsistências e prosseguir com a chamada
+                if (newOrder.length !== sortableList.children.length) {
+                    console.error('Erro: Alguns itens não possuem o atributo "data-id".');
+                    console.table(
+                        Array.from(sortableList.children).map(el => ({
+                            element: el,
+                            dataId: el.getAttribute('data-id')
+                        }))
+                    );
+                    return;
+                }
+
+                // Chamar o método Blazor
+                dotNetObject.invokeMethodAsync('UpdateOrdenation', newOrder)
+                    .then(() => console.log('Ordem enviada para o Blazor:', newOrder))
+                    .catch(err => console.error('Erro ao chamar o método .NET:', err));
             }
         });
-    });
-
+    }
 </script>-->
+
+
+
+
+
+

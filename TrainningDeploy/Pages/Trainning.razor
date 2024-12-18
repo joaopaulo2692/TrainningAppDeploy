@@ -11,8 +11,8 @@
 
 <TrainningInfoBasicComponent TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
 
-
-@* <div class="parent-container">
+@* 
+ <div class="parent-container">
     <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small">
         @foreach (var drop in DropzoneList)
         {
@@ -23,7 +23,7 @@
             <MudTabPanel Text=@drop[0].Name Key="@drop.GetHashCode()">
                 @if (drop[0].Exercise == null)
                 {
-                  @*   <h3>Nenhum exercício Adicionado na Sessão</h3> 
+                     <h3>Nenhum exercício Adicionado na Sessão</h3> 
                     <DropZoneExercises OnAddExercise="HandleAddExercise"
                                        T="DropZoneItem"
                                        _items="drop"
@@ -56,17 +56,49 @@
         }
         <MudTabPanel Text="Adicionar Sessão" OnClick="() => AddNewTrainningDay()">
             <!-- Conteúdo da aba (opcional) -->
-            @* <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton> 
+             <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton> 
         </MudTabPanel>
        <br/>
        <br/>
        <br/>
         <MudButton OnClick="OnSaveTrainning" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton>
     </MudTabs>
+</div>  *@
+
+@* <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+<MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small">
+    @foreach (var trainningDay in TrainningToEdit.TrainningDays)
+    {
+        <MudTabPanel Text=@trainningDay.Name Key=@trainningDay.GetHashCode()>
+            <!-- Conteúdo do MudTabPanel -->
+            <Teste></Teste>
+        </MudTabPanel>
+    }
+
+        <MudTabPanel Text="Adicionar Sessão" OnClick="() => AddNewTrainningDay()">
+            <!-- Conteúdo da aba (opcional) -->
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton>
+        </MudTabPanel>
+</MudTabs>
 </div> *@
 
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+    <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small">
+        @foreach (var trainningDay in TrainningToEdit.TrainningDays)
+        {
+            <MudTabPanel Text="@trainningDay.Name" Key="@trainningDay.GetHashCode()">
+                <!-- Conteúdo do MudTabPanel -->
+                <TrainningDaysComponent ParameterTrainningExercises=trainningDay.TrainningExercises OnRemoveTrainningDay="HandleRemoveTrainningDay"></TrainningDaysComponent>
+            </MudTabPanel>
+        }
 
-<Teste></Teste>
+        <MudTabPanel Text="Adicionar Sessão" OnClick="() => AddNewTrainningDay()">
+            <!-- Conteúdo da aba (opcional) -->
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton>
+        </MudTabPanel>
+    </MudTabs>
+</div>
+
 
 
 
@@ -93,12 +125,18 @@
     }
 
 
-    .dropzone-small {
-        width: 87%; /* Ajusta para 100% da largura do contêiner */
+ @*    .dropzone-small {
+        width: 68%; /* Ajusta para 100% da largura do contêiner */
         max-width: 1400px; /* Limite máximo de largura */
         /* height: 700px; /* Altura fixa */ */ padding: 16px;
         margin: 10px;
-    }
+    } *@
+    .dropzone-small {
+    width: 68%; /* Ajusta para 68% da largura do contêiner */
+    max-width: 1400px; /* Limite máximo de largura */
+    padding: 16px;
+    margin: 10px;
+}
 
 </style>
 
@@ -119,22 +157,26 @@
 
     private void AddNewTrainningDay()
     {
-        string letter = DropzoneList.Select(x => x.Select(x => x.Name)).Last().FirstOrDefault();
-        // char currentLetter = 'C';
-        char currentLetter = letter[0];
-        char nextLetter = (char)(currentLetter + 1);
-        DropzoneList.Add(new List<DropZoneItem>
-    {
-        new DropZoneItem
-        {
-            Zone = "Drop Zone 1",
-            TrainningDayOrdenation = 3,
-            TrainningDayId = 3,
-            // Name = "C",
-            Name = nextLetter.ToString(),
+        //     string letter = DropzoneList.Select(x => x.Select(x => x.Name)).Last().FirstOrDefault();
+        //     // char currentLetter = 'C';
+        //     char currentLetter = letter[0];
+        //     char nextLetter = (char)(currentLetter + 1);
+        //     DropzoneList.Add(new List<DropZoneItem>
+        // {
+        //     new DropZoneItem
+        //     {
+        //         Zone = "Drop Zone 1",
+        //         TrainningDayOrdenation = 3,
+        //         TrainningDayId = 3,
+        //         // Name = "C",
+        //         Name = nextLetter.ToString(),
 
-        }
-    });
+        //     }
+        // });
+        char trainningLetter = TrainningToEdit.TrainningDays.Max(x => x.Name).FirstOrDefault();
+        TrainningDayReturnVO lastTrainning = TrainningToEdit.TrainningDays.LastOrDefault();
+        trainningLetter++;
+        TrainningToEdit.TrainningDays.Add(new TrainningDayReturnVO() { Name = trainningLetter.ToString(), Ordenation = lastTrainning.Ordenation + 1, TrainningExercises = new List<TrainningExerciseVO>()});
         _uniqueKey++;
     }
 
@@ -209,24 +251,31 @@
 
 
 
-    private async Task HandleRemoveTrainningDay(string trainningDayToRemove)
+    // private async Task HandleRemoveTrainningDay(string trainningDayToRemove)
+    // {
+    //     DropzoneList.RemoveAll(sublist => sublist.Any(item => item.Name == trainningDayToRemove));
+    //     char newLetter = 'A';
+    //     int cont = 0;
+
+    //     foreach(var itemIndex in DropzoneList)
+    //     {
+
+    //         foreach(var itemTwoIndex in itemIndex)
+    //         {
+    //             itemTwoIndex.Name = newLetter.ToString();
+    //         }
+    //         // cont++;
+    //         // newLetter = (char)(newLetter + cont);
+    //         newLetter++;
+    //     }
+    //     _uniqueKey++;
+    // }
+
+    private async Task HandleRemoveTrainningDay(int trainningDayIdToRemove)
     {
-        DropzoneList.RemoveAll(sublist => sublist.Any(item => item.Name == trainningDayToRemove));
-        char newLetter = 'A';
-        int cont = 0;
+        TrainningDayReturnVO trainningDay = TrainningToEdit.TrainningDays.Where(x => x.Id == trainningDayIdToRemove).FirstOrDefault();
+        TrainningToEdit.TrainningDays.Remove(trainningDay);
 
-        foreach(var itemIndex in DropzoneList)
-        {
-
-            foreach(var itemTwoIndex in itemIndex)
-            {
-                itemTwoIndex.Name = newLetter.ToString();
-            }
-            // cont++;
-            // newLetter = (char)(newLetter + cont);
-            newLetter++;
-        }
-        _uniqueKey++;
     }
 
     private async Task HandleAddExercise(DropZoneItem newExercise)
