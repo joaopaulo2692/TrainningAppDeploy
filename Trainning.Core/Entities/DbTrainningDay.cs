@@ -73,7 +73,15 @@ namespace TrainningApp.Core.Entities
                     Ordenation = 3,
                     TrainningId = 3,
                     TrainningExercises =  _trainningExercise.TrainningExercises.Where(x => x.Id == 6 || x.Id == 7 || x.Id == 8 || x.Id == 9).ToList()
-                }
+                },
+                   new TrainningDay
+                {
+                    Id = 4,
+                    Name = "A",
+                    Ordenation = 2,
+                    TrainningId = 2,
+                    TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.Id == 4 || x.Id == 5).ToList()
+                },
             };
         }
     }

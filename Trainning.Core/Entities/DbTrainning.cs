@@ -85,7 +85,7 @@ namespace TrainningApp.Core.Entities
                 Name = "Treino ABC",
                 Personal = _dbUsers.Personals.Where(x => x.Id == "2").FirstOrDefault(),
                 Activate = false,
-                TrainningDays = _trainningDay.TrainningDays.Where(x => x.Id == 2).ToList(),
+                TrainningDays = _trainningDay.TrainningDays.Where(x => x.Id == 4).ToList(),
             },
              new Trainning()
             {
