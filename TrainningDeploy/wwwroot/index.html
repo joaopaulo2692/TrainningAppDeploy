@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TrainningDeploy</title>
-    <base href="/TrainningAppDeploy/"/>
-    <!--<base href="/" />-->
+    <!--<base href="/TrainningAppDeploy/"/>-->
+    <base href="/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
@@ -43,7 +43,7 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
-<script>
+<!--<script>
     let sortableInstance;
 
     function initializeSortable(dotNetObject) {
@@ -60,46 +60,33 @@
             }
         });
     }
-</script>
+</script>-->
 
-<!--<script>
+<script>
     let sortableInstance;
 
     function initializeSortable(dotNetObject) {
         const sortableList = document.getElementById('sortable-list');
-        if (!sortableList) {
-            console.error('Erro: Elemento com ID "sortable-list" não encontrado.');
-            return;
-        }
+        if (!sortableList) return;
 
         sortableInstance = new Sortable(sortableList, {
             animation: 150,
+            // Especifica que o arrasto será permitido apenas dentro de elementos com a classe .sortable-handle
+            handle: '.sortable-handle',
             onEnd: function (event) {
-                // Obter o novo array de ordenação e filtrar itens inválidos
-                const newOrder = Array.from(sortableList.children)
-                    .map(el => el.getAttribute('data-id'))
-                    .filter(id => id !== null && id !== "");
-
-                // Verificar inconsistências e prosseguir com a chamada
-                if (newOrder.length !== sortableList.children.length) {
-                    console.error('Erro: Alguns itens não possuem o atributo "data-id".');
-                    console.table(
-                        Array.from(sortableList.children).map(el => ({
-                            element: el,
-                            dataId: el.getAttribute('data-id')
-                        }))
-                    );
-                    return;
-                }
-
-                // Chamar o método Blazor
+                const newOrder = Array.from(sortableList.children).map(el => el.getAttribute('data-id'));
                 dotNetObject.invokeMethodAsync('UpdateOrdenation', newOrder)
-                    .then(() => console.log('Ordem enviada para o Blazor:', newOrder))
+                    .then(() => console.log('Ordem enviada para o Blazor.'))
                     .catch(err => console.error('Erro ao chamar o método .NET:', err));
             }
         });
     }
-</script>-->
+</script>
+
+
+
+
+
 
 
 
