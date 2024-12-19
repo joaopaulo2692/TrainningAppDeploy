@@ -3,6 +3,8 @@
 @inject IJSRuntime JS
 @inject IDialogService DialogService
 
+<br/>
+
 
 <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
      <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton>
@@ -233,7 +235,7 @@
     //             swappedExercise.Ordenation = tempOrdenation;
 
     //             // Atualize a lista ou persista no banco de dados, se necessário
-    
+
     //         }
     //     }
     // }
@@ -280,7 +282,7 @@
 
     }
 
-      private void SelectEditExercise(TrainningExerciseVO exercise)
+    private void SelectEditExercise(TrainningExerciseVO exercise)
     {
         exerciseToEdited = exercise;
         IsToEdited = true;
@@ -290,10 +292,10 @@
     }
 
 
-       private async Task RemoveTrainningDay()
+    private async Task RemoveTrainningDay()
     {
-
-        await OnRemoveTrainningDay.InvokeAsync(1);
+        int trainningDayId = ParameterTrainningExercises.FirstOrDefault().TrainningDayId;
+        await OnRemoveTrainningDay.InvokeAsync(trainningDayId);
     }
         private async Task EditListExercise(List<TrainningExerciseVO> trainningExerciseVOs)
     {

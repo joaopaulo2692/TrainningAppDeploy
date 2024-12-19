@@ -15,6 +15,10 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<UsersDb>();
 builder.Services.AddScoped<DbMusclesAndExercises>();
+builder.Services.AddScoped<DbTrainning>();
+builder.Services.AddScoped<DbTrainningDay>();
+builder.Services.AddScoped<DbTrainningExercise>();
+builder.Services.AddScoped<DbUsers>();
 builder.Services.AddScoped<OrdenationService>();
 
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainningApp.Core.DTO.TrainningDay;
+using TrainningApp.Core.DTO.TrainningExercise;
 
 namespace TrainningApp.Core.Entities
 {
@@ -12,8 +14,30 @@ namespace TrainningApp.Core.Entities
 
         private readonly DbMusclesAndExercises _musclesAndExercises;
 
-        public DbTrainningExercise() 
+
+        public List<TrainningExerciseVO> TrainningExerciseTOListVO(List<TrainningExercise> list)
         {
+            return list.Select(exercise => new TrainningExerciseVO
+            {
+                ExerciseName = exercise.Exercise.Name,
+                Id = exercise.Id,
+                Info = exercise.Info,
+                Interval = exercise.Interval,
+                Ordenation = exercise.Ordenation,
+                Reps = exercise.Reps,
+                Set = exercise.Set,
+                Weight = exercise.Weight,
+                ExerciseId = exercise.Exercise.Id,
+                TrainningDayId = exercise.Exercise.Id,
+
+
+            }).ToList();
+        }
+
+        public DbTrainningExercise(DbMusclesAndExercises musclesAndExercises) 
+        {
+            _musclesAndExercises = musclesAndExercises ?? throw new ArgumentNullException(nameof(musclesAndExercises));
+
             TrainningExercises = new List<TrainningExercise>()
             {
                         new TrainningExercise

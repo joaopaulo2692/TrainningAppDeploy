@@ -35,154 +35,154 @@ namespace TrainningApp.Core.Entities
         //public virtual List<TrainningExercise> TrainningExercises { get; set; }
 
 
-        public List<Trainning> TrainningList()
-        {
-            return new List<Trainning>{
-            new Trainning()
-            {
-                Id = 1,
-                CreatedAt = new DateTime(2024, 11, 20),
-                Goal = "Hipertrofia",
-                Name = "Treino 2024",
-                PersonalId = "1",
-                Activate = true,
-                TrainningDays = new List<TrainningDay>()
-                {
-                    new TrainningDay
-                    {
-                        Name = "A",
-                        Ordenation = 1,
-                        TrainningId = 1,
-                        TrainningExercises = new List<TrainningExercise>
-                        {
-                            new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 1,
-                                Info = "Normal",
-                                Ordenation = 1,
-                                TrainningDayId = 1
-                            },
-                            new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 2,
-                                Info = "Normal",
-                                Ordenation = 2,
-                                TrainningDayId = 1
-                            },
-                             new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 3,
-                                Info = "Normal",
-                                Ordenation = 3,
-                                TrainningDayId = 1
-                            },
-                        }
-                    },
-                    new TrainningDay
-                    {
-                        Name = "B",
-                        Ordenation = 2,
-                        TrainningId = 2,
-                        TrainningExercises = new List<TrainningExercise>
-                        {
-                            new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 4,
-                                Info = "Normal",
-                                Ordenation = 1,
-                                TrainningDayId = 1
-                            },
-                             new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 5,
-                                Info = "Normal",
-                                Ordenation = 2,
-                                TrainningDayId = 1
-                            },
-                            new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 6,
-                                Info = "Normal",
-                                Ordenation = 3,
-                                TrainningDayId = 1
-                            },
-                        }
-                    },
-                    new TrainningDay
-                    {
-                        Name = "C",
-                        Ordenation = 3,
-                        TrainningId = 3,
-                        TrainningExercises = new List<TrainningExercise>
-                        {
-                            new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 7,
-                                Info = "Normal",
-                                Ordenation = 1,
-                                TrainningDayId = 1
-                            },
-                         new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 8,
-                                Info = "Normal",
-                                Ordenation = 2,
-                                TrainningDayId = 1
-                            },
-                            new TrainningExercise
-                             {
-                                Reps = "10",
-                                Set = 3,
-                                ExerciseId = 9,
-                                Info = "Normal",
-                                Ordenation = 3,
-                                TrainningDayId = 1
-                            },
-                        }
-                    }
+        //public List<Trainning> TrainningList()
+        //{
+        //    return new List<Trainning>{
+        //    new Trainning()
+        //    {
+        //        Id = 1,
+        //        CreatedAt = new DateTime(2024, 11, 20),
+        //        Goal = "Hipertrofia",
+        //        Name = "Treino 2024",
+        //        PersonalId = "1",
+        //        Activate = true,
+        //        TrainningDays = new List<TrainningDay>()
+        //        {
+        //            new TrainningDay
+        //            {
+        //                Name = "A",
+        //                Ordenation = 1,
+        //                TrainningId = 1,
+        //                TrainningExercises = new List<TrainningExercise>
+        //                {
+        //                    new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 1,
+        //                        Info = "Normal",
+        //                        Ordenation = 1,
+        //                        TrainningDayId = 1
+        //                    },
+        //                    new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 2,
+        //                        Info = "Normal",
+        //                        Ordenation = 2,
+        //                        TrainningDayId = 1
+        //                    },
+        //                     new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 3,
+        //                        Info = "Normal",
+        //                        Ordenation = 3,
+        //                        TrainningDayId = 1
+        //                    },
+        //                }
+        //            },
+        //            new TrainningDay
+        //            {
+        //                Name = "B",
+        //                Ordenation = 2,
+        //                TrainningId = 2,
+        //                TrainningExercises = new List<TrainningExercise>
+        //                {
+        //                    new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 4,
+        //                        Info = "Normal",
+        //                        Ordenation = 1,
+        //                        TrainningDayId = 1
+        //                    },
+        //                     new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 5,
+        //                        Info = "Normal",
+        //                        Ordenation = 2,
+        //                        TrainningDayId = 1
+        //                    },
+        //                    new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 6,
+        //                        Info = "Normal",
+        //                        Ordenation = 3,
+        //                        TrainningDayId = 1
+        //                    },
+        //                }
+        //            },
+        //            new TrainningDay
+        //            {
+        //                Name = "C",
+        //                Ordenation = 3,
+        //                TrainningId = 3,
+        //                TrainningExercises = new List<TrainningExercise>
+        //                {
+        //                    new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 7,
+        //                        Info = "Normal",
+        //                        Ordenation = 1,
+        //                        TrainningDayId = 1
+        //                    },
+        //                 new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 8,
+        //                        Info = "Normal",
+        //                        Ordenation = 2,
+        //                        TrainningDayId = 1
+        //                    },
+        //                    new TrainningExercise
+        //                     {
+        //                        Reps = "10",
+        //                        Set = 3,
+        //                        ExerciseId = 9,
+        //                        Info = "Normal",
+        //                        Ordenation = 3,
+        //                        TrainningDayId = 1
+        //                    },
+        //                }
+        //            }
 
-                }
-            },
-             new Trainning()
-            {
-                 Id = 2,
-                CreatedAt = new DateTime(2024, 10, 5),
-                Goal = "Emagrecimento",
-                Name = "Treino ABC",
-                PersonalId = "2",
-                Activate = false,
-                TrainningDays = new List<TrainningDay>()
-            },
-             new Trainning()
-            {
-                 Id = 3,
-                CreatedAt = new DateTime(2024, 9, 4),
-                Goal = "Condicionamento",
-                Name = "Treino AB",
-                PersonalId = "3",
-                Activate = false,
-                TrainningDays = new List<TrainningDay>()
-            },
+        //        }
+        //    },
+        //     new Trainning()
+        //    {
+        //         Id = 2,
+        //        CreatedAt = new DateTime(2024, 10, 5),
+        //        Goal = "Emagrecimento",
+        //        Name = "Treino ABC",
+        //        PersonalId = "2",
+        //        Activate = false,
+        //        TrainningDays = new List<TrainningDay>()
+        //    },
+        //     new Trainning()
+        //    {
+        //         Id = 3,
+        //        CreatedAt = new DateTime(2024, 9, 4),
+        //        Goal = "Condicionamento",
+        //        Name = "Treino AB",
+        //        PersonalId = "3",
+        //        Activate = false,
+        //        TrainningDays = new List<TrainningDay>()
+        //    },
 
-        };
+        //};
 
-        }
+        //}
 
     }
 }

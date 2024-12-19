@@ -12,8 +12,8 @@ namespace TrainningApp.Core.Entities
     {
         public List<TrainningDay> TrainningDays { get; set; }
 
-        public readonly DbMusclesAndExercises _musclesAndExercises;
-        public readonly DbTrainningExercise _trainningExercise;
+        private readonly DbMusclesAndExercises _musclesAndExercises;
+        private readonly DbTrainningExercise _trainningExercise;
 
 
         public TrainningDayVO TrainningDayToVO(TrainningDay trainningDay)
@@ -28,8 +28,26 @@ namespace TrainningApp.Core.Entities
             return trainningVO;
         }
 
-        public DbTrainningDay()
+        public List<TrainningDayReturnVO> TrainningDaysToVOList(List<TrainningDay> trainningDays)
         {
+            return trainningDays.Select(trainningDay => new TrainningDayReturnVO
+            {
+                Name = trainningDay.Name,
+                Id = trainningDay.Id,
+                Ordenation = trainningDay.Ordenation,
+                TrainningExercises = _trainningExercise.TrainningExerciseTOListVO(trainningDay.TrainningExercises),
+                TrainningId = trainningDay.Id
+            }).ToList();
+        }
+
+
+        public DbTrainningDay(DbTrainningExercise trainningExercise, DbMusclesAndExercises musclesAndExercises)
+        {
+
+            _trainningExercise = trainningExercise ?? throw new ArgumentNullException(nameof(trainningExercise));
+            _musclesAndExercises = musclesAndExercises ?? throw new ArgumentNullException(nameof(musclesAndExercises));
+       
+
             TrainningDays = new List<TrainningDay>()
             {
                 new TrainningDay
