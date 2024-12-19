@@ -3,6 +3,7 @@
 @inject IJSRuntime JS
 @inject IDialogService DialogService
 
+
 <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
      <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton>
     <MudButton Disabled=DisableTrainningRemove OnClick="RemoveTrainningDay" Variant="Variant.Filled" Color="Color.Error" Style="margin-right: 20px;">Remover Sessão</MudButton>
@@ -17,7 +18,7 @@
 </div>
 
 
-<h3 style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">Sessões do treino </h3>
+
 <div id="sortable-list" class="sortable-container parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
     
     @* <MudTabPanel Text="Treino A" @* Key="@drop.GetHashCode()"> 
@@ -27,7 +28,8 @@
     {
        
         @* <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Ordenation" Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%"> *@
-        <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Id" Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%">
+        <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Id"
+                  Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%; border-radius: 24px;">
            
 
              <div class="sortable-handle">
@@ -74,6 +76,9 @@
     align-items: center; /* Alinha os campos verticalmente */
 }
 
+    .rounded-paper {
+        border-radius: 24px; /* Ou o valor que preferir para bordas mais arredondadas */
+    }
 </style>
 
 
