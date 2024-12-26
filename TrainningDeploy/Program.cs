@@ -21,6 +21,13 @@ builder.Services.AddScoped<DbTrainningExercise>();
 builder.Services.AddScoped<DbUsers>();
 builder.Services.AddScoped<OrdenationService>();
 
+//builder.Services.AddSingleton<UsersDb>();
+//builder.Services.AddSingleton<DbMusclesAndExercises>();
+//builder.Services.AddSingleton<DbTrainning>();
+//builder.Services.AddSingleton<DbTrainningDay>();
+//builder.Services.AddSingleton<DbTrainningExercise>();
+//builder.Services.AddSingleton<DbUsers>();
+
 
 
 await builder.Build().RunAsync();

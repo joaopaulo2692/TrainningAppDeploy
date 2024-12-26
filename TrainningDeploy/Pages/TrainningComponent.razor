@@ -7,7 +7,8 @@
 @using TrainningDeploy.Components
 @using TrainningDeploy.Layout
 @layout UserLayout
-
+@inject DbTrainningDay _trainningDay
+@inject DbTrainning _trainning
 
 <TrainningInfoBasicComponent TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
 
@@ -81,23 +82,27 @@
         </MudTabPanel>
 </MudTabs>
 </div> *@
- <h3 style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">Sessões do treino </h3>
+@if(TrainningToEdit != null)
+{
+    <h3 style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">Sessões do treino </h3>
 <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
     <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-0" @key="_uniqueKey" Class="dropzone-small">
         @foreach (var trainningDay in TrainningToEdit.TrainningDays)
         {
-            <MudTabPanel Text="@trainningDay.Name" Key="@trainningDay.GetHashCode()">
-                <!-- Conteúdo do MudTabPanel -->
-                <TrainningDaysComponent ParameterTrainningExercises=trainningDay.TrainningExercises OnRemoveTrainningDay="HandleRemoveTrainningDay"></TrainningDaysComponent>
+            <MudTabPanel  Text="@trainningDay.Name" Key="@trainningDay.GetHashCode()">
+
+                <TrainningDaysComponent ParameterTrainningDay=trainningDay.Id ParameterTrainningExercises=trainningDay.TrainningExercises OnRemoveTrainningDay="HandleRemoveTrainningDay"></TrainningDaysComponent>
             </MudTabPanel>
         }
 
         <MudTabPanel Text="Adicionar Sessão" OnClick="() => AddNewTrainningDay()">
-            <!-- Conteúdo da aba (opcional) -->
+
             <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton>
         </MudTabPanel>
     </MudTabs>
 </div>
+}
+
 
 
 
@@ -274,7 +279,11 @@
     private async Task HandleRemoveTrainningDay(int trainningDayIdToRemove)
     {
         TrainningDayReturnVO trainningDay = TrainningToEdit.TrainningDays.Where(x => x.Id == trainningDayIdToRemove).FirstOrDefault();
-        TrainningToEdit.TrainningDays.Remove(trainningDay);
+     
+        _trainningDay.RemoveById(trainningDayIdToRemove);
+        TrainningToEdit = _trainning.GetById(trainningDay.Id);
+        StateHasChanged();
+
 
     }
 
@@ -444,50 +453,64 @@
     protected override void OnInitialized()
     {
         StateHasChanged();
-
-        if (TrainningToEdit != null && TrainningToEdit.TrainningDays.Count > 0)
+        if(TrainningToEdit == null)
         {
-            foreach(var trainningDayIndex in TrainningToEdit.TrainningDays)
-            {
-                if(trainningDayIndex != null)
+            TrainningToEdit = new TrainningReturnVO()
                 {
-                    foreach (var exerciseIndex in trainningDayIndex.TrainningExercises)
+                    TrainningDays = new List<TrainningDayReturnVO>()
+                {
+                    new TrainningDayReturnVO()
                     {
-                        DropZoneItem newDropZone = new DropZoneItem()
-                            {
-                                Zone = "Drop Zone 1",
-                                TrainningDayOrdenation = trainningDayIndex.Ordenation,
-                                TrainningDayId = trainningDayIndex.Id,
-                                Name = trainningDayIndex.Name,
-                                Exercise = exerciseIndex
-                            };
-                        _items.Add(newDropZone);
+                        Name = "A",
+                        Ordenation = 1,
+                        TrainningExercises = new List<TrainningExerciseVO>(),
                     }
                 }
-                else
-                {
-                    _items = new List<DropZoneItem>
-                    {
-                        new() { Zone = "Drop Zone 1", TrainningDayOrdenation=1, TrainningDayId =1, Name = "A" }
-                    };
-                    DropzoneList.Add(_items);
-                    break;
-                }
-
-                DropzoneList.Add(_items);
-                _items = new List<DropZoneItem>();
-            }
-        }
-
-
-        else
-        {
-            _items = new List<DropZoneItem>
-                {
-                    new() { Zone = "Drop Zone 1", TrainningDayOrdenation=1, TrainningDayId =1, Name = "A" } 
                 };
-            DropzoneList.Add(_items);       
         }
+        // if (TrainningToEdit != null && TrainningToEdit.TrainningDays.Count > 0)
+        // {
+        //     foreach(var trainningDayIndex in TrainningToEdit.TrainningDays)
+        //     {
+        //         if(trainningDayIndex != null)
+        //         {
+        //             foreach (var exerciseIndex in trainningDayIndex.TrainningExercises)
+        //             {
+        //                 DropZoneItem newDropZone = new DropZoneItem()
+        //                     {
+        //                         Zone = "Drop Zone 1",
+        //                         TrainningDayOrdenation = trainningDayIndex.Ordenation,
+        //                         TrainningDayId = trainningDayIndex.Id,
+        //                         Name = trainningDayIndex.Name,
+        //                         Exercise = exerciseIndex
+        //                     };
+        //                 _items.Add(newDropZone);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             _items = new List<DropZoneItem>
+        //             {
+        //                 new() { Zone = "Drop Zone 1", TrainningDayOrdenation=1, TrainningDayId =1, Name = "A" }
+        //             };
+        //             DropzoneList.Add(_items);
+        //             break;
+        //         }
+
+        //         DropzoneList.Add(_items);
+        //         _items = new List<DropZoneItem>();
+        //     }
+        // }
+
+
+        // else
+        // {
+        //     _items = new List<DropZoneItem>
+        //         {
+        //             new() { Zone = "Drop Zone 1", TrainningDayOrdenation=1, TrainningDayId =1, Name = "A" } 
+        //         };
+        //     DropzoneList.Add(_items);       
+        // }
         
 
     }

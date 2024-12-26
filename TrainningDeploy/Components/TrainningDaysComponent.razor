@@ -294,8 +294,8 @@
 
     private async Task RemoveTrainningDay()
     {
-        int trainningDayId = ParameterTrainningExercises.FirstOrDefault().TrainningDayId;
-        await OnRemoveTrainningDay.InvokeAsync(trainningDayId);
+        // int trainningDayId = ParameterTrainningExercises.FirstOrDefault().TrainningDayId;
+        await OnRemoveTrainningDay.InvokeAsync(ParameterTrainningDay);
     }
         private async Task EditListExercise(List<TrainningExerciseVO> trainningExerciseVOs)
     {

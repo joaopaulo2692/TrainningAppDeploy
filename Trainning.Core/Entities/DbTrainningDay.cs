@@ -28,6 +28,47 @@ namespace TrainningApp.Core.Entities
             return trainningVO;
         }
 
+        public event Action TrainningDaysUpdated;
+
+        public bool RemoveById(int trainningDayId)
+        {
+            var trainningDay = TrainningDays.FirstOrDefault(x => x.Id == trainningDayId);
+            if (trainningDay == null) return false;
+
+            TrainningDays.Remove(trainningDay);
+            char newLetter = 'A';
+            foreach (var trainnDay in TrainningDays)
+            {
+                if (trainnDay.TrainningId == trainningDay.TrainningId)
+                {
+                    trainnDay.Name = newLetter.ToString();
+                    newLetter++;
+                }
+
+            }
+            TrainningDaysUpdated?.Invoke(); // Notifica a alteração
+            return true;
+        }
+
+        //public bool RemoveById(int trainningDayId)
+        //{
+        //    TrainningDay trainningDay = TrainningDays.Where(x => x.Id == trainningDayId).FirstOrDefault();
+        //    if (trainningDay == null) return false;
+
+        //    TrainningDays.Remove(trainningDay);
+
+        //    char newLetter = 'A';
+        //    foreach (var trainnDay in TrainningDays)
+        //    {
+        //        if (trainnDay.TrainningId == trainningDay.TrainningId)
+        //        {
+        //            trainnDay.Name = newLetter.ToString();
+        //            newLetter++;
+        //        }
+
+        //    }
+        //    return true;
+        //}
         public List<TrainningDayReturnVO> TrainningDaysToVOList(List<TrainningDay> trainningDays)
         {
             return trainningDays.Select(trainningDay => new TrainningDayReturnVO
@@ -63,7 +104,7 @@ namespace TrainningApp.Core.Entities
                     Id = 2,
                     Name = "B",
                     Ordenation = 2,
-                    TrainningId = 2,
+                    TrainningId = 1,
                     TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.Id == 4 || x.Id == 5).ToList()
                 },
                 new TrainningDay
@@ -71,7 +112,7 @@ namespace TrainningApp.Core.Entities
                     Id = 3,
                     Name = "C",
                     Ordenation = 3,
-                    TrainningId = 3,
+                    TrainningId = 1,
                     TrainningExercises =  _trainningExercise.TrainningExercises.Where(x => x.Id == 6 || x.Id == 7 || x.Id == 8 || x.Id == 9).ToList()
                 },
                    new TrainningDay

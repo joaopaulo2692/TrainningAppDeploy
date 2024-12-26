@@ -20,6 +20,8 @@ namespace TrainningApp.Core.Entities
         private readonly DbTrainningDay _trainningDay;
         private readonly DbTrainningExercise _trainningExercise;
 
+
+
         public TrainningReturnVO TrainningToTrainningVO(Trainning trainning)
         {
             TrainningReturnVO trainningDayReturnVO = new TrainningReturnVO()
@@ -58,11 +60,31 @@ namespace TrainningApp.Core.Entities
             }).ToList();
         }
 
+        private void UpdateTrainningDays()
+        {
+            // Atualiza os TrainningDays para refletir qualquer mudança
+            foreach (var trainning in Trainnings)
+            {
+                trainning.TrainningDays = _trainningDay.TrainningDays
+                    .Where(td => trainning.TrainningDays.Select(t => t.Id).Contains(td.Id))
+                    .ToList();
+            }
+        }
+        public TrainningReturnVO GetById(int trainningId)
+        {
+            Trainning trainning = Trainnings.Where(x => x.Id == trainningId).FirstOrDefault();
+            if (trainning == null) return new TrainningReturnVO();
+            return TrainningToTrainningVO(trainning);
+        }
+
         public DbTrainning(DbUsers dbUsers, DbTrainningDay trainningDay, DbTrainningExercise trainningExercise)
         {
             _dbUsers = dbUsers ?? throw new ArgumentNullException(nameof(dbUsers));
             _trainningDay = trainningDay ?? throw new ArgumentNullException(nameof(trainningDay));
             _trainningExercise = trainningExercise ?? throw new ArgumentNullException(nameof(trainningExercise));
+
+
+            _trainningDay.TrainningDaysUpdated += UpdateTrainningDays;
 
 
             Trainnings = new List<Trainning>{

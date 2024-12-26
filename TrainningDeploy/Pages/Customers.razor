@@ -17,20 +17,19 @@
     <MudPaper Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
         @foreach (var user in users)
         {
-            <!-- Container com hover -->
+   
             <MudGrid AlignItems="AlignItems.Center" Class="profile-container hover-container">
-                <!-- Avatar -->
+   
                 <MudItem>
                     <MudAvatar Size="Size.Large" Image="https://via.placeholder.com/150" Class="mb-2" />
                 </MudItem>
 
-                <!-- Texto ao lado do avatar -->
+ 
                 <MudItem Class="profile-text">
                     <MudText Typo="Typo.h6" Class="font-weight-bold">@user.Name</MudText>
                         <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
                     </MudItem>
 
-                    <!-- Ícones de ação próximos aos dados -->
                     <MudItem>
                         <div class="action-icons">
                             <MudIconButton OnClick="NavigateToEditPage" Icon="@Icons.Material.Outlined.Edit" />
