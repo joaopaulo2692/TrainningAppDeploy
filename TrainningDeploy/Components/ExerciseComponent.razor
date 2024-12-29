@@ -100,7 +100,7 @@
         }
         @if (EditExercise != null)
         {
-            <MudButton Variant="Variant.Filled" OnClick="AddNewExercise" Color="Color.Success">Editar</MudButton>
+            <MudButton Variant="Variant.Filled" OnClick="EditNewExercise" Color="Color.Success">Editar</MudButton>
         }
         
 
@@ -206,13 +206,15 @@
         }
         trainningExerciseVO = new TrainningExerciseVO
             {
+                Id = EditExercise.Id,
                 ExerciseName = exerciseSelected,
                 Reps = string.Join("/", reps),
                 // Reps = array[1],
                 Interval = rest,
                 Weight = string.Join("/", weights),
                 Info = observation,
-                Set = set
+                Set = set,
+                Ordenation = EditExercise.Ordenation
 
             };
 
@@ -235,13 +237,15 @@
         }
         trainningExerciseVO = new TrainningExerciseVO
             {
+                
                 ExerciseName = exerciseSelected,
                 Reps = string.Join("/", reps),
                 // Reps = array[1],
                 Interval = rest,
                 Weight = string.Join("/", weights),
                 Info = observation,
-                Set = set
+                Set = set,
+           
 
             };
 

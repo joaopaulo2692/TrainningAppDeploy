@@ -9,6 +9,7 @@
 @layout UserLayout
 @inject DbTrainningDay _trainningDay
 @inject DbTrainning _trainning
+@* @inject DbTrainningExercise _trainningExercise *@
 
 <TrainningInfoBasicComponent TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
 
@@ -91,7 +92,7 @@
         {
             <MudTabPanel  Text="@trainningDay.Name" Key="@trainningDay.GetHashCode()">
 
-                <TrainningDaysComponent ParameterTrainningDay=trainningDay.Id ParameterTrainningExercises=trainningDay.TrainningExercises OnRemoveTrainningDay="HandleRemoveTrainningDay"></TrainningDaysComponent>
+                <TrainningDaysComponent  OnModification="UpdateTrainningGetById" ParameterTrainningDay=trainningDay.Id ParameterTrainningExercises=trainningDay.TrainningExercises OnRemoveTrainningDay="HandleRemoveTrainningDay"></TrainningDaysComponent>
             </MudTabPanel>
         }
 
@@ -183,6 +184,16 @@
         trainningLetter++;
         TrainningToEdit.TrainningDays.Add(new TrainningDayReturnVO() { Name = trainningLetter.ToString(), Ordenation = lastTrainning.Ordenation + 1, TrainningExercises = new List<TrainningExerciseVO>()});
         _uniqueKey++;
+    }
+
+    private void UpdateTrainningGetById()
+    {
+        TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
+    }
+
+    private void OnEditExercise()
+    {
+        
     }
 
     private async Task HandleInfoTrainning(TrainningReturnVO trainningToSave)
@@ -281,7 +292,7 @@
         TrainningDayReturnVO trainningDay = TrainningToEdit.TrainningDays.Where(x => x.Id == trainningDayIdToRemove).FirstOrDefault();
      
         _trainningDay.RemoveById(trainningDayIdToRemove);
-        TrainningToEdit = _trainning.GetById(trainningDay.Id);
+        TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
         StateHasChanged();
 
 
@@ -453,7 +464,7 @@
     protected override void OnInitialized()
     {
         StateHasChanged();
-        if(TrainningToEdit == null)
+        if(TrainningToEdit.TrainningDays.Count == null || TrainningToEdit.TrainningDays.Count == 0)
         {
             TrainningToEdit = new TrainningReturnVO()
                 {

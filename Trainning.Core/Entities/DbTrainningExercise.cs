@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainningApp.Core.DTO.Exercise;
 using TrainningApp.Core.DTO.TrainningDay;
 using TrainningApp.Core.DTO.TrainningExercise;
 
@@ -13,30 +14,90 @@ namespace TrainningApp.Core.Entities
         public List<TrainningExercise> TrainningExercises { get; set; }
 
         private readonly DbMusclesAndExercises _musclesAndExercises;
+        //private readonly DbTrainningDay _trainningDay;
+        
 
+        public event Action TrainningExerciseUpdated;
 
         public List<TrainningExerciseVO> TrainningExerciseTOListVO(List<TrainningExercise> list)
         {
-            return list.Select(exercise => new TrainningExerciseVO
+            return list
+                .OrderBy(exercise => exercise.Ordenation) // Ordena pela propriedade Ordenation
+                .Select(exercise => new TrainningExerciseVO
+                {
+                    ExerciseName = exercise.Exercise.Name,
+                    Id = exercise.Id,
+                    Info = exercise.Info,
+                    Interval = exercise.Interval,
+                    Ordenation = exercise.Ordenation,
+                    Reps = exercise.Reps,
+                    Set = exercise.Set,
+                    Weight = exercise.Weight,
+                    ExerciseId = exercise.Exercise.Id,
+                    TrainningDayId = exercise.TrainningDayId
+                })
+                .ToList();
+        }
+
+
+        public TrainningExercise TrainningExerciseVOToEntitie(TrainningExerciseVO trainningExerciseVO)
+        {
+            return new TrainningExercise
             {
-                ExerciseName = exercise.Exercise.Name,
-                Id = exercise.Id,
-                Info = exercise.Info,
-                Interval = exercise.Interval,
-                Ordenation = exercise.Ordenation,
-                Reps = exercise.Reps,
-                Set = exercise.Set,
-                Weight = exercise.Weight,
-                ExerciseId = exercise.Exercise.Id,
-                TrainningDayId = exercise.Exercise.Id,
+                Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == trainningExerciseVO.ExerciseId).FirstOrDefault(),
+                Id = trainningExerciseVO.Id,
+                Info = trainningExerciseVO.Info,
+                Interval = trainningExerciseVO.Interval,
+                Ordenation = trainningExerciseVO.Ordenation,
+                Reps = trainningExerciseVO.Reps,
+                Set = trainningExerciseVO.Set,
+                Weight = trainningExerciseVO.Weight,
+                ExerciseId = trainningExerciseVO.ExerciseId,
+                TrainningDayId = trainningExerciseVO.TrainningDayId
+                //TrainningDay = _trainningDay.TrainningDays.Where(x => x.Id == trainningExerciseVO.TrainningDayId).FirstOrDefault(),
+                
+            };
+        }
+
+        public List<TrainningExerciseVO> GetByTrainningDayId(int trainningId)
+        {
+            List<TrainningExercise> trainningExercise = TrainningExercises.Where(x => x.TrainningDayId == trainningId).ToList();
+            return TrainningExerciseTOListVO(trainningExercise);
+        }
 
 
-            }).ToList();
+        public void EditById(TrainningExerciseVO trainningExerciseVO)
+        {
+            TrainningExercise trainning = TrainningExercises.Where(x => x.Id == trainningExerciseVO.Id).FirstOrDefault();
+            if (trainning == null) return;
+
+            TrainningExercises.Remove(trainning);
+
+            TrainningExercise trainningExercise = TrainningExerciseVOToEntitie(trainningExerciseVO);
+            trainningExercise.TrainningDay = trainning.TrainningDay;
+            trainningExercise.Exercise = trainning.Exercise;
+            trainningExercise.Ordenation = trainning.Ordenation;
+            TrainningExercises.Add(trainningExercise);
+            TrainningExercises.OrderBy(x => x.Ordenation);
+            TrainningExerciseUpdated?.Invoke();
+
+        } 
+
+        public bool RemoveById(int exerciseId)
+        {
+            TrainningExercise exercise = TrainningExercises.Where(x => x.Id == exerciseId).FirstOrDefault();
+            if(exercise == null) return false;
+
+            TrainningExercises.Remove(exercise);
+            TrainningExerciseUpdated?.Invoke();
+
+            return true;
         }
 
         public DbTrainningExercise(DbMusclesAndExercises musclesAndExercises) 
         {
             _musclesAndExercises = musclesAndExercises ?? throw new ArgumentNullException(nameof(musclesAndExercises));
+            //_trainningDay = trainningDay ?? throw new ArgumentNullException(nameof(trainningDay));
 
             TrainningExercises = new List<TrainningExercise>()
             {

@@ -14,8 +14,8 @@ namespace TrainningApp.Core.Entities
     {
         public List<Trainning> Trainnings { get; set; }
 
-        
-       
+
+
         private readonly DbUsers _dbUsers;
         private readonly DbTrainningDay _trainningDay;
         private readonly DbTrainningExercise _trainningExercise;
@@ -74,6 +74,20 @@ namespace TrainningApp.Core.Entities
         {
             Trainning trainning = Trainnings.Where(x => x.Id == trainningId).FirstOrDefault();
             if (trainning == null) return new TrainningReturnVO();
+            if (trainning.TrainningDays == null || trainning.TrainningDays.Count == 0)
+            {
+
+                trainning.TrainningDays = new List<TrainningDay>()
+                {
+                    new TrainningDay()
+                    {
+                        Name = "A",
+                        Ordenation = 1,
+                        TrainningExercises = new List<TrainningExercise>(),
+                    }
+
+                };
+            }
             return TrainningToTrainningVO(trainning);
         }
 
@@ -97,7 +111,7 @@ namespace TrainningApp.Core.Entities
                 Personal = _dbUsers.Personals.Where(x => x.Id == "1").FirstOrDefault(),
                 Activate = true,
                 TrainningDays = _trainningDay.TrainningDays.Where(x => x.Id == 1 || x.Id == 2 || x.Id == 3).ToList(),
-                                  
+
             },
              new Trainning()
             {
@@ -121,6 +135,18 @@ namespace TrainningApp.Core.Entities
             },
 
         };
+            foreach (var trainning in Trainnings)
+            {
+                foreach (var trainningDayIndex in trainning.TrainningDays)
+                {
+                    trainningDayIndex.TrainningExercises = trainningDayIndex.TrainningExercises
+                        .OrderBy(x => x.Ordenation)
+                        .ToList();
+                }
+            }
+
+
+
         }
     }
 }

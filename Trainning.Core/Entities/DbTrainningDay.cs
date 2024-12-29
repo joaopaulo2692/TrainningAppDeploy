@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainningApp.Core.DTO;
 using TrainningApp.Core.DTO.TrainningDay;
 using TrainningApp.Core.DTO.TrainningExercise;
 
@@ -14,6 +15,8 @@ namespace TrainningApp.Core.Entities
 
         private readonly DbMusclesAndExercises _musclesAndExercises;
         private readonly DbTrainningExercise _trainningExercise;
+
+        public event Action TrainningDaysUpdated;
 
 
         public TrainningDayVO TrainningDayToVO(TrainningDay trainningDay)
@@ -28,7 +31,7 @@ namespace TrainningApp.Core.Entities
             return trainningVO;
         }
 
-        public event Action TrainningDaysUpdated;
+        
 
         public bool RemoveById(int trainningDayId)
         {
@@ -81,13 +84,30 @@ namespace TrainningApp.Core.Entities
             }).ToList();
         }
 
+        public void UpdateTrainningExercise()
+        {
+
+
+            // Atualiza os TrainningDays para refletir qualquer mudança
+            foreach (var trainning in TrainningDays)
+            {
+                trainning.TrainningExercises = _trainningExercise.TrainningExercises
+                   .Where(td => trainning.TrainningExercises.Select(t => t.Id).Contains(td.Id))
+                   .ToList();
+
+               
+            }
+
+        }
+
 
         public DbTrainningDay(DbTrainningExercise trainningExercise, DbMusclesAndExercises musclesAndExercises)
         {
 
             _trainningExercise = trainningExercise ?? throw new ArgumentNullException(nameof(trainningExercise));
             _musclesAndExercises = musclesAndExercises ?? throw new ArgumentNullException(nameof(musclesAndExercises));
-       
+
+            _trainningExercise.TrainningExerciseUpdated += UpdateTrainningExercise;
 
             TrainningDays = new List<TrainningDay>()
             {
@@ -124,6 +144,8 @@ namespace TrainningApp.Core.Entities
                     TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.Id == 4 || x.Id == 5).ToList()
                 },
             };
+
+            TrainningDays.Select(x => x.TrainningExercises.OrderBy(x => x.Ordenation)).ToList();
         }
     }
 }           

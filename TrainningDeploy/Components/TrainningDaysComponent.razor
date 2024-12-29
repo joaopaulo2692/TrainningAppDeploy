@@ -1,7 +1,9 @@
 ﻿@page "/drag-and-drop"
 @using TrainningApp.Core.DTO.TrainningExercise
+@using TrainningApp.Core.Entities
 @inject IJSRuntime JS
 @inject IDialogService DialogService
+@inject DbTrainningExercise _trainningExercise
 
 <br/>
 
@@ -60,7 +62,7 @@
                  Editar
              </MudButton>
              <MudButton Variant="Variant.Filled" Color="Color.Error"
-                        Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;">
+                        Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => RemoveExercise(item)">
                  Deletar
              </MudButton>
          </MudPaper>
@@ -105,7 +107,10 @@
     public List<TrainningExerciseVO> ParameterTrainningExercises { get; set; }
 
     [Parameter]
-    public EventCallback<List<TrainningExerciseVO>> OnEditExercise { get; set; }
+    public EventCallback<TrainningExerciseVO> OnEditExercise { get; set; }
+
+    [Parameter]
+    public EventCallback OnModification { get; set; }
 
     [Parameter]
     public EventCallback<int> OnRemoveTrainningDay { get; set; }
@@ -215,31 +220,6 @@
 
 
 
-    // [JSInvokableAttribute]
-    // public async Task UpdateOrdenation(string draggedId, string swappedId)
-    // {
-    //     // Converter os IDs para inteiros (ou outro tipo apropriado)
-    //     if (int.TryParse(draggedId, out var draggedExerciseId) &&
-    //         int.TryParse(swappedId, out var swappedExerciseId))
-    //     {
-    //         // Obtenha os objetos correspondentes com base nos IDs
-    //         var draggedExercise = ParameterTrainningExercises.FirstOrDefault(e => e.Id == draggedExerciseId);
-    //         var swappedExercise = ParameterTrainningExercises.FirstOrDefault(e => e.Id == swappedExerciseId);
-
-    //         if (draggedExercise != null && swappedExercise != null)
-    //         {
-
-    //             // Você pode atualizar as propriedades Ordenation ou realizar outras alterações
-    //             var tempOrdenation = draggedExercise.Ordenation;
-    //             draggedExercise.Ordenation = swappedExercise.Ordenation;
-    //             swappedExercise.Ordenation = tempOrdenation;
-
-    //             // Atualize a lista ou persista no banco de dados, se necessário
-
-    //         }
-    //     }
-    // }
-
 
     private async Task OpenDialog()
     {
@@ -262,8 +242,8 @@
             if (addedExercise == null) return;
             addedExercise.TrainningDayId = ParameterTrainningDay;
 
-            if (!IsToEdited) addedExercise.Ordenation = ParameterOrdenation + 1;
-            if (IsToEdited) addedExercise.Ordenation = ParameterOrdenation;
+            // if (!IsToEdited) addedExercise.Ordenation = ParameterOrdenation + 1;
+            // if (IsToEdited) addedExercise.Ordenation = ParameterOrdenation;
             // Chame o método para adicionar o exercício ao componente pai
             // DropZoneItem dropItem = new DropZoneItem()
             //     {
@@ -275,9 +255,19 @@
             // if (!IsToEdited) await AddExercise(dropItem);
             // else if (IsToEdited) await EditExercise(dropItem);
 
-            EditListExercise(exercises);
+            // EditListExercise(exercises);
+
+            if (IsToEdited)
+            {
+                _trainningExercise.EditById(addedExercise);
+            }
+            if (!IsToEdited)
+            {
+                
+            }
 
             IsToEdited = false;
+            OnModification.InvokeAsync();
         }
 
     }
@@ -291,17 +281,23 @@
         return;
     }
 
+    private async Task RemoveExercise(TrainningExerciseVO exercise)
+    {
+        _trainningExercise.RemoveById(exercise.Id);
+        await OnModification.InvokeAsync();
+        StateHasChanged();
+    }
 
     private async Task RemoveTrainningDay()
     {
         // int trainningDayId = ParameterTrainningExercises.FirstOrDefault().TrainningDayId;
         await OnRemoveTrainningDay.InvokeAsync(ParameterTrainningDay);
     }
-        private async Task EditListExercise(List<TrainningExerciseVO> trainningExerciseVOs)
-    {
-        // Chame o callback passando o exercício adicionado
-        await OnEditExercise.InvokeAsync(trainningExerciseVOs);
-    }
+    //     private async Task EditListExercise(List<TrainningExerciseVO> trainningExerciseVOs)
+    // {
+    //     // Chame o callback passando o exercício adicionado
+    //     await OnEditExercise.InvokeAsync(trainningExerciseVOs);
+    // }
 
    private void AddNewTrainningDay()
     {
