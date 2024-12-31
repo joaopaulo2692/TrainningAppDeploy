@@ -182,7 +182,13 @@
         char trainningLetter = TrainningToEdit.TrainningDays.Max(x => x.Name).FirstOrDefault();
         TrainningDayReturnVO lastTrainning = TrainningToEdit.TrainningDays.LastOrDefault();
         trainningLetter++;
-        TrainningToEdit.TrainningDays.Add(new TrainningDayReturnVO() { Name = trainningLetter.ToString(), Ordenation = lastTrainning.Ordenation + 1, TrainningExercises = new List<TrainningExerciseVO>()});
+
+        TrainningDay trainningDay = _trainningDay.AddNewTrainningDay(trainningLetter.ToString(), lastTrainning.TrainningId);
+        _trainning.AddTrainningDay(trainningDay, lastTrainning.TrainningId);
+        TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
+        // TrainningToEdit.TrainningDays.Add(new TrainningDayReturnVO() { Name = trainningLetter.ToString(), Ordenation = lastTrainning.Ordenation + 1, TrainningExercises = new List<TrainningExerciseVO>()});
+        
+        
         _uniqueKey++;
     }
 

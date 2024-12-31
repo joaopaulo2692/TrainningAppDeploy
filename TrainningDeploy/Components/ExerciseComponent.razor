@@ -2,8 +2,9 @@
 @using TrainningApp.Core.DTO.Exercise
 @using TrainningApp.Core.DTO.Muscle
 @using TrainningApp.Core.DTO.TrainningExercise
+@using TrainningApp.Core.Entities
 @using TrainningDeploy.Components
-
+@inject DbMusclesAndExercises _dbMusclesAndExercise
 
 <MudDialog MaxWidth="MaxWidth.ExtraLarge" FullWidth="true" Class="custom-dialog rounded-lg">
     <DialogContent>
@@ -28,10 +29,18 @@
                 else if (exerciseList[0].Video == "") exerciseNotHasVideo = true;
                 else if (exerciseList[0].Video != null && exerciseList[0].Video != "") exerciseNotHasVideo = false;
             }
-            <MudAutocomplete T="string" Label="Exercício" @bind-Value="exerciseSelected" SearchFunc="@SearchExercise"           
+            <MudAutocomplete T="ExerciseVO"
+                             Label="Exercício"
+                             @bind-Value="exerciseVO"
+                             SearchFunc="@SearchExercise"
                              ResetValueOnEmptyText="@resetValueOnEmptyText"
                              MaxItems="50"
-                             CoerceText="@coerceText" CoerceValue="@coerceValue" HelperText="@(hasError ? errorMessage : null)" Error="@hasError" />
+                             CoerceText="@coerceText"
+                             CoerceValue="@coerceValue"
+                             HelperText="@(hasError ? errorMessage : null)"
+                             Error="@hasError">
+            </MudAutocomplete>
+
             @if (hasError)
             {
                 <MudText Color="Color.Error" Typo="Typo.caption">@errorMessage</MudText>
@@ -139,7 +148,7 @@
 
     private bool ValidateSelection()
     {
-        if (string.IsNullOrEmpty(exerciseSelected))
+        if (exerciseVO == null)
         {
             hasError = true;
             return hasError;
@@ -207,7 +216,8 @@
         trainningExerciseVO = new TrainningExerciseVO
             {
                 Id = EditExercise.Id,
-                ExerciseName = exerciseSelected,
+                ExerciseId = exerciseVO.Id,
+                ExerciseName = exerciseVO.Name,
                 Reps = string.Join("/", reps),
                 // Reps = array[1],
                 Interval = rest,
@@ -237,15 +247,15 @@
         }
         trainningExerciseVO = new TrainningExerciseVO
             {
-                
-                ExerciseName = exerciseSelected,
+                ExerciseId = exerciseVO.Id,
+                ExerciseName = exerciseVO.Name,
                 Reps = string.Join("/", reps),
                 // Reps = array[1],
                 Interval = rest,
                 Weight = string.Join("/", weights),
                 Info = observation,
                 Set = set,
-           
+
 
             };
 
@@ -276,7 +286,9 @@
             if (numbersReps.Count == 0) numbersReps = new List<string> { "", "", "", "", "" };
             if (numbersWeights.Count == 0) numbersWeights = new List<string> { "", "", "", "", "" };
 
+            ExerciseVO exerciseDb = _dbMusclesAndExercise.GetExerciseById(EditExercise.ExerciseId);
 
+            exerciseVO = exerciseDb;
             set = EditExercise.Set;
             reps = numbersReps;
             exerciseSelected = EditExercise.ExerciseName != null ? EditExercise.ExerciseName : string.Empty;
@@ -305,29 +317,58 @@
         }
     }
 
-    private async Task<IEnumerable<string>> SearchExercise(string value, CancellationToken token)
+    // private async Task<IEnumerable<string>> SearchExercise(string value, CancellationToken token)
+    // {
+    //     exerciseList = exerciseListCopy;
+    //     await Task.Delay(5, token); // Simulação de chamada assíncrona
+    //     StateHasChanged();
+    //     MuscleVO muscleVO = musclesList.Where(x => x.Name == muscleSelected).FirstOrDefault();
+
+
+    //     if (muscleVO != null) exerciseList = exerciseList.Where(x => x.Muscles.Contains(muscleVO.Name)).ToList();
+    //     if (string.IsNullOrEmpty(value))
+    //         return exerciseList.Select(x => x.Name);
+    //     ExerciseVO exerciseVO = exerciseList.Where(x => x.Name == value).FirstOrDefault();
+    //     if (exerciseVO != null)
+    //     {
+    //         if (exerciseVO.Video == null) exerciseNotHasVideo = true;
+    //         else if (exerciseVO.Video == "") exerciseNotHasVideo = true;
+    //         else if (exerciseVO.Video != null && exerciseVO.Video != "") exerciseNotHasVideo = false;
+
+    //     }
+    //     StateHasChanged();
+
+    //     return exerciseList.Select(x => x.Name).Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    // }
+
+    private async Task<IEnumerable<ExerciseVO>> SearchExercise(string value, CancellationToken token)
     {
         exerciseList = exerciseListCopy;
         await Task.Delay(5, token); // Simulação de chamada assíncrona
-        StateHasChanged();
+
         MuscleVO muscleVO = musclesList.Where(x => x.Name == muscleSelected).FirstOrDefault();
 
+        if (muscleVO != null)
+            exerciseList = exerciseList.Where(x => x.Muscles.Contains(muscleVO.Name)).ToList();
 
-        if (muscleVO != null) exerciseList = exerciseList.Where(x => x.Muscles.Contains(muscleVO.Name)).ToList();
         if (string.IsNullOrEmpty(value))
-            return exerciseList.Select(x => x.Name);
-        ExerciseVO exerciseVO = exerciseList.Where(x => x.Name == value).FirstOrDefault();
-        if (exerciseVO != null)
+            return exerciseList;
+
+        var filteredList = exerciseList.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+        ExerciseVO selectedExercise = filteredList.FirstOrDefault(x => x.Name == value);
+        if (selectedExercise != null)
         {
-            if (exerciseVO.Video == null) exerciseNotHasVideo = true;
-            else if (exerciseVO.Video == "") exerciseNotHasVideo = true;
-            else if (exerciseVO.Video != null && exerciseVO.Video != "") exerciseNotHasVideo = false;
-
+            if (string.IsNullOrEmpty(selectedExercise.Video))
+                exerciseNotHasVideo = true;
+            else
+                exerciseNotHasVideo = false;
         }
-        StateHasChanged();
 
-        return exerciseList.Select(x => x.Name).Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return filteredList;
     }
+
+
 
     private async Task<IEnumerable<string>> SearchByMuscle(string value, CancellationToken token)
     {

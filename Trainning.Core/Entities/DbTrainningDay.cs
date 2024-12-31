@@ -31,7 +31,35 @@ namespace TrainningApp.Core.Entities
             return trainningVO;
         }
 
-        
+        public TrainningDay AddNewTrainningDay(string letter, int trainningId)
+        {
+            int id = TrainningDays.Max(x => x.Id) + 1;
+            TrainningDay trainningDay = new TrainningDay()
+            {
+                Id = id,
+                Name = letter,
+                TrainningExercises = new List<TrainningExercise>(),
+                TrainningId = trainningId
+            };
+            TrainningDays.Add(trainningDay);
+            TrainningDaysUpdated?.Invoke();
+            return trainningDay;
+        }
+
+        public void AddNewExercise(int trainningDayId, int trainningExerciseId)
+        {
+            
+
+            TrainningExercise trainningExercise = _trainningExercise.TrainningExercises.Where(x => x.Id == trainningExerciseId).FirstOrDefault();
+
+            TrainningDay trainningDay = TrainningDays.Where(x => x.Id == trainningDayId).FirstOrDefault();
+            if (trainningDay != null)
+            {
+                trainningDay.TrainningExercises.Add(trainningExercise);
+            }
+
+            TrainningDaysUpdated?.Invoke();
+        }
 
         public bool RemoveById(int trainningDayId)
         {
@@ -80,7 +108,7 @@ namespace TrainningApp.Core.Entities
                 Id = trainningDay.Id,
                 Ordenation = trainningDay.Ordenation,
                 TrainningExercises = _trainningExercise.TrainningExerciseTOListVO(trainningDay.TrainningExercises),
-                TrainningId = trainningDay.Id
+                TrainningId = trainningDay.TrainningId
             }).ToList();
         }
 

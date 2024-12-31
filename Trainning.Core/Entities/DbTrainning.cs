@@ -60,16 +60,43 @@ namespace TrainningApp.Core.Entities
             }).ToList();
         }
 
+        //private void UpdateTrainningDays()
+        //{
+        //    // Atualiza os TrainningDays para refletir qualquer mudança
+        //    foreach (var trainning in Trainnings)
+        //    {
+        //        trainning.TrainningDays = _trainningDay.TrainningDays
+        //            .Where(td => trainning.TrainningDays.Select(t => t.Id).Contains(td.Id))
+        //            .ToList();
+        //    }
+        //}
+
+
+        public void AddTrainningDay(TrainningDay trainningDay, int trainningId)
+        {
+            Trainning trainning = Trainnings.Where(x => x.Id == trainningId).FirstOrDefault();
+
+            trainning.TrainningDays.Add(trainningDay);
+        }
+
         private void UpdateTrainningDays()
         {
-            // Atualiza os TrainningDays para refletir qualquer mudança
             foreach (var trainning in Trainnings)
             {
                 trainning.TrainningDays = _trainningDay.TrainningDays
-                    .Where(td => trainning.TrainningDays.Select(t => t.Id).Contains(td.Id))
+                    .Where(td => trainning.TrainningDays.Any(t => t.Id == td.Id))
+                    .Select(td =>
+                    {
+                        td.TrainningExercises = _trainningExercise.TrainningExercises
+                            .Where(te => td.TrainningExercises.Any(t => t.Id == te.Id))
+                            .ToList();
+                        return td;
+                    })
                     .ToList();
             }
         }
+
+
         public TrainningReturnVO GetById(int trainningId)
         {
             Trainning trainning = Trainnings.Where(x => x.Id == trainningId).FirstOrDefault();

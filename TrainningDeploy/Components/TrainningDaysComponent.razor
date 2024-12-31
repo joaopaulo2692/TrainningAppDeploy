@@ -4,6 +4,7 @@
 @inject IJSRuntime JS
 @inject IDialogService DialogService
 @inject DbTrainningExercise _trainningExercise
+@inject DbTrainningDay _trainningDay
 
 <br/>
 
@@ -263,7 +264,10 @@
             }
             if (!IsToEdited)
             {
-                
+                TrainningDay trainningDay = _trainningDay.TrainningDays.Where(x => x.Id == ParameterTrainningDay).FirstOrDefault();
+                int trainningExerciseId = _trainningExercise.AddNewExercise(addedExercise, trainningDay);
+                _trainningDay.AddNewExercise(ParameterTrainningDay, trainningExerciseId);
+
             }
 
             IsToEdited = false;

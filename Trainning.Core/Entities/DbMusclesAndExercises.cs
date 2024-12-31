@@ -28,6 +28,26 @@ namespace TrainningApp.Core.Entities
             }).ToList();
         }
 
+        public ExerciseVO GetExerciseById(int exerciseId)
+        {
+            Exercise exercise = Exercises.Where(x => x.Id == exerciseId).FirstOrDefault();
+            if (exercise == null) return null;
+
+            return ExerciseToDTO(exercise);
+
+        }
+
+        public ExerciseVO ExerciseToDTO(Exercise exercise)
+        {
+            return new ExerciseVO
+            {
+                Id = exercise.Id,
+                Name = exercise.Name,
+                Muscles = exercise.Muscles.Select(x => x.Name).ToList()
+
+            };
+        }
+
         public List<ExerciseVO> ExercisesToDTO()
         {
             return Exercises.Select(x => new ExerciseVO

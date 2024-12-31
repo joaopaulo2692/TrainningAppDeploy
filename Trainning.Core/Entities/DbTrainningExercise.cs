@@ -65,6 +65,31 @@ namespace TrainningApp.Core.Entities
             return TrainningExerciseTOListVO(trainningExercise);
         }
 
+        public int AddNewExercise(TrainningExerciseVO trainningExerciseVO, TrainningDay trainningDay)
+        {
+            List<TrainningExercise> trainningExercises = TrainningExercises.Where(x => x.TrainningDayId == trainningExerciseVO.TrainningDayId).ToList();
+            if(trainningExercises != null && trainningExercises.Count > 0)
+            {
+                int ordenation = trainningExercises.Max(x => x.Ordenation);
+                trainningExerciseVO.Ordenation = ordenation++;
+            }
+            else
+            {
+                trainningExerciseVO.Ordenation = 1;
+            }
+            
+
+            int id = TrainningExercises.Max(x => x.Id);
+            //trainningExerciseVO.Ordenation = ordenation++;
+
+
+            TrainningExercise trainningExercise = TrainningExerciseVOToEntitie(trainningExerciseVO);
+            trainningExercise.TrainningDay = trainningDay;
+            trainningExercise.Id = id + 1;
+            TrainningExercises.Add(trainningExercise);
+            TrainningExerciseUpdated?.Invoke();
+            return trainningExercise.Id;
+        }
 
         public void EditById(TrainningExerciseVO trainningExerciseVO)
         {
@@ -72,10 +97,14 @@ namespace TrainningApp.Core.Entities
             if (trainning == null) return;
 
             TrainningExercises.Remove(trainning);
+            DbMusclesAndExercises muscleExercise = new DbMusclesAndExercises();
+            Exercise exercise = muscleExercise.Exercises.Where(x => x.Id == trainningExerciseVO.ExerciseId).FirstOrDefault();
 
             TrainningExercise trainningExercise = TrainningExerciseVOToEntitie(trainningExerciseVO);
             trainningExercise.TrainningDay = trainning.TrainningDay;
-            trainningExercise.Exercise = trainning.Exercise;
+            trainningExercise.ExerciseId = exercise.Id;
+            //trainningExercise.Exercise = trainning.Exercise;
+            trainningExercise.Exercise = exercise;
             trainningExercise.Ordenation = trainning.Ordenation;
             TrainningExercises.Add(trainningExercise);
             TrainningExercises.OrderBy(x => x.Ordenation);
