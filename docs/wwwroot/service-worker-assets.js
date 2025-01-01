@@ -97,7 +97,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-styhKLJxvhDG7bXHjcKz5\/2S01H4JxNmv5LH+FbCaEk=",
+      "hash": "sha256-99Y01zvcKtXnWy8HlNwXz97aR0szA1FLcOV4tdJ5LcM=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.Forms.wasm"
     },
     {
-      "hash": "sha256-UalpvqdUwgi\/+RI9EEaVpfjpbW2o7Vx4L+vyDuswjMY=",
+      "hash": "sha256-1wqjBZGLT+kBxDZEhsqGuBOhfkzLuEC\/JU6SYKVwtjI=",
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -177,7 +177,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-QufmU12miwopwWAYwDta89EH9M2uNRSsR\/Dkw6WHFf8=",
+      "hash": "sha256-JSqT\/YhdfVd9RfQxghweHfNF0jRWMnAjOvgo9gBE2\/s=",
       "url": "_framework\/MudBlazor.wasm"
     },
     {
@@ -257,7 +257,7 @@
       "url": "_framework\/System.Runtime.InteropServices.JavaScript.wasm"
     },
     {
-      "hash": "sha256-Kavgkt\/ZVC4rjlYq4V391D81TatR1I9HXF+kL8i77Uk=",
+      "hash": "sha256-NsX+8cuJ\/DanS5zvC0c9qSFWMPiYz5520AaHgvs0haE=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -273,15 +273,19 @@
       "url": "_framework\/System.Text.RegularExpressions.wasm"
     },
     {
+      "hash": "sha256-4C3ndI\/Xg3W8vOvl13jkctoRhnF8IMqWfWFATomhvjM=",
+      "url": "_framework\/System.Threading.wasm"
+    },
+    {
       "hash": "sha256-UsIFTsNRr1Sw\/A0hEbTyYbQo5eHUNmMuOWT6\/xaM3TE=",
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-S1kO0dgJx8TAugTPryxsfr2Fte5U99zq7udtTB\/wOcg=",
+      "hash": "sha256-uW3D6C0G\/cRfuCRBWw9KC2W2iaQF6mTqB9hZzPLufoI=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-53zLS2Fb+3WGblNB2DNvIkE96GcFfWp9aceF0xr1FPo=",
+      "hash": "sha256-C7TpsXIWyOaKv\/kyBDHgp4FfKT0udCZSxXXyV\/gbISo=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -297,5 +301,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "gESq+8Gk"
+  "version": "eGK663ML"
 };

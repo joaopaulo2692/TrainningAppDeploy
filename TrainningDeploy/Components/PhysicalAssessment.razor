@@ -7,12 +7,10 @@
 <br />
 <br />
 
-
 @foreach (var physical in physicalList)
 {
     <div class="hover-container" style="display: flex; justify-content: center; margin-bottom: 10px;">
         <MudPaper class="hover-paper custom-size" Height="80px" Width="75%" Style="padding: 20px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-sizing: border-box;">
-
             <!-- Container de textos -->
             <div>
                 <!-- Responsável -->
@@ -35,10 +33,7 @@
             <!-- Ícone -->
             <div class="action-icons">
                 <MudIconButton OnClick="()=>EditPhysical(physical)" Icon="@Icons.Material.Filled.MedicalInformation" Style="font-size: 68px; color: var(--mud-palette-primary);" />
-
                 <MudIconButton OnClick="()=>DeleteDialogAsync(physical)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
-
-                @* <MudIcon Icon="@Icons.Material.Filled.MedicalInformation"  Style="font-size: 48px; color: var(--mud-palette-primary);" /> *@
             </div>
 
         </MudPaper>
@@ -59,26 +54,35 @@
         cursor: pointer; /* Indica que é clicável */
     }
 
-        /* Efeito de seleção */
+        /* Efeito de hover comum */
         .hover-paper:hover {
-            background-color: #2a2a3d; /* Cor de destaque no hover */
+            background-color: var(--hover-background-color);
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra opcional */
         }
 
-        /* Ícone invisível por padrão */
-        .hover-paper .action-icons {
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
+    /* Tema Light */
+    .mud-theme-light .hover-paper {
+        --hover-background-color: #E0F7FA !important; /* Forçando a cor de fundo clara para o hover no tema light */
+    }
 
-        /* Exibe o ícone no hover */
-        .hover-paper:hover .action-icons {
-            visibility: visible;
-            opacity: 1;
-        }
+    /* Tema Dark */
+    .mud-theme-dark .hover-paper {
+        --hover-background-color: #1E88E5 !important; /* Forçando a cor de fundo escura para o hover no tema dark */
+    }
+
+    /* Ícone invisível por padrão */
+    .hover-paper .action-icons {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* Exibe o ícone no hover */
+    .hover-paper:hover .action-icons {
+        visibility: visible;
+        opacity: 1;
+    }
 </style>
-
 
    
 
