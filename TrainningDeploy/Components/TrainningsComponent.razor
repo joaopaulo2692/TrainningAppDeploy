@@ -20,7 +20,7 @@
     <br />
     <br />
     <br />
-    @foreach (TrainningReturnVO trainning in trainningsList)
+    @foreach (TrainningReturnVO trainning in TrainningsList)
     {
         <div style="display: flex; justify-content: center; margin-bottom: 10px;">
             <MudPaper Height="220px" Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-sizing: border-box;">
@@ -155,6 +155,9 @@
 
 @code {
 
+    [Parameter]
+    public List<TrainningReturnVO> TrainningsList { get; set; } 
+
     private async Task DeleteDialogAsync(TrainningReturnVO trainning)
     {
         var parameters = new DialogParameters
@@ -186,14 +189,14 @@
 
     // TrainningReturnVO trainning = new TrainningReturnVO();
     private TrainningReturnVO TrainningEditing { get; set; }
-    List<TrainningReturnVO> trainningsList = new List<TrainningReturnVO>();
+    // List<TrainningReturnVO> trainningsList = new List<TrainningReturnVO>();
 
 
     private void UpdateOrCreateTrainning(TrainningReturnVO trainningToSave)
     {
         if (trainningToSave.Activate)
         {
-            foreach (var item in trainningsList.Where(x => x.Activate))
+            foreach (var item in TrainningsList.Where(x => x.Activate))
             {
                 if (trainningToSave.Id != item.Id) item.Activate = false;
                 // Altera o valor para false
@@ -201,7 +204,7 @@
         }
         if (trainningToSave.Id != 0)
         {
-            var trainningToUpdate = trainningsList.FirstOrDefault(x => x.Id == trainningToSave.Id);
+            var trainningToUpdate = TrainningsList.FirstOrDefault(x => x.Id == trainningToSave.Id);
             if (trainningToUpdate != null)
             {
                 // Atualizar as propriedades do item encontrado
@@ -218,12 +221,12 @@
         }
         else
         {
-            trainningToSave.Id = trainningsList.Count + 1;
-            trainningsList.Add(trainningToSave);
+            trainningToSave.Id = TrainningsList.Count + 1;
+            TrainningsList.Add(trainningToSave);
         }
         EditTrainning = false;
         AddTrainning = false;
-        trainningsList = trainningsList.OrderByDescending(x => x.CreatedAt).ToList();
+        TrainningsList = TrainningsList.OrderByDescending(x => x.CreatedAt).ToList();
     }
 
     private bool AddTrainning { get; set; } = false;
@@ -235,7 +238,10 @@
         // DbTrainning _trainning = new DbTrainning(dbUsers, trainningDay, trainningExercise);
         // List<Trainning> trainning = _trainning.Trainnings;
 
-        trainningsList = _trainning.TrainningToTrainningVOList();
+        // trainningsList = _trainning.TrainningToTrainningVOList();
+
+
+
         // trainningsList = new List<TrainningReturnVO>{
         //     new TrainningReturnVO()
         //     {
@@ -387,8 +393,8 @@
 
     private void OnDeleteTrainning(TrainningReturnVO trainningToDelete)
     {
-        TrainningReturnVO toDelete = trainningsList.Where(x => x == trainningToDelete).FirstOrDefault();
-        if (toDelete != null) trainningsList.Remove(toDelete);
+        TrainningReturnVO toDelete = TrainningsList.Where(x => x == trainningToDelete).FirstOrDefault();
+        if (toDelete != null) TrainningsList.Remove(toDelete);
         // _trainning.RemoveById(trainningToDelete.Id);
 
     }

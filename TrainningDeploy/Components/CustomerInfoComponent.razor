@@ -1,5 +1,10 @@
-﻿@page "/cliente"
+﻿@page "/cliente/{UserId}"
+@using TrainningApp.Core.DTO.Trainning
+@using TrainningApp.Core.DTO.User
+@using TrainningApp.Core.Entities
 @using TrainningDeploy.Pages
+@inject DbUsers _dbUser
+@inject DbTrainning _dbTrainning
 
 <MudGrid AlignItems="AlignItems.Center" Class="profile-container">
     <!-- Avatar -->
@@ -10,10 +15,10 @@
     <!-- Texto ao lado do avatar -->
     <MudItem  Class="profile-text">
         <!-- Nome em negrito e maior -->
-        <MudText Typo="Typo.h5" Class="font-weight-bold">João Paulo</MudText>
+        <MudText Typo="Typo.h5" Class="font-weight-bold">@UserVOSelected.Name</MudText>
 
         <!-- Idade e gênero abaixo do nome com tamanho menor -->
-        <MudText Typo="Typo.body2" Class="text-muted">32 anos, Masculino</MudText>
+            <MudText Typo="Typo.body2" Class="text-muted">@UserVOSelected.Age anos, @UserVOSelected.Gender</MudText>
     </MudItem>
 
     <!-- MudAlert ao lado direito -->
@@ -26,10 +31,10 @@
 
 <MudTabs Elevation="1" Rounded="true" PanelClass="pa-0">
     <MudTabPanel Text="RESUMO" ToolTip="Resumos">
-       <CustomerResumeComponent></CustomerResumeComponent>
+            <CustomerResumeComponent UserSelected="UserVOSelected "></CustomerResumeComponent>
     </MudTabPanel>
     <MudTabPanel Text="TREINO" ToolTip="Treinos">
-        <TrainningsComponent></TrainningsComponent>
+            <TrainningsComponent TrainningsList="trainningVOList"></TrainningsComponent>
     </MudTabPanel>
     <MudTabPanel Text="AVALIAÇÕES FÍSICAS" ToolTip="Avaliações Físicas">
        <PhysicalAssessment></PhysicalAssessment>
@@ -59,7 +64,7 @@
     /* Ajusta o conteúdo do MudTabPanel para ser mais compacto nos lados */
     /* Ajusta a largura e o padding para diminuir o tamanho do MudTabPanel */
 
-
+  
 
 
     .responsive-tabs .mud-tab-panel {
@@ -98,8 +103,21 @@
 
 </style>
 @code
-{
+    {
+    [Parameter]
+    public string? UserId { get; set; }
+
+    List<TrainningReturnVO> trainningVOList;
+
+    public UserVO UserVOSelected { get; set; }
     int activeIndex = 0;
+
+
+    protected override void OnInitialized()
+    {
+        UserVOSelected = _dbUser.GetCustomerById(UserId);
+        trainningVOList = _dbTrainning.GetByCustomerId(UserId);
+    }
 }
 
 

@@ -25,7 +25,7 @@ namespace TrainningApp.Core.Entities
         public bool Activate { get; set; }
         public string? Gender { get; set; }
         public int ManagementId { get; set; }
-        public virtual List<ApplicationUser> Users { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual ApplicationUser Personal { get; set; }
 
         public virtual List<TrainningDay> TrainningDays { get; set; }

@@ -17,7 +17,13 @@ namespace TrainningApp.Core.DTO.User
         public string Phone { get; set; }
         public string Cpf { get; set; }
         public string Goal { get; set; }
-
+        public DateTime Birthday {  get; set; }
+        public string Cep {  get; set; }
+        public string City {  get; set; }
+        public string Address {  get; set; }
+        public int NumberHouse {  get; set; }
+        public string Neighborhood {  get; set; }
+        public string Complement{  get; set; }
     
     }
 }

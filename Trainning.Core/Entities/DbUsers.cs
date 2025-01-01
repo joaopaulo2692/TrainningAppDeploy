@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainningApp.Core.DTO.User;
 
 namespace TrainningApp.Core.Entities
 {
@@ -11,6 +12,27 @@ namespace TrainningApp.Core.Entities
         public List<ApplicationUser> Personals { get; set; }
         public List<ApplicationUser> Customers { get; set; }
 
+        public static UserVO UserToVO(ApplicationUser user)
+        {
+            return new UserVO()
+            {
+                Age = user.Age.Value,
+                Cpf = user.Cpf,
+                Email = user.Email,
+                Name = user.Name,
+                Gender = user.Gender,
+                Id = user.Id,
+                Birthday = user.Byrthday
+            };
+        }
+
+        public UserVO GetCustomerById(string id)
+        {
+            ApplicationUser user = Customers.Where(x => x.Id == id).FirstOrDefault();
+            if (user == null) return new UserVO();
+
+            return UserToVO(user);
+        }
         public DbUsers()
         {
             //Personals = new List<ApplicationUser>()
@@ -41,29 +63,20 @@ namespace TrainningApp.Core.Entities
 
             // Inicializando Customers com 20 nomes fixos
             Customers = new List<ApplicationUser>
-        {
-            new ApplicationUser { Id = "4", Name = "Ana", Age = 24, Gender = "Feminino" },
-            new ApplicationUser { Id = "5", Name = "Bruno", Age = 28, Gender = "Masculino" },
-            new ApplicationUser { Id = "6", Name = "Carla", Age = 22, Gender = "Feminino" },
-            new ApplicationUser { Id = "7", Name = "Daniel", Age = 35, Gender = "Masculino" },
-            new ApplicationUser { Id = "8", Name = "Elaine", Age = 26, Gender = "Feminino" },
-            new ApplicationUser { Id = "9", Name = "Fernando", Age = 32, Gender = "Masculino" },
-            new ApplicationUser { Id = "10", Name = "Gabriela", Age = 27, Gender = "Feminino" },
-            new ApplicationUser { Id = "11", Name = "Hugo", Age = 29, Gender = "Masculino" },
-            new ApplicationUser { Id = "12", Name = "Isabela", Age = 23, Gender = "Feminino" },
-            new ApplicationUser { Id = "13", Name = "João", Age = 31, Gender = "Masculino" },
-            new ApplicationUser { Id = "14", Name = "Karen", Age = 25, Gender = "Feminino" },
-            new ApplicationUser { Id = "15", Name = "Leonardo", Age = 33, Gender = "Masculino" },
-            new ApplicationUser { Id = "16", Name = "Mariana", Age = 24, Gender = "Feminino" },
-            new ApplicationUser { Id = "17", Name = "Natália", Age = 28, Gender = "Feminino" },
-            new ApplicationUser { Id = "18", Name = "Otávio", Age = 34, Gender = "Masculino" },
-            new ApplicationUser { Id = "19", Name = "Patrícia", Age = 26, Gender = "Feminino" },
-            new ApplicationUser { Id = "20", Name = "Rafael", Age = 30, Gender = "Masculino" },
-            new ApplicationUser { Id = "21", Name = "Sofia", Age = 22, Gender = "Feminino" },
-            new ApplicationUser { Id = "22", Name = "Thiago", Age = 29, Gender = "Masculino" },
-            new ApplicationUser { Id = "23", Name = "Vanessa", Age = 27, Gender = "Feminino" }
-            };
+{
+    new ApplicationUser { Id = "1", Name = "Alice", Age = 25, Gender = "Feminino", Email = "alice@gmail.com", Cpf = "222222222", Heigth = 1.65f, Weight = 55, Byrthday = new DateTime(1998, 5, 15) },
+    new ApplicationUser { Id = "2", Name = "Bob", Age = 30, Gender = "Masculino", Email = "bob@gmail.com", Cpf = "333333333", Heigth = 1.75f, Weight = 70, Byrthday = new DateTime(1995, 8, 22) },
+    new ApplicationUser { Id = "3", Name = "Clara", Age = 28, Gender = "Feminino", Email = "clara@gmail.com", Cpf = "444444444", Heigth = 1.68f, Weight = 58, Byrthday = new DateTime(1997, 3, 10) },
+    new ApplicationUser { Id = "4", Name = "David", Age = 35, Gender = "Masculino", Email = "david@gmail.com", Cpf = "555555555", Heigth = 1.80f, Weight = 80, Byrthday = new DateTime(1990, 1, 5) },
+    new ApplicationUser { Id = "5", Name = "Eva", Age = 23, Gender = "Feminino", Email = "eva@gmail.com", Cpf = "666666666", Heigth = 1.62f, Weight = 52, Byrthday = new DateTime(2002, 7, 18) },
+    new ApplicationUser { Id = "6", Name = "Frank", Age = 40, Gender = "Masculino", Email = "frank@gmail.com", Cpf = "777777777", Heigth = 1.85f, Weight = 85, Byrthday = new DateTime(1985, 12, 1) },
+    new ApplicationUser { Id = "7", Name = "Grace", Age = 27, Gender = "Feminino", Email = "grace@gmail.com", Cpf = "888888888", Heigth = 1.70f, Weight = 60, Byrthday = new DateTime(1998, 9, 12) },
+    new ApplicationUser { Id = "8", Name = "Henry", Age = 32, Gender = "Masculino", Email = "henry@gmail.com", Cpf = "999999999", Heigth = 1.78f, Weight = 75, Byrthday = new DateTime(1993, 11, 30) },
+    new ApplicationUser { Id = "9", Name = "Ivy", Age = 26, Gender = "Feminino", Email = "ivy@gmail.com", Cpf = "101010101", Heigth = 1.63f, Weight = 54, Byrthday = new DateTime(1998, 4, 25) },
+    new ApplicationUser { Id = "10", Name = "Jack", Age = 29, Gender = "Masculino", Email = "jack@gmail.com", Cpf = "111111111", Heigth = 1.82f, Weight = 78, Byrthday = new DateTime(1996, 6, 17) }
+};
+
         }
     }
- }
+    }
 

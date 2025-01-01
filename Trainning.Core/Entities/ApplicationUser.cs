@@ -13,12 +13,14 @@ namespace TrainningApp.Core.Entities
         public string Id { get; set; }
         public string? Name { get; set; }
         public int? Age { get; set; }
+        public string? Cpf { get; set; }
+        public string? Email { get; set; }
         public float? Heigth { get; set; }
         public string? Gender { get; set; }
         public float? Weight { get; set; }
         public int? GymId { get; set; }  
         // Usado para "Users"
-
+        public DateTime Byrthday { get; set; }
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }

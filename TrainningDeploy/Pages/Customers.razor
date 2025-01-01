@@ -32,7 +32,7 @@
 
                     <MudItem>
                         <div class="action-icons">
-                            <MudIconButton OnClick="NavigateToEditPage" Icon="@Icons.Material.Outlined.Edit" />
+                            <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" />
                         </div>
                     </MudItem>
                 </MudGrid>
@@ -70,9 +70,9 @@
 @code {
     List<UserVO> users = new List<UserVO>();
 
-    private void NavigateToEditPage()
+    private void NavigateToEditPage(string user)
     {
-        NavigationManager.NavigateTo("/TrainningAppDeploy/cliente"); // Substitua "/edit-page" pela rota desejada
+        NavigationManager.NavigateTo($"/TrainningAppDeploy/cliente/{user}"); // Substitua "/edit-page" pela rota desejada
     }
     protected override void OnInitialized()
     {

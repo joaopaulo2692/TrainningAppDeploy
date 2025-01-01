@@ -42,6 +42,40 @@ namespace TrainningApp.Core.Entities
             return trainningDayReturnVO;
         }
 
+        public List<TrainningReturnVO> TrainningListToTrainningVOList(List<Trainning> trainnings)
+        {
+            var trainningReturnVOList = new List<TrainningReturnVO>();
+
+            foreach (var trainning in trainnings)
+            {
+                var trainningReturnVO = new TrainningReturnVO()
+                {
+                    Id = trainning.Id,
+                    Activate = trainning.Activate,
+                    CreatedAt = trainning.CreatedAt,
+                    FrequencyWeekly = trainning.FrequencyWeekly,
+                    Gender = trainning.Gender,
+                    Goal = trainning.Goal,
+                    Level = trainning.Level,
+                    Name = trainning.Name,
+                    Observation = trainning.Observation,
+                    PersonalName = trainning.Personal.Name,
+                    TrainningDays = _trainningDay.TrainningDaysToVOList(trainning.TrainningDays)
+                };
+
+                trainningReturnVOList.Add(trainningReturnVO);
+            }
+
+            return trainningReturnVOList;
+        }
+
+
+        public List<TrainningReturnVO> GetByCustomerId(string userId)
+        {
+            List<Trainning> trainnings = Trainnings.Where(x => x.User.Id == userId).ToList();
+            return TrainningListToTrainningVOList(trainnings);
+        }
+
         public List<TrainningReturnVO> TrainningToTrainningVOList()
         {
             return Trainnings.Select(trainning => new TrainningReturnVO
@@ -138,6 +172,7 @@ namespace TrainningApp.Core.Entities
                 Personal = _dbUsers.Personals.Where(x => x.Id == "1").FirstOrDefault(),
                 Activate = true,
                 TrainningDays = _trainningDay.TrainningDays.Where(x => x.Id == 1 || x.Id == 2 || x.Id == 3).ToList(),
+                User = _dbUsers.Customers.Where(x => x.Id == "4").FirstOrDefault()
 
             },
              new Trainning()
@@ -149,6 +184,7 @@ namespace TrainningApp.Core.Entities
                 Personal = _dbUsers.Personals.Where(x => x.Id == "2").FirstOrDefault(),
                 Activate = false,
                 TrainningDays = _trainningDay.TrainningDays.Where(x => x.Id == 4).ToList(),
+                User = _dbUsers.Customers.Where(x => x.Id == "4").FirstOrDefault()
             },
              new Trainning()
             {
@@ -158,9 +194,22 @@ namespace TrainningApp.Core.Entities
                 Name = "Treino AB",
                  Personal = _dbUsers.Personals.Where(x => x.Id == "3").FirstOrDefault(),
                 Activate = false,
-                TrainningDays = new List<TrainningDay>()
+                TrainningDays = new List<TrainningDay>(),
+                User = _dbUsers.Customers.Where(x => x.Id == "4").FirstOrDefault()
             },
 
+             new Trainning()
+            {
+                Id = 4,
+                CreatedAt = new DateTime(2024, 11, 20),
+                Goal = "Hipertrofia",
+                Name = "Treino 2024",
+                Personal = _dbUsers.Personals.Where(x => x.Id == "1").FirstOrDefault(),
+                Activate = true,
+                TrainningDays = _trainningDay.TrainningDays.Where(x => x.Id == 1 || x.Id == 2 || x.Id == 3).ToList(),
+                User = _dbUsers.Customers.Where(x => x.Id == "5").FirstOrDefault()
+
+            },
         };
             foreach (var trainning in Trainnings)
             {
