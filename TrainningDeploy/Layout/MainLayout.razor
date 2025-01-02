@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using TrainningDeploy.Components
+@inherits LayoutComponentBase
 
 
 
@@ -13,6 +14,7 @@
         <MudSpacer />
          @if (ShowSearchCustomer)
         {
+            
             @if (_isDarkMode)
             {
                 <SearchCustomer IsLightMode=false></SearchCustomer>
@@ -89,7 +91,7 @@
             DrawerBackground = "#ffffff",
             GrayLight = "#e8e8e8", // Ajuste aqui a cor do cinza claro
             GrayLighter = "#f9f9f9", // Ajuste aqui o cinza mais claro, se necessário
-            Background = "#dcdcdc" // Cor cinza para o fundo no modo claro
+            Background = "#F5F5F5" // Cor cinza para o fundo no modo claro
         };
 
     private readonly PaletteDark _darkPalette = new()

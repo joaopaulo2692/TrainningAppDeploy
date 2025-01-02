@@ -2,7 +2,7 @@
 @inject NavigationManager NavigationManager
 @using TrainningApp.Core.DTO.User
 @using TrainningApp.Core.Entities
-@inject UsersDb UserDbService
+@inject DbUsers _dbUsers
 
 
 <div style="display: flex; justify-content: center;">
@@ -76,7 +76,8 @@
     }
     protected override void OnInitialized()
     {
-        users = UserDbService.CustomersToDTO();
+        List<ApplicationUser> appUser = _dbUsers.Customers.ToList();
+        users = _dbUsers.UsersToDTO(appUser);
         //         users = new List<UserVO>()
 // {
 //     new UserVO()

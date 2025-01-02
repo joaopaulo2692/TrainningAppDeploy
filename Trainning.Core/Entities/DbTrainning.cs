@@ -21,6 +21,23 @@ namespace TrainningApp.Core.Entities
         private readonly DbTrainningExercise _trainningExercise;
 
 
+        public TrainningReturnVO AddNewTrainning(string userId)
+        {
+            int id = Trainnings.Max(x => x.Id);
+            id++;
+            ApplicationUser user = _dbUsers.Customers.Where(x => x.Id == userId).FirstOrDefault();
+            TrainningDay trainningDay = _trainningDay.AddNewTrainningDay("A", id);
+            List<TrainningDay> trainningDayList = new List<TrainningDay>() { trainningDay };
+            Trainning newTrainning = new Trainning()
+            {
+                Id = id,
+                User = user,
+                TrainningDays = trainningDayList
+            };
+            Trainnings.Add(newTrainning);
+
+            return TrainningToTrainningVO(newTrainning);
+        }
 
         public TrainningReturnVO TrainningToTrainningVO(Trainning trainning)
         {
@@ -34,9 +51,9 @@ namespace TrainningApp.Core.Entities
                 Goal = trainning.Goal,
                 Level = trainning.Level,
                 Name = trainning.Name,
-                Observation = trainning.Observation,
-                PersonalName = trainning.Personal.Name,
-                TrainningDays = _trainningDay.TrainningDaysToVOList(trainning.TrainningDays)
+                Observation = trainning.Observation != null ? trainning.Observation : string.Empty ,
+                PersonalName = trainning.Personal != null ? trainning.Personal.Name : string.Empty,
+                TrainningDays = trainning.TrainningDays != null ?_trainningDay.TrainningDaysToVOList(trainning.TrainningDays) : new List<TrainningDayReturnVO>()
             };
 
             return trainningDayReturnVO;

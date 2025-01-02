@@ -158,6 +158,9 @@
     [Parameter]
     public List<TrainningReturnVO> TrainningsList { get; set; } 
 
+    [Parameter]
+    public string UserId { get; set; }
+
     private async Task DeleteDialogAsync(TrainningReturnVO trainning)
     {
         var parameters = new DialogParameters
@@ -185,6 +188,15 @@
             OnDeleteTrainning(trainning); // Executa a ação de exclusão
         }
     }
+
+    // protected override void OnAfterRender(bool firstRender)
+    // {
+    //     if (TrainningEditing != null)
+    //     {
+    //         TrainningEditing = _trainning.GetById(TrainningEditing.Id);
+    //     }
+       
+    // }
 
 
     // TrainningReturnVO trainning = new TrainningReturnVO();
@@ -403,6 +415,8 @@
     {
         TrainningEditing = null;
         AddTrainning = true;
+        TrainningReturnVO newTrainning = _trainning.AddNewTrainning(UserId);
+        TrainningEditing = newTrainning;
     }
 
     private void OnEditTrainning(TrainningReturnVO trainningToEdit)

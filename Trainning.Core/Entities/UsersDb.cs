@@ -24,6 +24,7 @@ namespace TrainningApp.Core.Entities
             }).ToList();
         }
 
+  
 
 
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using TrainningApp.Core.Constants;
 using TrainningApp.Core.Entities;
 using TrainningDeploy;
 using TrainningDeploy.Service;
@@ -20,6 +21,7 @@ builder.Services.AddScoped<DbTrainningDay>();
 builder.Services.AddScoped<DbTrainningExercise>();
 builder.Services.AddScoped<DbUsers>();
 builder.Services.AddScoped<OrdenationService>();
+
 
 //builder.Services.AddSingleton<UsersDb>();
 //builder.Services.AddSingleton<DbMusclesAndExercises>();

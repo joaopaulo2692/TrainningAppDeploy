@@ -26,6 +26,18 @@ namespace TrainningApp.Core.Entities
             };
         }
 
+        public List<UserVO> UsersToDTO(List<ApplicationUser> applicationUsers)
+        {
+            return applicationUsers.Select(user => new UserVO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Age = user.Age.Value,
+                Gender = user.Gender,
+                Email = user.Email
+            }).ToList();
+        }
+
         public UserVO GetCustomerById(string id)
         {
             ApplicationUser user = Customers.Where(x => x.Id == id).FirstOrDefault();

@@ -19,9 +19,9 @@ namespace TrainningApp.Core.Entities
         public event Action TrainningDaysUpdated;
 
 
-        public TrainningDayVO TrainningDayToVO(TrainningDay trainningDay)
+        public TrainningDayReturnVO TrainningDayToVO(TrainningDay trainningDay)
         {
-           TrainningDayVO trainningVO =  new TrainningDayVO
+            TrainningDayReturnVO trainningVO =  new TrainningDayReturnVO
             {
                 Name = trainningDay.Name,
                 Id = trainningDay.Id
@@ -81,25 +81,6 @@ namespace TrainningApp.Core.Entities
             return true;
         }
 
-        //public bool RemoveById(int trainningDayId)
-        //{
-        //    TrainningDay trainningDay = TrainningDays.Where(x => x.Id == trainningDayId).FirstOrDefault();
-        //    if (trainningDay == null) return false;
-
-        //    TrainningDays.Remove(trainningDay);
-
-        //    char newLetter = 'A';
-        //    foreach (var trainnDay in TrainningDays)
-        //    {
-        //        if (trainnDay.TrainningId == trainningDay.TrainningId)
-        //        {
-        //            trainnDay.Name = newLetter.ToString();
-        //            newLetter++;
-        //        }
-
-        //    }
-        //    return true;
-        //}
         public List<TrainningDayReturnVO> TrainningDaysToVOList(List<TrainningDay> trainningDays)
         {
             return trainningDays.Select(trainningDay => new TrainningDayReturnVO
