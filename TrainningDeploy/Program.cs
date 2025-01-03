@@ -14,21 +14,21 @@ builder.Services.AddMudServices();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddScoped<UsersDb>();
-builder.Services.AddScoped<DbMusclesAndExercises>();
-builder.Services.AddScoped<DbTrainning>();
-builder.Services.AddScoped<DbTrainningDay>();
-builder.Services.AddScoped<DbTrainningExercise>();
-builder.Services.AddScoped<DbUsers>();
+//builder.Services.AddScoped<UsersDb>();
+//builder.Services.AddScoped<DbMusclesAndExercises>();
+//builder.Services.AddScoped<DbTrainning>();
+//builder.Services.AddScoped<DbTrainningDay>();
+//builder.Services.AddScoped<DbTrainningExercise>();
+//builder.Services.AddScoped<DbUsers>();
 builder.Services.AddScoped<OrdenationService>();
 
 
-//builder.Services.AddSingleton<UsersDb>();
-//builder.Services.AddSingleton<DbMusclesAndExercises>();
-//builder.Services.AddSingleton<DbTrainning>();
-//builder.Services.AddSingleton<DbTrainningDay>();
-//builder.Services.AddSingleton<DbTrainningExercise>();
-//builder.Services.AddSingleton<DbUsers>();
+builder.Services.AddSingleton<UsersDb>();
+builder.Services.AddSingleton<DbMusclesAndExercises>();
+builder.Services.AddSingleton<DbTrainning>();
+builder.Services.AddSingleton<DbTrainningDay>();
+builder.Services.AddSingleton<DbTrainningExercise>();
+builder.Services.AddSingleton<DbUsers>();
 
 
 

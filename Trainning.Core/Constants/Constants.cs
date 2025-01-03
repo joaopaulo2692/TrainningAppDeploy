@@ -10,9 +10,10 @@ namespace TrainningApp.Core.Constants
     {
         public static string GetUrlForCustomer(string userId)
         {
-            return $"/cliente/{userId}";
-            //return $"/cliente/{userId}";
+            return $"/aluno/{userId}";
+            //return $"/TrainningAppDeploy/aluno/{userId}";
         }
+
     }
 
 }

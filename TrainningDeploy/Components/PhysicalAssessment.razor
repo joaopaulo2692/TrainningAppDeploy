@@ -1,5 +1,10 @@
 ﻿@using TrainningApp.Core.DTO.PhysicalAssessment
 @inject IDialogService DialogService
+@page "/aluno/{UserId}/avaliacao/"
+
+
+<CustomerInfoComponent ActiveIndex=2 UserId="@UserId"></CustomerInfoComponent>
+
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     <MudButton OnClick="()=>CreatePhysical()" Variant="Variant.Filled" Color="Color.Success">Novo Avaliação</MudButton>
@@ -88,6 +93,9 @@
 
 
 @code {
+
+    [Parameter]
+    public string? UserId { get; set; }
 
     private async Task DeleteDialogAsync(PhysicalAssessmentVO physicalToRemove)
     {

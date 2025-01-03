@@ -1,10 +1,11 @@
-﻿@page "/cliente/{UserId}"
+﻿
 @using TrainningApp.Core.DTO.Trainning
 @using TrainningApp.Core.DTO.User
 @using TrainningApp.Core.Entities
 @using TrainningDeploy.Pages
 @inject DbUsers _dbUser
 @inject DbTrainning _dbTrainning
+@inject NavigationManager Navigation
 
 <MudGrid AlignItems="AlignItems.Center" Class="profile-container">
     <!-- Avatar -->
@@ -29,9 +30,9 @@
 
 <br />
 
-<MudTabs Elevation="1" Rounded="true" PanelClass="pa-0">
+@* <MudTabs Elevation="1" Rounded="true" PanelClass="pa-0">
     <MudTabPanel Text="RESUMO" ToolTip="Resumos">
-            <CustomerResumeComponent UserSelected="UserVOSelected "></CustomerResumeComponent>
+             <CustomerResumeComponent UserSelected="UserVOSelected "></CustomerResumeComponent> 
     </MudTabPanel>
     <MudTabPanel Text="TREINO" ToolTip="Treinos">
             <TrainningsComponent UserId="@UserId" TrainningsList="trainningVOList"></TrainningsComponent>
@@ -39,19 +40,24 @@
     <MudTabPanel Text="AVALIAÇÕES FÍSICAS" ToolTip="Avaliações Físicas">
        <PhysicalAssessment></PhysicalAssessment>
     </MudTabPanel>
-</MudTabs>
-
-@* <MudTabs Elevation="1" Rounded="true" PanelClass="pa-6" Class="custom-tabs">
-    <MudTabPanel Text="RESUMO" ToolTip="Resumos">
-        <CustomerResumeComponent></CustomerResumeComponent>
-    </MudTabPanel>
-    <MudTabPanel Text="TREINO" ToolTip="Treinos">
-        <TrainningsComponent></TrainningsComponent>
-    </MudTabPanel>
-    <MudTabPanel Text="AVALIAÇÕES" ToolTip="Avaliações Físicas">
-        <PhysicalAssessment></PhysicalAssessment>
-    </MudTabPanel>
 </MudTabs> *@
+
+    <MudTabs Elevation="1" Rounded="true" PanelClass="pa-0" ActivePanelIndex="ActiveIndex">
+        <MudTabPanel Text="RESUMO" ToolTip="Resumos" @onclick="NavigateToResumo">
+            <!-- Conteúdo da aba -->
+        </MudTabPanel>
+
+        <MudTabPanel Text="TREINO" ToolTip="Treinos" @onclick="NavigateToTreino">
+            @* <TrainningsComponent UserId="@UserId" TrainningsList="trainningVOList"></TrainningsComponent> *@
+        </MudTabPanel>
+
+        <MudTabPanel Text="AVALIAÇÕES FÍSICAS" ToolTip="Avaliações Físicas" @onclick="NavigateToAvaliacoes">
+            @* <PhysicalAssessment></PhysicalAssessment> *@
+        </MudTabPanel>
+    </MudTabs>
+
+
+
 
 
 
@@ -107,17 +113,36 @@
     [Parameter]
     public string? UserId { get; set; }
 
+    [Parameter]
+    public int ActiveIndex { get; set; }
     List<TrainningReturnVO> trainningVOList;
 
     public UserVO UserVOSelected { get; set; }
-    int activeIndex = 0;
+    
 
+    private void NavigateToResumo()
+    {
+        ActiveIndex =0;
+        Navigation.NavigateTo($"/aluno/{UserId}");
+    }
 
+    private void NavigateToTreino()
+    {
+        ActiveIndex = 1;
+        Navigation.NavigateTo($"/aluno/{UserId}/treinos");
+    }
+
+    private void NavigateToAvaliacoes()
+    {
+        ActiveIndex = 3;
+        Navigation.NavigateTo($"/aluno/{UserId}/avaliacao/");
+    }
     protected override void OnInitialized()
     {
         UserVOSelected = _dbUser.GetCustomerById(UserId);
         trainningVOList = _dbTrainning.GetByCustomerId(UserId);
     }
 }
+
 
 

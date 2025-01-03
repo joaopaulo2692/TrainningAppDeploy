@@ -1,5 +1,6 @@
-﻿@page "/clientes"
+﻿@page "/alunos"
 @inject NavigationManager NavigationManager
+@using TrainningApp.Core.Constants
 @using TrainningApp.Core.DTO.User
 @using TrainningApp.Core.Entities
 @inject DbUsers _dbUsers
@@ -72,7 +73,8 @@
 
     private void NavigateToEditPage(string user)
     {
-        NavigationManager.NavigateTo($"/TrainningAppDeploy/cliente/{user}"); // Substitua "/edit-page" pela rota desejada
+        string url = Constants.GetUrlForCustomer(user);
+        NavigationManager.NavigateTo(url); // Substitua "/edit-page" pela rota desejada
     }
     protected override void OnInitialized()
     {

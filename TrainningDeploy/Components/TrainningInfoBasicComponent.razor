@@ -1,15 +1,17 @@
 ﻿@page "/teste"
 @using TrainningApp.Core.DTO.Trainning
 @using TrainningApp.Core.DTO.User
+@using TrainningApp.Core.Entities
 @using TrainningDeploy.Pages
-
+@inject DbTrainning _dbTrainning
+@inject DbUsers _dbUsers
 
 <div class="parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
     <h3>Dados do Treino</h3>
     <MudPaper Class="pa-16 ma-2 custom-size" Elevation="3" Style="max-width: 70%; width: 70% ">
         <div class="form-grid">
             <!-- Linha 1: Nome e Responsável -->
-            <MudTextField T="string" Label="Nome" @bind-Value="nameTrainning" Typo="Typo.input" />
+            <MudTextField T="string" Label="Nome" @bind-Value="nameTrainning" Typo="Typo.input" TextChanged="OnChanged" />
             <MudAutocomplete T="string" Label="Responsável" @bind-Value="personalSelected" SearchFunc="@SearchByPersonal"
                              ResetValueOnEmptyText="@resetValueOnEmptyText"
                              CoerceText="@coerceText" CoerceValue="@coerceValue" Class="custom-autocomplete" TextChanged="OnChanged" />
@@ -133,31 +135,34 @@
         TrainningVO.Name  = nameTrainning;
         TrainningVO.Activate = isActivate;
         TrainningVO.PersonalName = personalSelected;
-
+        TrainningVO.Level = levelTrainning;
+        _dbTrainning.UpdateTrainningInfo(TrainningVO);
         TrainningToSave.InvokeAsync(TrainningVO);
     }
 
     protected override void OnInitialized()
     {
         if (TrainningVO != null && TrainningVO.Activate) isActivate = true;
-        PersonalUsers = new List<UserVO>()
-        {
-            new UserVO
-            {
-                Id = "1",
-                Name = "João"
-            },
-             new UserVO
-            {
-                Id = "2",
-                Name = "Charlles"
-            },
-             new UserVO
-            {
-                Id = "3",
-                Name = "Giovanni"
-            },
-        };
+        PersonalUsers = _dbUsers.UsersToDTO(_dbUsers.Personals.ToList());
+
+        // PersonalUsers = new List<UserVO>()
+        // {
+        //     new UserVO
+        //     {
+        //         Id = "1",
+        //         Name = "João"
+        //     },
+        //      new UserVO
+        //     {
+        //         Id = "2",
+        //         Name = "Charlles"
+        //     },
+        //      new UserVO
+        //     {
+        //         Id = "3",
+        //         Name = "Giovanni"
+        //     },
+        // };
 
         if (TrainningVO != null)
         {

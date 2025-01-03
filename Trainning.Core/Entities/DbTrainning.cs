@@ -21,6 +21,59 @@ namespace TrainningApp.Core.Entities
         private readonly DbTrainningExercise _trainningExercise;
 
 
+
+        public void UpdateTrainningInfo(TrainningReturnVO trainningVO)
+        {
+            if (trainningVO == null)
+                throw new ArgumentNullException(nameof(trainningVO));
+
+            // Localiza o Trainning na lista pelo ID
+            var trainning = Trainnings.FirstOrDefault(x => x.Id == trainningVO.Id);
+
+            if (trainning != null)
+            {
+                // Atualiza as propriedades do Trainning existente
+                trainning.Activate = trainningVO.Activate;
+                trainning.FrequencyWeekly = trainningVO.FrequencyWeekly;
+                trainning.Gender = trainningVO.Gender;
+                trainning.Goal = trainningVO.Goal;
+                trainning.Level = trainningVO.Level;
+                trainning.Name = trainningVO.Name;
+                trainning.Observation = string.IsNullOrEmpty(trainningVO.Observation) ? null : trainningVO.Observation;
+                trainning.Personal = !string.IsNullOrEmpty(trainningVO.PersonalName)
+                    ? _dbUsers.Personals.FirstOrDefault(x => x.Name == trainningVO.PersonalName)
+                    : null;
+
+                //if (trainningVO.TrainningDays != null)
+                //{
+                //    trainning.TrainningDays = _trainningDay.TrainningDaysVOToList(trainningVO.TrainningDays);
+                //}
+            }
+        }
+
+        public Trainning TrainningVOToTrainning(TrainningReturnVO trainningReturnVO)
+        {
+            if (trainningReturnVO == null)
+                throw new ArgumentNullException(nameof(trainningReturnVO));
+
+            var trainning = new Trainning()
+            {
+                Id = trainningReturnVO.Id,
+                Activate = trainningReturnVO.Activate,
+                CreatedAt = trainningReturnVO.CreatedAt,
+                FrequencyWeekly = trainningReturnVO.FrequencyWeekly,
+                Gender = trainningReturnVO.Gender,
+                Goal = trainningReturnVO.Goal,
+                Level = trainningReturnVO.Level,
+                Name = trainningReturnVO.Name,
+                Observation = string.IsNullOrEmpty(trainningReturnVO.Observation) ? null : trainningReturnVO.Observation,
+                Personal = !string.IsNullOrEmpty(trainningReturnVO.PersonalName)
+                    ? _dbUsers.Personals.Where(x => x.Name == trainningReturnVO.PersonalName).FirstOrDefault() : new ApplicationUser(),
+            };
+
+            return trainning;
+        }
+
         public TrainningReturnVO AddNewTrainning(string userId)
         {
             int id = Trainnings.Max(x => x.Id);
@@ -75,9 +128,9 @@ namespace TrainningApp.Core.Entities
                     Goal = trainning.Goal,
                     Level = trainning.Level,
                     Name = trainning.Name,
-                    Observation = trainning.Observation,
-                    PersonalName = trainning.Personal.Name,
-                    TrainningDays = _trainningDay.TrainningDaysToVOList(trainning.TrainningDays)
+                    Observation = trainning.Observation != null ? trainning.Observation : string.Empty,
+                    PersonalName = trainning.Personal != null ? trainning.Personal.Name : string.Empty,
+                    TrainningDays = trainning.TrainningDays != null ? _trainningDay.TrainningDaysToVOList(trainning.TrainningDays) : new List<TrainningDayReturnVO>()
                 };
 
                 trainningReturnVOList.Add(trainningReturnVO);
@@ -105,9 +158,9 @@ namespace TrainningApp.Core.Entities
                 Goal = trainning.Goal,
                 Level = trainning.Level,
                 Name = trainning.Name,
-                Observation = trainning.Observation,
-                PersonalName = trainning.Personal?.Name,
-                TrainningDays = _trainningDay.TrainningDaysToVOList(trainning.TrainningDays)
+                Observation = trainning.Observation != null ? trainning.Observation : string.Empty,
+                PersonalName = trainning.Personal != null ? trainning.Personal.Name : string.Empty,
+                TrainningDays = trainning.TrainningDays != null ? _trainningDay.TrainningDaysToVOList(trainning.TrainningDays) : new List<TrainningDayReturnVO>()
             }).ToList();
         }
 

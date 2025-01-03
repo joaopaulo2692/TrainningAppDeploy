@@ -1,8 +1,9 @@
 ﻿@using TrainningApp.Core.DTO.Trainning
 @using TrainningApp.Core.DTO.User
 @using TrainningApp.Core.Entities
-
-
+@page "/aluno/{UserId}"
+@inject DbUsers _dbUsers
+<CustomerInfoComponent ActiveIndex=0 UserId="@UserId"></CustomerInfoComponent>
 <br />
 <br />
 <div class="parent-container">
@@ -124,8 +125,13 @@
 
 
 @code {
+
+    [Parameter]
+    public string? UserId { get; set; }
+
     [Parameter]
     public UserVO UserSelected { get; set; }
+
     List<TrainningReturnVO> trainningVO;
     // private string name;
     // private string email;
@@ -149,10 +155,11 @@
 
     protected override void OnInitialized()
     {
-        if (UserSelected == null)
-        {
-            UserSelected = new UserVO();  // Inicializa se for null
-        }
+        UserSelected = _dbUsers.GetCustomerById(UserId);
+        // if (UserSelected == null)
+        // {
+        //     UserSelected = new UserVO();  // Inicializa se for null
+        // }
         goal = UserSelected.Goal;
         birthDay = UserSelected.Birthday;
 
