@@ -9,6 +9,10 @@
 @* @inject DbUsers dbUsers
 @inject DbTrainningDay trainningDay
 @inject DbTrainningExercise trainningExercise *@
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+
+
 @page "/aluno/{UserId}/treinos"
 
 
@@ -18,7 +22,16 @@
 {
     <br />  
     <div style="display: flex; justify-content: center;">
-        <MudButton OnClick="() => OndAddTrainning()" Variant="Variant.Filled" Color="Color.Success">Novo Treino</MudButton>
+        <MudPaper Width="250px" Class="py-3" Elevation="0">
+            <MudNavMenu Dense>
+             <MudNavGroup Title="Adicionar Treino" Expanded="false">
+                 <MudNavLink OnClick="@(() => OndAddTrainning())">Novo Treino</MudNavLink>
+                 <MudNavLink OnClick="@(() => GoTo("Adicionar Treino/Security"))">Biblioteca de Treinos</MudNavLink>
+                 <MudNavLink OnClick="@(() => OpenUserSelectionDialog())">Utilizar de outro aluno</MudNavLink>
+             </MudNavGroup>
+         </MudNavMenu>
+     </MudPaper>
+        @* <MudButton OnClick="() => OndAddTrainning()" Variant="Variant.Filled" Color="Color.Success">Novo Treino</MudButton> *@
     </div>
     <br />
     <br />
@@ -157,12 +170,30 @@
 </style>
 
 @code {
-
+    private void GoTo(string page) => Snackbar.Add($"Clicked {page}");
     [Parameter]
     public List<TrainningReturnVO> TrainningsList { get; set; } 
 
     [Parameter]
     public string UserId { get; set; }
+
+
+    private async Task OpenUserSelectionDialog()
+    {
+        var options = new DialogOptions { MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
+        var parameters = new DialogParameters();
+
+        var dialog = DialogService.Show<NewTrainningByUserComponent>("Selecionar Usuário", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // SelectedUser = (UserVO)result.Data;
+            // Console.WriteLine($"Usuário Selecionado: {SelectedUser.Name}, ID: {SelectedUser.Id}");
+        }
+    }
+
 
     private async Task DeleteDialogAsync(TrainningReturnVO trainning)
     {

@@ -21,6 +21,7 @@ namespace TrainningApp.Core.Entities
         private readonly DbTrainningExercise _trainningExercise;
 
 
+        
 
         public void UpdateTrainningInfo(TrainningReturnVO trainningVO)
         {
@@ -72,6 +73,14 @@ namespace TrainningApp.Core.Entities
             };
 
             return trainning;
+        }
+
+        public void AddTrainning(Trainning trainning)
+        {
+            int id = Trainnings.Max(x => x.Id);
+            id++;
+            trainning.Id = id;
+            Trainnings.Add(trainning);
         }
 
         public TrainningReturnVO AddNewTrainning(string userId)

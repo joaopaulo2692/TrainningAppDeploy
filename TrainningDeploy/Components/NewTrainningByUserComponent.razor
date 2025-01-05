@@ -1,0 +1,129 @@
+﻿@using TrainningApp.Core.DTO.User
+@using TrainningApp.Core.Entities
+@inject DbUsers _dbUsers
+@inject DbTrainning _dbTrainning
+
+
+@* <MudDialog MaxWidth="MaxWidth.ExtraLarge" FullWidth="true" Class="custom-dialog rounded-lg">
+    <DialogContent>
+</DialogContent>
+</MudDialog>
+ *@
+
+<MudDialog MaxWidth="MaxWidth.Small" FullWidth="false" Class="custom-dialog rounded-lg" Style="width: 400px;">
+    <DialogContent>
+        <MudText Typo="Typo.h6" Class="mb-2">Selecione um usuário</MudText>
+        
+        <!-- Campo de Pesquisa -->
+        <MudTextField @bind-Value="SearchTerm" Placeholder="Digite para buscar..." Class="mb-2" Immediate="true" 
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+
+        <!-- Lista Filtrada de Usuários -->
+        <MudRadioGroup T="string" @bind-Value="SelectedUserId">
+            @foreach (var user in FilteredUsers)
+            {
+                <MudRadio T="string" Class="d-block" Value="user.Id" >
+                    @user.Name
+                </MudRadio>
+            }
+        </MudRadioGroup>
+    </DialogContent>
+
+    <DialogActions>
+        <div class="d-flex justify-content-end w-100">
+            <MudButton Variant="Variant.Text" Color="Color.Secondary" OnClick="Cancel" Class="me-2">
+                Cancelar
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Submit">
+                Confirmar
+            </MudButton>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@if (isAlertVisible)
+{
+    <MudAlert Severity="Severity.Error" Variant="Variant.Filled" OnClose="HideAlert">
+        Usuário sem treino ativo!
+    </MudAlert>
+}
+
+@code {
+
+    [Parameter]
+    public string UserId { get; set; }
+
+    private bool isAlertVisible = false;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private List<UserVO> Users = new List<UserVO>();
+    private List<UserVO> FilteredUsers = new List<UserVO>();
+    private string SelectedUserId; // Agora apenas mantemos o ID do usuário
+
+    private string _searchTerm; // Campo para controlar a pesquisa
+    public string SearchTerm
+    {
+        get => _searchTerm;
+        set
+        {
+            if (_searchTerm != value)
+            {
+                _searchTerm = value;
+                OnSearchTermChanged();
+            }
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        // Inicializa lista de usuários
+        Users = _dbUsers.UsersToDTO(_dbUsers.Customers.ToList());
+        FilteredUsers = Users; // Inicialmente, todos os usuários aparecem na lista
+    }
+
+    private void Submit()
+    {
+        // Verifica se o SelectedUserId está definido
+        if (!string.IsNullOrEmpty(SelectedUserId))
+        {
+            // Encontra o usuário selecionado com base no ID
+            var selectedUser = Users.FirstOrDefault(user => user.Id == SelectedUserId);
+
+            Trainning trainning = _dbTrainning.Trainnings.Where(x => x.User.Id == SelectedUserId && x.Activate == true).FirstOrDefault();
+            if (trainning == null)
+            {
+                isAlertVisible = true;
+                return;
+            }
+            ApplicationUser user = _dbUsers.Customers.Where(x => x.Id == UserId).FirstOrDefault();
+            trainning.Personal = user;
+            _dbTrainning.AddTrainning(trainning);
+            // if (selectedUser != null)
+            // {
+            //     Console.WriteLine($"Confirmando usuário: {selectedUser.Name}, ID: {selectedUser.Id}");
+            //     MudDialog.Close(DialogResult.Ok(selectedUser));
+            // }
+            // else
+            // {
+            //     Console.WriteLine("Usuário não encontrado.");
+            // }
+         
+        }
+        else
+        {
+            Console.WriteLine("Nenhum usuário foi selecionado.");
+        }
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void OnSearchTermChanged()
+    {
+        // Filtra os usuários com base no termo de busca
+        FilteredUsers = Users
+            .Where(user => user.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+}
