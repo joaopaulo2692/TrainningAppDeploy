@@ -9,6 +9,7 @@ using TrainningApp.Core.DTO.Trainning;
 using TrainningApp.Core.DTO.TrainningDay;
 using TrainningApp.Core.DTO.TrainningExercise;
 using TrainningApp.Core.DTO.User;
+using static System.Net.WebRequestMethods;
 
 namespace TrainningApp.Core.Entities
 {
@@ -43,7 +44,10 @@ namespace TrainningApp.Core.Entities
             {
                 Id = exercise.Id,
                 Name = exercise.Name,
-                Muscles = exercise.Muscles.Select(x => x.Name).ToList()
+                Muscles = exercise.Muscles.Select(x => x.Name).ToList(),
+                Description = exercise.Description,
+                Level = exercise.Level,
+                Video = exercise.Video
 
             };
         }
@@ -54,7 +58,10 @@ namespace TrainningApp.Core.Entities
             {
                 Id = x.Id,
                 Name = x.Name,
-                Muscles = x.Muscles.Select(x => x.Name).ToList()
+                Muscles = x.Muscles.Select(x => x.Name).ToList(),
+                Description = x.Description,
+                Level = x.Level,
+                Video = x.Video
 
             }).ToList();
         }
@@ -178,19 +185,22 @@ namespace TrainningApp.Core.Entities
                 {
                     Id = 1,
                     Name = "Supino",
-                    Muscles = Muscles.Where(m => m.Id == 21 || m.Id == 28).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 21 || m.Id == 28).ToList(),
+                    Video = "https://www.youtube.com/watch?v=EZMYCLKuGow&pp=ygUGU1VQSU5P"
                 },
                 new Exercise
                 {
                     Id = 2,
                     Name = "Agachamento",
-                    Muscles = Muscles.Where(m => m.Id == 22).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 22).ToList(),
+                    Video = "https://www.youtube.com/embed/GiAWATi5D0U"
                 },
                 new Exercise
                 {
                     Id = 3,
                     Name = "Rosca Direta",
-                    Muscles = Muscles.Where(m => m.Id == 7).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 7).ToList(),
+                    Video = "https://www.youtube.com/watch?v=GiAWATi5D0U"
                 },
                 new Exercise
                 {

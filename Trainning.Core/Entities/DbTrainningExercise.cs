@@ -71,7 +71,8 @@ namespace TrainningApp.Core.Entities
             if(trainningExercises != null && trainningExercises.Count > 0)
             {
                 int ordenation = trainningExercises.Max(x => x.Ordenation);
-                trainningExerciseVO.Ordenation = ordenation++;
+                ordenation++;
+                trainningExerciseVO.Ordenation = ordenation;
             }
             else
             {
