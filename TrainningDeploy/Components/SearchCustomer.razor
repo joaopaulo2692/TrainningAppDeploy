@@ -73,6 +73,10 @@
         users = _dbUsers.UsersToDTO(appUsers);
     }
 
+    protected override void OnParametersSet()
+    {
+       
+    }
     private async Task OnCustomerSelected(string customer)
     {
         Navigation.NavigateTo("/cliente");
@@ -85,8 +89,9 @@
         if (selectedUser != null)
         {
             string url = Constants.GetUrlForCustomer(user.Id);
-            // Navigation.NavigateTo(url);
-            Navigation.NavigateTo(url, true);
+            Navigation.NavigateTo(url);
+            // Navigation.NavigateTo(url, true);
+
             Console.WriteLine($"Usuário selecionado: {selectedUser.Name}, Email: {selectedUser.Email}");
         }
     }

@@ -14,21 +14,22 @@
         <MudGrid>
             <!-- Linha 1: Nome, CPF e Telefone -->
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Nome" @bind-Value="UserSelected.Name" Typo="Typo.input" />
+                <MudTextField T="string" Label="Nome" @bind-Value="UserSelected.Name" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="CPF" @bind-Value="UserSelected.Cpf" Typo="Typo.input" />
+                <MudTextField T="string" Label="CPF" @bind-Value="UserSelected.Cpf" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Telefone" @bind-Value="UserSelected.Phone" Typo="Typo.input" />
+                <MudTextField T="string" Label="Telefone" @bind-Value="UserSelected.Phone" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
 
             <!-- Linha 2: Data Nascimento, Objetivo e Email -->
             <MudItem xs="6" sm="4">
-                <MudDatePicker Label="Data Nascimento" @bind-Date="birthDay" />
+                <MudDatePicker Label="Data Nascimento" Date="birthDay" DateChanged="OnChanged" />
+
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudSelect Label="Objetivo" @bind-Value="goal">
+                <MudSelect Label="Objetivo" @bind-Value="UserSelected.Goal" TextChanged="OnChanged">
                     @foreach (var state in typesTrainningList)
                     {
                         <MudSelectItem Value="state">@state</MudSelectItem>
@@ -36,13 +37,13 @@
                 </MudSelect>
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Email" @bind-Value="UserSelected.Email" Typo="Typo.input" />
+                <MudTextField T="string" Label="Email" @bind-Value="UserSelected.Email" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
 
             <!-- Linha 3: MudSwitch -->
             <!-- Linha 4: Observação -->
             <MudItem xs="12">
-                <MudTextField T="string" Label="Observação" @bind-Value="UserSelected.Observation" Typo="Typo.input" />
+                <MudTextField T="string" Label="Observação" @bind-Value="UserSelected.Observation" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
         </MudGrid>
     </MudPaper>
@@ -57,24 +58,24 @@
         <MudGrid>
             <!-- Linha 1: CEP, Logradouro, Número -->
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="CEP" @bind-Value="UserSelected.Cep" Typo="Typo.input" />
+                <MudTextField Label="CEP" @bind-Value="UserSelected.Cep" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Logradouro" @bind-Value="UserSelected.Address" Typo="Typo.input" />
+                <MudTextField T="string" Label="Logradouro" @bind-Value="UserSelected.Address" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="int" Label="Número" @bind-Value="UserSelected.NumberHouse" Typo="Typo.input" />
+                <MudTextField T="int" Label="Número" @bind-Value="UserSelected.NumberHouse" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
 
             <!-- Linha 2: Complemento, Bairro, Cidade -->
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Complemento" @bind-Value="UserSelected.Complement" Typo="Typo.input" />
+                <MudTextField T="string" Label="Complemento" @bind-Value="UserSelected.Complement" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Bairro" @bind-Value="UserSelected.Neighborhood" Typo="Typo.input" />
+                <MudTextField T="string" Label="Bairro" @bind-Value="UserSelected.Neighborhood" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Cidade" @bind-Value="UserSelected.City" Typo="Typo.input" />
+                <MudTextField T="string" Label="Cidade" @bind-Value="UserSelected.City" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
         </MudGrid>
     </MudPaper>
@@ -163,6 +164,23 @@
         goal = UserSelected.Goal;
         birthDay = UserSelected.Birthday;
 
-       
+
+    }
+
+    private void OnChanged()
+    {
+        _dbUsers.UpdateCustomer(UserSelected);
+        StateHasChanged();
+    }
+
+    protected override void OnParametersSet()
+    {
+        UserSelected = _dbUsers.GetCustomerById(UserId);
+        // if (UserSelected == null)
+        // {
+        //     UserSelected = new UserVO();  // Inicializa se for null
+        // }
+        goal = UserSelected.Goal;
+        birthDay = UserSelected.Birthday;
     }
 }

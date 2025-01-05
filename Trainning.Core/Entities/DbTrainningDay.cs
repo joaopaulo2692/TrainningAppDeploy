@@ -34,6 +34,7 @@ namespace TrainningApp.Core.Entities
         public TrainningDay AddNewTrainningDay(string letter, int trainningId)
         {
             int id = TrainningDays.Max(x => x.Id) + 1;
+            
             TrainningDay trainningDay = new TrainningDay()
             {
                 Id = id,

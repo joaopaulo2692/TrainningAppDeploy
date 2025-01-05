@@ -26,6 +26,59 @@ namespace TrainningApp.Core.Entities
             };
         }
 
+        public ApplicationUser UserVOToApplicationUser(UserVO user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            return new ApplicationUser
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Age = user.Age,
+                Cpf = user.Cpf,
+                Email = user.Email,
+                Gender = user.Gender,
+                Byrthday = user.Birthday,
+                Heigth = user.Heigth,            
+                Weight = user.Weight         
+
+            };
+        }
+
+
+        public void AddCustomer(UserVO user)
+        {
+            int id = int.Parse(Customers.Max(x => x.Id)) + 1;
+            user.Id = id.ToString();
+            ApplicationUser userDb = UserVOToApplicationUser(user);
+            Customers.Add(userDb);
+        }
+
+        public void UpdateCustomer(UserVO user)
+        {
+            ApplicationUser userDb = Customers.Where(x => x.Id == user.Id).FirstOrDefault();
+            if (userDb != null)
+            {
+                userDb.Name = user.Name;
+                userDb.Age = user.Age;
+                userDb.Cpf = user.Cpf;
+                userDb.Email = user.Email;
+                userDb.Gender = user.Gender;
+                userDb.Byrthday = user.Birthday;
+                userDb.Heigth= user.Heigth;
+                userDb.Weight= user.Weight;
+                userDb.UpdatedAt = DateTime.Now; // Atualiza a data de modificação
+
+                // Se outros campos de ApplicationUser forem relevantes para atualização, ajuste aqui.
+            }
+            else
+            {
+                throw new InvalidOperationException($"Customer with ID {user.Id} not found.");
+            }
+
+        }
+
         public List<UserVO> UsersToDTO(List<ApplicationUser> applicationUsers)
         {
             return applicationUsers.Select(user => new UserVO

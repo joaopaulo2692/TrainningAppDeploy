@@ -24,6 +24,8 @@ namespace TrainningApp.Core.DTO.User
         public int NumberHouse {  get; set; }
         public string Neighborhood {  get; set; }
         public string Complement{  get; set; }
-    
+        public float? Weight { get; set; }
+        public float? Heigth { get; set; }
+
     }
 }
