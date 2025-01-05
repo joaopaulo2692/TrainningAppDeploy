@@ -1,4 +1,5 @@
 ﻿@using TrainningApp.Core
+@using TrainningApp.Core.Constants
 @using TrainningApp.Core.DTO.Trainning
 @using TrainningApp.Core.DTO.TrainningDay
 @using TrainningApp.Core.DTO.TrainningExercise
@@ -11,7 +12,7 @@
 @inject DbTrainningExercise trainningExercise *@
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
-
+@inject NavigationManager Navigation
 
 @page "/aluno/{UserId}/treinos"
 
@@ -181,7 +182,12 @@
     private async Task OpenUserSelectionDialog()
     {
         var options = new DialogOptions { MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
-        var parameters = new DialogParameters();
+        // var parameters = new DialogParameters();
+        var parameters = new DialogParameters
+    {
+        { "UserId", UserId }
+
+    };
 
         var dialog = DialogService.Show<NewTrainningByUserComponent>("Selecionar Usuário", parameters, options);
 
@@ -296,14 +302,18 @@
 
     private void OndAddTrainning()
     {
-        TrainningEditing = null;
-        AddTrainning = true;
+        // TrainningEditing = null;
+        // AddTrainning = true;
         TrainningReturnVO newTrainning = _trainning.AddNewTrainning(UserId);
-        TrainningEditing = newTrainning;
+        // TrainningEditing = newTrainning;
+         string url = Constants.GetUrlForTrainning(UserId, newTrainning.Id);
+        Navigation.NavigateTo(url);
     }
 
     private void OnEditTrainning(TrainningReturnVO trainningToEdit)
     {
+        string url = Constants.GetUrlForTrainning(UserId, trainningToEdit.Id);
+        Navigation.NavigateTo(url);
         TrainningEditing = trainningToEdit;
         EditTrainning = true;
     }

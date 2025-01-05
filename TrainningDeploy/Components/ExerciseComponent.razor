@@ -59,13 +59,13 @@
             <div class="d-flex flex-row align-items-center" >
                 <MudNumericField Label="Série" @bind-Value="set" Max="9" Min="0" Variant="Variant.Outlined" Style="width: 80px; height: 30px;" />
                 <MudTextField Label="Repetições" @bind-Value="reps[0]" />
-             @*    <MudNumericField Label="Série"
+                <MudNumericField Label="Série"
                                  @bind-Value="set"
                                  Max="9"
                                  Min="0"
                                  Variant="Variant.Outlined"
                                  Style="width: 80px; height: 30px;"
-                                 Class="invisible" /> *@
+                                 Class="invisible" />
                 <MudTextField Label="Carga" @bind-Value="weights[0]" />
             </div>
             @if(set > 1)

@@ -75,12 +75,13 @@ namespace TrainningApp.Core.Entities
             return trainning;
         }
 
-        public void AddTrainning(Trainning trainning)
+        public int AddTrainning(Trainning trainning)
         {
             int id = Trainnings.Max(x => x.Id);
             id++;
             trainning.Id = id;
             Trainnings.Add(trainning);
+            return id;
         }
 
         public TrainningReturnVO AddNewTrainning(string userId)

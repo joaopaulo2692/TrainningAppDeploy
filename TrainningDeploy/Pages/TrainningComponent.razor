@@ -11,78 +11,13 @@
 @inject DbTrainning _trainning
 @* @inject DbTrainningExercise _trainningExercise *@
 
+@page "/aluno/{UserId}/treinos/{TrainningId:int}"
+
+<CustomerInfoComponent UserId="@UserId" ActiveIndex="1"></CustomerInfoComponent>
+
 <TrainningInfoBasicComponent TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
 
-@* 
- <div class="parent-container">
-    <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small">
-        @foreach (var drop in DropzoneList)
-        {
-            @if(DropzoneList.Count == 1)
-            {
-                
-            }
-            <MudTabPanel Text=@drop[0].Name Key="@drop.GetHashCode()">
-                @if (drop[0].Exercise == null)
-                {
-                     <h3>Nenhum exercício Adicionado na Sessão</h3> 
-                    <DropZoneExercises OnAddExercise="HandleAddExercise"
-                                       T="DropZoneItem"
-                                       _items="drop"
-                                       _zones="_zones"
-                                       ParameterTrainningDay=drop[0].TrainningDayId
-                                       ParameterNameZone=@drop[0].Name
-                                       TrainningExercise="drop[0].Exercise"
-                                       OnRemoveTrainningDay="HandleRemoveTrainningDay"
-                                       DisableTrainningRemove="DropzoneList.Count == 1 ? true : false" />
-                }
-                else
-                {
-                    <DropZoneExercises OnAddExercise="HandleAddExercise"
-                                       OnRemoveExercise="HandleRemoveExercise"
-                                       OnEditExercise="HandleEditExercise"
-                                       T="DropZoneItem"
-                                       _items="drop"
-                                       _zones="_zones"
-                                       ParameterTrainningDay=drop[0].TrainningDayId
-                                       ParameterOrdenation=drop[0].Exercise.Ordenation
-                                       ParameterNameZone=@drop[0].Name
-                                       TrainningExercise="drop[0].Exercise"
-                                       OnRemoveTrainningDay="HandleRemoveTrainningDay"
-                                       DisableTrainningRemove="DropzoneList.Count == 1 ? true : false"
-                                       OnEditExerciseOrdenation="HandleChangeOrdenationExercise" />
-                }
 
-
-            </MudTabPanel>
-        }
-        <MudTabPanel Text="Adicionar Sessão" OnClick="() => AddNewTrainningDay()">
-            <!-- Conteúdo da aba (opcional) -->
-             <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton> 
-        </MudTabPanel>
-       <br/>
-       <br/>
-       <br/>
-        <MudButton OnClick="OnSaveTrainning" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton>
-    </MudTabs>
-</div>  *@
-
-@* <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
-<MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small">
-    @foreach (var trainningDay in TrainningToEdit.TrainningDays)
-    {
-        <MudTabPanel Text=@trainningDay.Name Key=@trainningDay.GetHashCode()>
-            <!-- Conteúdo do MudTabPanel -->
-            <Teste></Teste>
-        </MudTabPanel>
-    }
-
-        <MudTabPanel Text="Adicionar Sessão" OnClick="() => AddNewTrainningDay()">
-            <!-- Conteúdo da aba (opcional) -->
-            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Small">Salvar Treino</MudButton>
-        </MudTabPanel>
-</MudTabs>
-</div> *@
 @if(TrainningToEdit != null)
 {
     <h3 style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">Sessões do treino </h3>
@@ -112,13 +47,7 @@
 
 
 <style>
-    /* .parent-container { */
-    /* display: flex; */
-    /* justify-content: center; /* Centraliza horizontalmente */
-    /* align-items: center; /* Centraliza verticalmente */
-    /* height: 100vh; /* Altura total da tela */
-    /* width: 100%; /* Largura total disponível */
-    /* } */
+
 
     .parent-container {
         display: flex;
@@ -147,6 +76,10 @@
 </style>
 
 @code {
+    [Parameter]
+    public int TrainningId { get; set; }
+    [Parameter]
+    public string UserId { get; set; }
     [Parameter]
     public TrainningReturnVO TrainningToEdit { get; set; }
 
@@ -187,8 +120,8 @@
         _trainning.AddTrainningDay(trainningDay, lastTrainning.TrainningId);
         TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
         // TrainningToEdit.TrainningDays.Add(new TrainningDayReturnVO() { Name = trainningLetter.ToString(), Ordenation = lastTrainning.Ordenation + 1, TrainningExercises = new List<TrainningExerciseVO>()});
-        
-        
+
+
         _uniqueKey++;
     }
 
@@ -199,7 +132,7 @@
 
     private void OnEditExercise()
     {
-        
+
     }
 
     private async Task HandleInfoTrainning(TrainningReturnVO trainningToSave)
@@ -236,67 +169,48 @@
         TrainningToUpdateOrCreate.InvokeAsync(TrainningVO);
     }
 
-    private async Task HandleChangeOrdenationExercise(List<DropZoneItem> dropNewOrdenation)
-    {
-        // Procurar a sublista que contém o item com o 'Name' desejado
-        var targetSublist = DropzoneList
-            .FirstOrDefault(sublist => sublist.Any(x => x.Name == dropNewOrdenation[0].Name));
-
-        // Se a sublista foi encontrada
-        if (targetSublist != null)
-        {
-            int contIndex = 0;
-            // Usar LINQ para encontrar e atualizar o item desejado dentro da sublista
-            targetSublist
-                .Where(x => x.Name == dropNewOrdenation[0].Name)
-                .ToList() // Usando ToList() para que a operação de atualização seja realizada no item
-                .ForEach(item =>
-                {
-                    // Substituindo as propriedades do item
-                    item.Exercise.Ordenation = dropNewOrdenation[contIndex].Exercise.Ordenation;
-                    item.Exercise.Set = dropNewOrdenation[contIndex].Exercise.Set;
-                    item.Exercise.Reps = dropNewOrdenation[contIndex].Exercise.Reps;
-                    item.Exercise.Info = dropNewOrdenation[contIndex].Exercise.Info;
-                    item.Exercise.Weight = dropNewOrdenation[contIndex].Exercise.Weight;
-                    item.Exercise.ExerciseId = dropNewOrdenation[contIndex].Exercise.ExerciseId;
-                    item.Exercise.ExerciseName = dropNewOrdenation[contIndex].Exercise.ExerciseName;
-                    item.Exercise.TrainningDayId = dropNewOrdenation[contIndex].Exercise.TrainningDayId;
-                    item.Exercise.Interval = dropNewOrdenation[contIndex].Exercise.Interval;
-                    // Adicione mais atualizações conforme necessário
-                    contIndex++;
-                });
-        }
-
-        // Atualizar chave única, se necessário
-        _uniqueKey++;
-    }
-
-
-
-    // private async Task HandleRemoveTrainningDay(string trainningDayToRemove)
+    // private async Task HandleChangeOrdenationExercise(List<DropZoneItem> dropNewOrdenation)
     // {
-    //     DropzoneList.RemoveAll(sublist => sublist.Any(item => item.Name == trainningDayToRemove));
-    //     char newLetter = 'A';
-    //     int cont = 0;
+    //     // Procurar a sublista que contém o item com o 'Name' desejado
+    //     var targetSublist = DropzoneList
+    //         .FirstOrDefault(sublist => sublist.Any(x => x.Name == dropNewOrdenation[0].Name));
 
-    //     foreach(var itemIndex in DropzoneList)
+    //     // Se a sublista foi encontrada
+    //     if (targetSublist != null)
     //     {
-
-    //         foreach(var itemTwoIndex in itemIndex)
-    //         {
-    //             itemTwoIndex.Name = newLetter.ToString();
-    //         }
-    //         // cont++;
-    //         // newLetter = (char)(newLetter + cont);
-    //         newLetter++;
+    //         int contIndex = 0;
+    //         // Usar LINQ para encontrar e atualizar o item desejado dentro da sublista
+    //         targetSublist
+    //             .Where(x => x.Name == dropNewOrdenation[0].Name)
+    //             .ToList() // Usando ToList() para que a operação de atualização seja realizada no item
+    //             .ForEach(item =>
+    //             {
+    //                 // Substituindo as propriedades do item
+    //                 item.Exercise.Ordenation = dropNewOrdenation[contIndex].Exercise.Ordenation;
+    //                 item.Exercise.Set = dropNewOrdenation[contIndex].Exercise.Set;
+    //                 item.Exercise.Reps = dropNewOrdenation[contIndex].Exercise.Reps;
+    //                 item.Exercise.Info = dropNewOrdenation[contIndex].Exercise.Info;
+    //                 item.Exercise.Weight = dropNewOrdenation[contIndex].Exercise.Weight;
+    //                 item.Exercise.ExerciseId = dropNewOrdenation[contIndex].Exercise.ExerciseId;
+    //                 item.Exercise.ExerciseName = dropNewOrdenation[contIndex].Exercise.ExerciseName;
+    //                 item.Exercise.TrainningDayId = dropNewOrdenation[contIndex].Exercise.TrainningDayId;
+    //                 item.Exercise.Interval = dropNewOrdenation[contIndex].Exercise.Interval;
+    //                 // Adicione mais atualizações conforme necessário
+    //                 contIndex++;
+    //             });
     //     }
+
+    //     // Atualizar chave única, se necessário
     //     _uniqueKey++;
     // }
+
+
+
 
     private async Task HandleRemoveTrainningDay(int trainningDayIdToRemove)
     {
         TrainningDayReturnVO trainningDay = TrainningToEdit.TrainningDays.Where(x => x.Id == trainningDayIdToRemove).FirstOrDefault();
-     
+
         _trainningDay.RemoveById(trainningDayIdToRemove);
         TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
         StateHasChanged();
@@ -304,88 +218,87 @@
 
     }
 
-    private async Task HandleAddExercise(DropZoneItem newExercise)
-    {
-        int cont = 0;
-        foreach (var sublist in DropzoneList)
-        {
+    // private async Task HandleAddExercise(DropZoneItem newExercise)
+    // {
+    //     int cont = 0;
+    //     foreach (var sublist in DropzoneList)
+    //     {
 
-            if (sublist.Any(x => x.Name == newExercise.Name))
-            {
-                if (sublist[0].Exercise == null)
-                {
-                    sublist[0] = newExercise;
-                    break;
-                }
-                sublist.Add(newExercise);
-                break;
-            }
-            cont++;
-        }
-        DropzoneList = new List<List<DropZoneItem>>(DropzoneList); // Recrie a lista para atualizar o estado
-        _uniqueKey++;
-        _selectedTabIndex = cont;
-        await InvokeAsync(StateHasChanged);
-    }
+    //         if (sublist.Any(x => x.Name == newExercise.Name))
+    //         {
+    //             if (sublist[0].Exercise == null)
+    //             {
+    //                 sublist[0] = newExercise;
+    //                 break;
+    //             }
+    //             sublist.Add(newExercise);
+    //             break;
+    //         }
+    //         cont++;
+    //     }
+    //     DropzoneList = new List<List<DropZoneItem>>(DropzoneList); // Recrie a lista para atualizar o estado
+    //     _uniqueKey++;
+    //     _selectedTabIndex = cont;
+    //     await InvokeAsync(StateHasChanged);
+    // }
 
-    private async Task HandleRemoveExercise(DropZoneItem removeExercise)
-    {
-        int cont = 0;
-        bool hasToBreak = false;
-        foreach (var sublist in DropzoneList)
-        {
-            foreach (var exercise in sublist)
-            {
-                if (removeExercise == exercise && sublist.Count > 1)
-                {
-                    sublist.Remove(exercise);
-                    hasToBreak = true;
-                    break;
-                }
-                else if (removeExercise == exercise && sublist.Count == 1)
-                {
-                    exercise.Exercise = null;
-                    hasToBreak = true;
-                    break;
-                }
-            }
-            if (hasToBreak) break;
-            cont++;
-        }
+    // private async Task HandleRemoveExercise(DropZoneItem removeExercise)
+    // {
+    //     int cont = 0;
+    //     bool hasToBreak = false;
+    //     foreach (var sublist in DropzoneList)
+    //     {
+    //         foreach (var exercise in sublist)
+    //         {
+    //             if (removeExercise == exercise && sublist.Count > 1)
+    //             {
+    //                 sublist.Remove(exercise);
+    //                 hasToBreak = true;
+    //                 break;
+    //             }
+    //             else if (removeExercise == exercise && sublist.Count == 1)
+    //             {
+    //                 exercise.Exercise = null;
+    //                 hasToBreak = true;
+    //                 break;
+    //             }
+    //         }
+    //         if (hasToBreak) break;
+    //         cont++;
+    //     }
 
-        DropzoneList = new List<List<DropZoneItem>>(DropzoneList); // Recrie a lista para atualizar o estado
-        _uniqueKey++;
-        _selectedTabIndex = cont;
-        await InvokeAsync(StateHasChanged);
-    }
+    //     DropzoneList = new List<List<DropZoneItem>>(DropzoneList); // Recrie a lista para atualizar o estado
+    //     _uniqueKey++;
+    //     _selectedTabIndex = cont;
+    //     await InvokeAsync(StateHasChanged);
+    // }
 
-    private async Task HandleEditExercise(DropZoneItem editedExercise)
-    {
-        int cont = 0;
-        bool hasToBreak = false;
-        foreach (var sublist in DropzoneList)
-        {
-            foreach (var exercise in sublist)
-            {
-                if (exercise.Name == editedExercise.Name)
-                {
-                    if (editedExercise.Exercise.Ordenation == exercise.Exercise.Ordenation)
-                    {
-                        exercise.Exercise = editedExercise.Exercise;
-                        hasToBreak = true;
-                        break;
-                    }
-                }
-            }
-            if (hasToBreak) break;
-            cont++;
-        }
+    // private async Task HandleEditExercise(DropZoneItem editedExercise)
+    // {
+    //     int cont = 0;
+    //     bool hasToBreak = false;
+    //     foreach (var sublist in DropzoneList)
+    //     {
+    //         foreach (var exercise in sublist)
+    //         {
+    //             if (exercise.Name == editedExercise.Name)
+    //             {
+    //                 if (editedExercise.Exercise.Ordenation == exercise.Exercise.Ordenation)
+    //                 {
+    //                     exercise.Exercise = editedExercise.Exercise;
+    //                     hasToBreak = true;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //         if (hasToBreak) break;
+    //         cont++;
+    //     }
 
-        DropzoneList = new List<List<DropZoneItem>>(DropzoneList); // Recrie a lista para atualizar o estado
-        _uniqueKey++;
-        _selectedTabIndex = cont;
-        await InvokeAsync(StateHasChanged);
-    }
+    //     _uniqueKey++;
+    //     _selectedTabIndex = cont;
+    //     await InvokeAsync(StateHasChanged);
+    // }
 
     // List<TrainningDayReturnVO> trainningDayReturnList = new List<TrainningDayReturnVO>();
     List<TrainningExerciseVO> exercises = new List<TrainningExerciseVO>()
@@ -422,44 +335,7 @@
 
 
 
-    public List<DropZone> _zones = new()
-    {
-        new() { Name = "Drop Zone 1" },
-        // new() { Name = "Drop Zone 2" }
-    };
-
-    public List<DropZoneItem> _items = new()
-    {
-        // new() { Zone = "Drop Zone 1", Name = "Item 1" },
-        // new() { Zone = "Drop Zone 1", Name = "Item 2" },
-        // new() { Zone = "Drop Zone 2", Name = "Item 3" },
-
-    };
-
-    public List<DropZoneItem> _items2 = new()
-    {
-        // new() { Zone = "Drop Zone 1", Name = "Item 1" },
-        // new() { Zone = "Drop Zone 1", Name = "Item 2" },
-        // new() { Zone = "Drop Zone 2", Name = "Item 3" },
-
-    };
-
-    public class DropZone
-    {
-        public string Name { get; init; }
-
-    }
-
-    public class DropZoneItem
-    {
-        public string Zone { get; set; }
-        public string Name { get; set; }
-        public TrainningExerciseVO Exercise { get; set; }
-        public TrainningDayReturnVO TrainningDayReturn { get; set; }
-        public int TrainningDayOrdenation { get; set; }
-        public int TrainningDayId { get; set; }
-    }
-    private List<List<DropZoneItem>> DropzoneList = new List<List<DropZoneItem>>();
+    
 
     protected override void OnParametersSet()
     {
@@ -469,6 +345,8 @@
 
     protected override void OnInitialized()
     {
+        
+        TrainningToEdit = _trainning.TrainningToTrainningVO(_trainning.Trainnings.Where(x => x.Id == TrainningId).FirstOrDefault());
         StateHasChanged();
         if(TrainningToEdit.TrainningDays.Count == null || TrainningToEdit.TrainningDays.Count == 0)
         {
@@ -485,49 +363,6 @@
                 }
                 };
         }
-        // if (TrainningToEdit != null && TrainningToEdit.TrainningDays.Count > 0)
-        // {
-        //     foreach(var trainningDayIndex in TrainningToEdit.TrainningDays)
-        //     {
-        //         if(trainningDayIndex != null)
-        //         {
-        //             foreach (var exerciseIndex in trainningDayIndex.TrainningExercises)
-        //             {
-        //                 DropZoneItem newDropZone = new DropZoneItem()
-        //                     {
-        //                         Zone = "Drop Zone 1",
-        //                         TrainningDayOrdenation = trainningDayIndex.Ordenation,
-        //                         TrainningDayId = trainningDayIndex.Id,
-        //                         Name = trainningDayIndex.Name,
-        //                         Exercise = exerciseIndex
-        //                     };
-        //                 _items.Add(newDropZone);
-        //             }
-        //         }
-        //         else
-        //         {
-        //             _items = new List<DropZoneItem>
-        //             {
-        //                 new() { Zone = "Drop Zone 1", TrainningDayOrdenation=1, TrainningDayId =1, Name = "A" }
-        //             };
-        //             DropzoneList.Add(_items);
-        //             break;
-        //         }
-
-        //         DropzoneList.Add(_items);
-        //         _items = new List<DropZoneItem>();
-        //     }
-        // }
-
-
-        // else
-        // {
-        //     _items = new List<DropZoneItem>
-        //         {
-        //             new() { Zone = "Drop Zone 1", TrainningDayOrdenation=1, TrainningDayId =1, Name = "A" } 
-        //         };
-        //     DropzoneList.Add(_items);       
-        // }
         
 
     }

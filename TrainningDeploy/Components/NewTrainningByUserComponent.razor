@@ -2,7 +2,7 @@
 @using TrainningApp.Core.Entities
 @inject DbUsers _dbUsers
 @inject DbTrainning _dbTrainning
-
+@inject NavigationManager Navigation
 
 @* <MudDialog MaxWidth="MaxWidth.ExtraLarge" FullWidth="true" Class="custom-dialog rounded-lg">
     <DialogContent>
@@ -96,7 +96,9 @@
             }
             ApplicationUser user = _dbUsers.Customers.Where(x => x.Id == UserId).FirstOrDefault();
             trainning.Personal = user;
-            _dbTrainning.AddTrainning(trainning);
+            int trainningId = _dbTrainning.AddTrainning(trainning);
+            Navigation.NavigateTo($"/aluno/{UserId}/treinos/{trainningId}");
+
             // if (selectedUser != null)
             // {
             //     Console.WriteLine($"Confirmando usuário: {selectedUser.Name}, ID: {selectedUser.Id}");
