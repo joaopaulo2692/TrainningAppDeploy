@@ -71,11 +71,18 @@
     {
         List<ApplicationUser> appUsers = _dbUsers.Customers.ToList();
         users = _dbUsers.UsersToDTO(appUsers);
+        _dbUsers.OnCustomersChanged += UpdateCustomers;
     }
 
     protected override void OnParametersSet()
     {
        
+    }
+    private void UpdateCustomers()
+    {
+        List<ApplicationUser> appUsers = _dbUsers.Customers.ToList();
+        users = _dbUsers.UsersToDTO(appUsers);
+        StateHasChanged();
     }
     private async Task OnCustomerSelected(string customer)
     {

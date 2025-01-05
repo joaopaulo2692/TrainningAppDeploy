@@ -25,7 +25,10 @@
 
             <!-- Linha 2: Data Nascimento, Objetivo e Email -->
             <MudItem xs="6" sm="4">
-                <MudDatePicker Label="Data Nascimento" Date="birthDay" DateChanged="OnChanged" />
+                <MudDatePicker Label="Data Nascimento" Date="UserSelected.Birthday" DateChanged="OnChangedDate" />
+
+
+
 
             </MudItem>
             <MudItem xs="6" sm="4">
@@ -169,8 +172,16 @@
 
     private void OnChanged()
     {
+        UserSelected.Birthday = birthDay.Value;
         _dbUsers.UpdateCustomer(UserSelected);
         StateHasChanged();
+    }
+
+    private void OnChangedDate(DateTime? newDate)
+    {
+        // birthDay = newDate; // Atualiza a variável com o valor selecionado
+        UserSelected.Birthday = newDate.Value;
+        _dbUsers.UpdateCustomer(UserSelected);
     }
 
     protected override void OnParametersSet()

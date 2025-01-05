@@ -12,11 +12,14 @@ namespace TrainningApp.Core.Entities
         public List<ApplicationUser> Personals { get; set; }
         public List<ApplicationUser> Customers { get; set; }
 
+        public event Action? OnCustomersChanged;
+        private void NotifyCustomersChanged() => OnCustomersChanged?.Invoke();
+
         public static UserVO UserToVO(ApplicationUser user)
         {
             return new UserVO()
             {
-                Age = user.Age.Value,
+                Age = user.Age.HasValue ? user.Age.Value : 0,
                 Cpf = user.Cpf,
                 Email = user.Email,
                 Name = user.Name,
@@ -46,13 +49,22 @@ namespace TrainningApp.Core.Entities
             };
         }
 
-
+        public string AddNewCustomer()
+        {
+            int id = Customers.Max(x => int.Parse(x.Id));
+            id ++;
+            ApplicationUser userDb = new ApplicationUser() { Id = id.ToString() };
+            Customers.Add(userDb);
+            NotifyCustomersChanged();
+            return id.ToString();
+        }
         public void AddCustomer(UserVO user)
         {
             int id = int.Parse(Customers.Max(x => x.Id)) + 1;
             user.Id = id.ToString();
             ApplicationUser userDb = UserVOToApplicationUser(user);
             Customers.Add(userDb);
+            NotifyCustomersChanged();
         }
 
         public void UpdateCustomer(UserVO user)
@@ -70,6 +82,7 @@ namespace TrainningApp.Core.Entities
                 userDb.Weight= user.Weight;
                 userDb.UpdatedAt = DateTime.Now; // Atualiza a data de modificação
 
+                NotifyCustomersChanged();
                 // Se outros campos de ApplicationUser forem relevantes para atualização, ajuste aqui.
             }
             else
@@ -85,7 +98,7 @@ namespace TrainningApp.Core.Entities
             {
                 Id = user.Id,
                 Name = user.Name,
-                Age = user.Age.Value,
+                Age = user.Age.HasValue ? user.Age.Value : 0,
                 Gender = user.Gender,
                 Email = user.Email
             }).ToList();

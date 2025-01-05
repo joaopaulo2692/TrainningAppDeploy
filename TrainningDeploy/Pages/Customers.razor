@@ -7,7 +7,7 @@
 
 
 <div style="display: flex; justify-content: center;">
-    <MudButton  Variant="Variant.Filled" Color="Color.Success">Novo Usuário</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="AddNewCustumer">Novo Usuário</MudButton>
 </div>
 <br />
 <br />
@@ -70,6 +70,12 @@
 
 @code {
     List<UserVO> users = new List<UserVO>();
+
+    private void AddNewCustumer()
+    {
+        string id = _dbUsers.AddNewCustomer();
+        NavigateToEditPage(id);
+    }
 
     private void NavigateToEditPage(string user)
     {

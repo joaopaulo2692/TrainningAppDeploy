@@ -148,7 +148,7 @@
 
     private bool ValidateSelection()
     {
-        if (exerciseVO == null)
+        if (exerciseVO == null || exerciseVO.Id == 0 || exerciseVO.Name == null)
         {
             hasError = true;
             return hasError;
