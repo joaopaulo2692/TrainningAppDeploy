@@ -57,7 +57,7 @@
       "url": "images\/treino.jpg"
     },
     {
-      "hash": "sha256-gcK4NMI4ic5fMkLJz+ilcCed+8OODGRbn3mA+VOlFXQ=",
+      "hash": "sha256-DvEbiLvjnTRgFkqnWlBxrGDv9KntAQ9ON+UG1YBN03E=",
       "url": "index.html"
     },
     {
@@ -97,7 +97,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-99Y01zvcKtXnWy8HlNwXz97aR0szA1FLcOV4tdJ5LcM=",
+      "hash": "sha256-tDO0B+Yw2fvht\/oTvtsTIhJDGrZ6WOYUf0VNlxLC5oY=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -105,7 +105,7 @@
       "url": "_framework\/dotnet.native.8.0.11.rj2m0pcs7a.js"
     },
     {
-      "hash": "sha256-MiTjPYB1kXEkY6GC3jcWC5oT6eMDkuGZ3sqV1M5v\/K0=",
+      "hash": "sha256-QAdwoCplaqsvIof6tnJdm49HlltAFcozS5lOolG7abo=",
       "url": "_framework\/dotnet.native.wasm"
     },
     {
@@ -177,7 +177,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-JSqT\/YhdfVd9RfQxghweHfNF0jRWMnAjOvgo9gBE2\/s=",
+      "hash": "sha256-JqfeZnmXRoY4MKLx0s1Fqpm7Czd9rDCpERcEihaFn4k=",
       "url": "_framework\/MudBlazor.wasm"
     },
     {
@@ -245,7 +245,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-JdtfgOUxpUjCmJFmoTcQ4zlo8WANuqJA7AzU39gAZKI=",
+      "hash": "sha256-L0P7kAFxEr2H1NR3FWUmOLeWYdy6IHbI264CGN+SaAY=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -257,7 +257,7 @@
       "url": "_framework\/System.Runtime.InteropServices.JavaScript.wasm"
     },
     {
-      "hash": "sha256-NsX+8cuJ\/DanS5zvC0c9qSFWMPiYz5520AaHgvs0haE=",
+      "hash": "sha256-CW+mDuVKsGnHX7Vi1pTu+y3gjEkBZBnO77V+mN99COE=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -281,11 +281,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-uW3D6C0G\/cRfuCRBWw9KC2W2iaQF6mTqB9hZzPLufoI=",
+      "hash": "sha256-q6xMA3vsUIl87AYVexkzztyx7YxwuhhebWt2y+42WXc=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-C7TpsXIWyOaKv\/kyBDHgp4FfKT0udCZSxXXyV\/gbISo=",
+      "hash": "sha256-eqaW+J2Qjb4IkKUlYij04VcrrFCuySoxsDFrNtTBM5o=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -301,5 +301,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "eGK663ML"
+  "version": "JUlex0Ze"
 };
