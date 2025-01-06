@@ -80,6 +80,7 @@ namespace TrainningApp.Core.Entities
             int id = Trainnings.Max(x => x.Id);
             id++;
             trainning.Id = id;
+            trainning.CreatedAt = DateTime.Now;
             Trainnings.Add(trainning);
             return id;
         }
@@ -95,7 +96,8 @@ namespace TrainningApp.Core.Entities
             {
                 Id = id,
                 User = user,
-                TrainningDays = trainningDayList
+                TrainningDays = trainningDayList,
+                CreatedAt = DateTime.Now
             };
             Trainnings.Add(newTrainning);
 
