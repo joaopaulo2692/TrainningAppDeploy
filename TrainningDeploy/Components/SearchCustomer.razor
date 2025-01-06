@@ -76,7 +76,7 @@
 
     protected override void OnParametersSet()
     {
-       
+
     }
     private void UpdateCustomers()
     {
@@ -87,6 +87,7 @@
     private async Task OnCustomerSelected(string customer)
     {
         Navigation.NavigateTo("/cliente");
+        
     }
 
     private void HandleCustomerSelection(UserVO user)
@@ -97,6 +98,7 @@
         {
             string url = Constants.GetUrlForCustomer(user.Id);
             Navigation.NavigateTo(url);
+      
             // Navigation.NavigateTo(url, true);
 
             Console.WriteLine($"Usuário selecionado: {selectedUser.Name}, Email: {selectedUser.Email}");

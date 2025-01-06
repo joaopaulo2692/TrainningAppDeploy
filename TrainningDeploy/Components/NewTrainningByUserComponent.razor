@@ -95,8 +95,25 @@
                 return;
             }
             ApplicationUser user = _dbUsers.Customers.Where(x => x.Id == UserId).FirstOrDefault();
-            trainning.Personal = user;
-            int trainningId = _dbTrainning.AddTrainning(trainning);
+            // trainning.User = user;
+            Trainning newTrainning = new Trainning()
+            {
+                    Goal = trainning?.Goal,
+                    FirstDay = trainning?.FirstDay ?? default(DateTime), // Usando o valor padrão se for nulo
+                    LastDay = trainning?.LastDay ?? default(DateTime),
+                    PersonalId = trainning?.PersonalId,
+                    GymId = trainning?.GymId,
+                    Level = trainning?.Level,
+                    Name = trainning?.Name,
+                    FrequencyWeekly = trainning?.FrequencyWeekly ?? 0, // Usando 0 como valor padrão se for nulo
+                    Observation = trainning?.Observation,
+                    Activate = trainning?.Activate ?? false, // Usando false como valor padrão se for nulo
+                    Gender = trainning?.Gender,
+                    TrainningDays = trainning?.TrainningDays
+            };
+            newTrainning.User = user;
+
+            int trainningId = _dbTrainning.AddTrainning(newTrainning);
             Navigation.NavigateTo($"/aluno/{UserId}/treinos/{trainningId}");
 
             // if (selectedUser != null)

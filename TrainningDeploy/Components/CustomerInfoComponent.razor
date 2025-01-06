@@ -118,7 +118,7 @@
     List<TrainningReturnVO> trainningVOList;
 
     public UserVO UserVOSelected { get; set; }
-    
+
 
     private void NavigateToResumo()
     {
@@ -141,6 +141,12 @@
     {
         UserVOSelected = _dbUser.GetCustomerById(UserId);
         trainningVOList = _dbTrainning.GetByCustomerId(UserId);
+    }
+
+    protected override void OnParametersSet()
+    {
+        UserVOSelected = _dbUser.GetCustomerById(UserId);
+        base.OnParametersSet();
     }
 }
 

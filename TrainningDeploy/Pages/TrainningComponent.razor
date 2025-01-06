@@ -6,10 +6,11 @@
 @using TrainningApp.Core.Entities
 @using TrainningDeploy.Components
 @using TrainningDeploy.Layout
-@layout UserLayout
 @inject DbTrainningDay _trainningDay
 @inject DbTrainning _trainning
 @* @inject DbTrainningExercise _trainningExercise *@
+
+
 
 @page "/aluno/{UserId}/treinos/{TrainningId:int}"
 
@@ -116,9 +117,10 @@
         TrainningDayReturnVO lastTrainning = TrainningToEdit.TrainningDays.LastOrDefault();
         trainningLetter++;
 
-        TrainningDay trainningDay = _trainningDay.AddNewTrainningDay(trainningLetter.ToString(), lastTrainning.TrainningId);
-        _trainning.AddTrainningDay(trainningDay, lastTrainning.TrainningId);
-        TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
+        TrainningDay trainningDay = _trainningDay.AddNewTrainningDay(trainningLetter.ToString(), TrainningId);
+        _trainning.AddTrainningDay(trainningDay, TrainningId);
+        TrainningToEdit = _trainning.GetById(TrainningId);
+        // TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
         // TrainningToEdit.TrainningDays.Add(new TrainningDayReturnVO() { Name = trainningLetter.ToString(), Ordenation = lastTrainning.Ordenation + 1, TrainningExercises = new List<TrainningExerciseVO>()});
 
 
