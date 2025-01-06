@@ -193,56 +193,63 @@ namespace TrainningApp.Core.Entities
                     Id = 2,
                     Name = "Agachamento",
                     Muscles = Muscles.Where(m => m.Id == 22).ToList(),
-                    Video = "https://www.youtube.com/embed/GiAWATi5D0U"
+                    Video = "https://www.youtube.com/watch?v=s7i94Okznns&pp=ygULYWdhY2hhbWVudG8%3D"
                 },
                 new Exercise
                 {
                     Id = 3,
                     Name = "Rosca Direta",
                     Muscles = Muscles.Where(m => m.Id == 7).ToList(),
-                    Video = "https://www.youtube.com/watch?v=GiAWATi5D0U"
+                    Video = "https://www.youtube.com/watch?v=s1vf8LEPpDA&pp=ygUMcm9zY2EgZGlyZXRh"
                 },
                 new Exercise
                 {
                     Id = 4,
                     Name = "Levantamento Terra",
-                    Muscles = Muscles.Where(m => m.Id == 11 || m.Id == 13 || m.Id == 22).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 11 || m.Id == 13 || m.Id == 22).ToList(),
+                    Video = "https://www.youtube.com/watch?v=UbQVJ_LuyE8&pp=ygUSTGV2YW50YW1lbnRvIHRlcnJh"
                 },
                 new Exercise
                 {
                     Id = 5,
                     Name = "Desenvolvimento com Halteres",
-                    Muscles = Muscles.Where(m => m.Id == 18 || m.Id == 28).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 18 || m.Id == 28).ToList(),
+                    Video = "https://www.youtube.com/shorts/Hu1cfCGrrYQ"
                 },
                 new Exercise
                 {
                     Id = 6,
                     Name = "Remada Curvada",
-                    Muscles = Muscles.Where(m => m.Id == 11 || m.Id == 7).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 11 || m.Id == 7).ToList(),
+                    Video = "https://www.youtube.com/watch?v=TfxJMertfsw&pp=ygUOUmVtYWRhIEN1cnZhZGE%3D"
                 },
                 new Exercise
                 {
                     Id = 7,
                     Name = "Cadeira Extensora",
-                    Muscles = Muscles.Where(m => m.Id == 22).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 22).ToList(),
+                    Video = "https://www.youtube.com/watch?v=el3oHblB5DM&pp=ygURY2FkZWlyYSBleHRlbnNvcmE%3D"
                 },
                 new Exercise
                 {
                     Id = 8,
                     Name = "Flexão de Braço",
-                    Muscles = Muscles.Where(m => m.Id == 21 || m.Id == 28 || m.Id == 18).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 21 || m.Id == 28 || m.Id == 18).ToList(),
+                    Video = "https://www.youtube.com/watch?v=dHgoYiCraCw&pp=ygURRmxleMOjbyBkZSBCcmHDp28%3D"
                 },
                 new Exercise
                 {
                     Id = 9,
                     Name = "Crucifixo",
-                    Muscles = Muscles.Where(m => m.Id == 21).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 21).ToList(),
+                    Video = "https://www.youtube.com/watch?v=uDMmccuPVPQ&pp=ygUJY3J1Y2lmaXhv"
                 },
                 new Exercise
                 {
                     Id = 10,
                     Name = "Abdominal",
-                    Muscles = Muscles.Where(m => m.Id == 1).ToList()
+                    Muscles = Muscles.Where(m => m.Id == 1).ToList(),
+                    Video = "https://www.youtube.com/watch?v=ixJcUH8AlL8&pp=ygUJYWJkb21pbmFs"
                 }
             };
         }

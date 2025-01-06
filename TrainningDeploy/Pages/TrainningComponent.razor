@@ -13,8 +13,14 @@
 
 
 @page "/aluno/{UserId}/treinos/{TrainningId:int}"
+@page "/treinos/{TrainningId:int}"
 
-<CustomerInfoComponent UserId="@UserId" ActiveIndex="1"></CustomerInfoComponent>
+
+@if(UserId != null)
+{
+    <CustomerInfoComponent UserId="@UserId" ActiveIndex="1"></CustomerInfoComponent>
+}
+
 
 <TrainningInfoBasicComponent TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
 

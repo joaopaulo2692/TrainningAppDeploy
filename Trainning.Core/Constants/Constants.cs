@@ -18,6 +18,11 @@ namespace TrainningApp.Core.Constants
         {
             return $"/aluno/{userId}/treinos/{trainningId}";
         }
+
+        public static string GetUrlForTrainningLibrary(int trainningId)
+        {
+            return $"/treinos/{trainningId}";
+        }
     }
 
 }

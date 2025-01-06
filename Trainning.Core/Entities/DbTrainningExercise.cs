@@ -223,6 +223,77 @@ namespace TrainningApp.Core.Entities
                             Info = "Normal",
                             Ordenation = 3,
                             TrainningDayId = 1
+                        },
+                         new TrainningExercise
+                        {
+
+                            Id=10,
+                            Reps = "10",
+                            Set = 3,
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 7).FirstOrDefault(),
+                            Info = "Normal",
+                            Ordenation = 1,
+                            TrainningDayId = 4
+                        },
+                        new TrainningExercise
+                        {
+                            Id = 11,
+                            Reps = "10",
+                            Set = 3,
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 8).FirstOrDefault(),
+                            Info = "Normal",
+                            Ordenation = 2,
+                            TrainningDayId = 4
+                        },
+                        new TrainningExercise
+                        {
+                            Id = 12,
+                            Reps = "10",
+                            Set = 3,
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 9).FirstOrDefault(),
+                            Info = "Normal",
+                            Ordenation = 3,
+                            TrainningDayId = 4
+                        },
+                        new TrainningExercise
+                        {
+                            Id = 13,
+                            Reps = "10",
+                            Set = 3,
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 1).FirstOrDefault(),
+                            Info = "Normal",
+                            Ordenation = 1,
+                            TrainningDayId = 6
+                        },
+                        new TrainningExercise
+                        {
+                            Id = 14,
+                            Reps = "10",
+                            Set = 3,
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 2).FirstOrDefault(),
+                            Info = "Normal",
+                            Ordenation = 2,
+                            TrainningDayId = 6
+                        },
+                        new TrainningExercise
+                        {
+                            Id = 15,
+                            Reps = "10",
+                            Set = 3,
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 3).FirstOrDefault(),
+                            Info = "Normal",
+                            Ordenation = 3,
+                            TrainningDayId = 7
+                        },
+                        new TrainningExercise
+                        {
+                            Id = 16,
+                            Reps = "10",
+                            Set = 3,
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 4).FirstOrDefault(),
+                            Info = "Normal",
+                            Ordenation = 1,
+                            TrainningDayId = 7
                         }
 
             };

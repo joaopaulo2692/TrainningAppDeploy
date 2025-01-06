@@ -151,8 +151,41 @@ namespace TrainningApp.Core.Entities
                     Name = "A",
                     Ordenation = 2,
                     TrainningId = 2,
-                    TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.Id == 4 || x.Id == 5).ToList()
+                    TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.Id == 10 || x.Id == 11).ToList()
                 },
+                      new TrainningDay
+                {
+                    Id = 5,
+                    Name = "B",
+                    Ordenation = 2,
+                    TrainningId = 2,
+                    TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.Id == 12).ToList()
+                },
+                new TrainningDay
+                    {
+                        Id = 6,
+                        Name = "A",
+                        Ordenation = 1,
+                        TrainningId = 1,
+                        TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.TrainningDayId == 6).ToList()
+                    },
+                    new TrainningDay
+                    {
+                        Id = 7,
+                        Name = "B",
+                        Ordenation = 1,
+                        TrainningId = 1,
+                        TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.TrainningDayId == 7).ToList()
+                    },
+                     new TrainningDay
+                    {
+                        Id = 8,
+                        Name = "C",
+                        Ordenation = 1,
+                        TrainningId = 1,
+                        TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.TrainningDayId == 8).ToList()
+                    },
+
             };
 
             TrainningDays.Select(x => x.TrainningExercises.OrderBy(x => x.Ordenation)).ToList();

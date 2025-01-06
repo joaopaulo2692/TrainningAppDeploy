@@ -24,7 +24,9 @@ namespace TrainningApp.Core.Entities
         public string Observation {  get; set; }
         public bool Activate { get; set; }
         public string? Gender { get; set; }
+        public string Type { get; set; }
         public int ManagementId { get; set; }
+        public bool IsLibrary { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ApplicationUser Personal { get; set; }
 

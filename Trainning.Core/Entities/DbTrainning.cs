@@ -13,6 +13,7 @@ namespace TrainningApp.Core.Entities
     public class DbTrainning
     {
         public List<Trainning> Trainnings { get; set; }
+        public List<Trainning> TrainningsLibrary { get; set; }
 
 
 
@@ -35,6 +36,7 @@ namespace TrainningApp.Core.Entities
             {
                 // Atualiza as propriedades do Trainning existente
                 trainning.Activate = trainningVO.Activate;
+                trainning.Type = trainningVO.Type;
                 trainning.FrequencyWeekly = trainningVO.FrequencyWeekly;
                 trainning.Gender = trainningVO.Gender;
                 trainning.Goal = trainningVO.Goal;
@@ -59,6 +61,7 @@ namespace TrainningApp.Core.Entities
 
             var trainning = new Trainning()
             {
+                Type = trainningReturnVO.Type,
                 Id = trainningReturnVO.Id,
                 Activate = trainningReturnVO.Activate,
                 CreatedAt = trainningReturnVO.CreatedAt,
@@ -85,7 +88,7 @@ namespace TrainningApp.Core.Entities
             return id;
         }
 
-        public TrainningReturnVO AddNewTrainning(string userId)
+        public TrainningReturnVO AddNewTrainning(string? userId, bool isLibrary = false)
         {
             int id = Trainnings.Max(x => x.Id);
             id++;
@@ -97,8 +100,10 @@ namespace TrainningApp.Core.Entities
                 Id = id,
                 User = user,
                 TrainningDays = trainningDayList,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                IsLibrary = isLibrary
             };
+            
             Trainnings.Add(newTrainning);
 
             return TrainningToTrainningVO(newTrainning);
@@ -108,6 +113,7 @@ namespace TrainningApp.Core.Entities
         {
             TrainningReturnVO trainningDayReturnVO = new TrainningReturnVO()
             {
+                Type = trainning.Type,
                 Id = trainning.Id,
                 Activate = trainning.Activate,
                 CreatedAt = trainning.CreatedAt,
@@ -132,6 +138,7 @@ namespace TrainningApp.Core.Entities
             {
                 var trainningReturnVO = new TrainningReturnVO()
                 {
+                    Type = trainning.Type,
                     Id = trainning.Id,
                     Activate = trainning.Activate,
                     CreatedAt = trainning.CreatedAt,
@@ -162,6 +169,7 @@ namespace TrainningApp.Core.Entities
         {
             return Trainnings.Select(trainning => new TrainningReturnVO
             {
+                Type = trainning.Type,
                 Id = trainning.Id,
                 Activate = trainning.Activate,
                 CreatedAt = trainning.CreatedAt,
@@ -243,6 +251,21 @@ namespace TrainningApp.Core.Entities
 
             _trainningDay.TrainningDaysUpdated += UpdateTrainningDays;
 
+    //        TrainningsLibrary = new List<Trainning>
+    //        {
+    //           new Trainning
+    //{
+    //            Id = 1,
+    //            CreatedAt = new DateTime(2024, 12, 10),
+    //            Goal = "Condicionamento Físico",
+    //            Name = "Treino ABC",
+    //            Personal = _dbUsers.Personals.Where(x => x.Id == "1").FirstOrDefault(),
+    //            Activate = true,
+    //            TrainningDays =  _trainningDay.TrainningDays.Where(x => x.Id == 6 || x.Id == 7 || x.Id == 8).ToList(),
+    //            Gender = "Masculino",
+    //            Level = "Intermediário",
+    //},
+    //        };
 
             Trainnings = new List<Trainning>{
             new Trainning()
@@ -292,6 +315,20 @@ namespace TrainningApp.Core.Entities
                 User = _dbUsers.Customers.Where(x => x.Id == "5").FirstOrDefault()
 
             },
+                        new Trainning
+    {
+                Id = 5,
+                CreatedAt = new DateTime(2024, 12, 10),
+                Goal = "Condicionamento Físico",
+                Name = "Treino ABC",
+                Personal = _dbUsers.Personals.Where(x => x.Id == "1").FirstOrDefault(),
+                Activate = true,
+                TrainningDays =  _trainningDay.TrainningDays.Where(x => x.Id == 6 || x.Id == 7 || x.Id == 8).ToList(),
+                Gender = "Masculino",
+                Level = "Intermediário",
+                IsLibrary = true,
+    },
+
         };
             foreach (var trainning in Trainnings)
             {
