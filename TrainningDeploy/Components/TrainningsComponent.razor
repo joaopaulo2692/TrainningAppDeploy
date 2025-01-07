@@ -27,7 +27,7 @@
             <MudNavMenu Dense>
              <MudNavGroup Title="Adicionar Treino" Expanded="false">
                  <MudNavLink OnClick="@(() => OndAddTrainning())">Novo Treino</MudNavLink>
-                 <MudNavLink OnClick="@(() => GoTo("Adicionar Treino/Security"))">Biblioteca de Treinos</MudNavLink>
+                 <MudNavLink OnClick="@(() => OpenDialogTrainningLibrary())">Biblioteca de Treinos</MudNavLink>
                  <MudNavLink OnClick="@(() => OpenUserSelectionDialog())">Utilizar de outro aluno</MudNavLink>
              </MudNavGroup>
          </MudNavMenu>
@@ -177,6 +177,27 @@
 
     [Parameter]
     public string UserId { get; set; }
+
+    private async Task OpenDialogTrainningLibrary()
+    {
+        var options = new DialogOptions { MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
+        // var parameters = new DialogParameters();
+        var parameters = new DialogParameters
+    {
+        { "UserId", UserId }
+
+    };
+
+        var dialog = DialogService.Show<NewTrainningByLibraryComponent>("Selecionar Treino", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // SelectedUser = (UserVO)result.Data;
+            // Console.WriteLine($"Usuário Selecionado: {SelectedUser.Name}, ID: {SelectedUser.Id}");
+        }
+    }
 
 
     private async Task OpenUserSelectionDialog()

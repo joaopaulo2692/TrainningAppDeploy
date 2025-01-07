@@ -1,0 +1,160 @@
+﻿@using TrainningApp.Core.DTO.Trainning
+@using TrainningApp.Core.Entities
+@inject DbTrainning _dbTrainning
+@inject DbUsers _dbUsers
+@inject NavigationManager Navigation
+
+<MudDialog MaxWidth="MaxWidth.Small" FullWidth="false" Class="custom-dialog rounded-lg" Style="width: 800px;">
+       <DialogContent>
+           <MudRadioGroup T="int" @bind-Value="SelectedTrainningId">
+        @foreach (var trainning in trainningsList)
+        {
+            <!-- Contêiner externo para hover e MudDivider -->
+            <div class="hover-container"
+                 Style="transition: background-color 0.3s ease; padding: 0; margin-bottom: 2px; cursor: pointer;">
+
+                <MudGrid AlignItems="AlignItems.Center" Class="profile-container" Style="padding: 20px 30px 5px 30px;">
+                    <!-- Menos espaço inferior -->
+                    <!-- Nome e alertas -->
+                    <MudItem Class="profile-text" Style="width: 100%;">
+                        <MudGrid>
+                            @* <MudText Typo="Typo.h6" Class="font-weight-bold">@trainning.Name</MudText> *@
+                                <MudRadio T="int" Class="d-block" Value="trainning.Id">
+                                    @trainning.Name
+                                </MudRadio>
+                            </MudGrid>
+
+                            <!-- Alertas e botão alinhados -->
+                            <MudGrid Item Class="d-flex align-items-center" Style="margin-top: 8px; width: 100%;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <!-- MudAlerts lado a lado -->
+                                    @if (!string.IsNullOrEmpty(trainning.Gender))
+                                {
+                                    <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                        @trainning.Gender
+                                    </MudAlert>
+                                }
+                                @if (!string.IsNullOrEmpty(trainning.PersonalName))
+                                {
+                                    <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                        @trainning.PersonalName
+                                    </MudAlert>
+                                }
+                                @if (!string.IsNullOrEmpty(trainning.Goal))
+                                {
+                                    <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                        @trainning.Goal
+                                    </MudAlert>
+                                }
+                                @if (!string.IsNullOrEmpty(trainning.Level))
+                                {
+                                    <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                        @trainning.Level
+                                    </MudAlert>
+                                }
+
+                                @if (trainning.TrainningDays != null)
+                                {
+                                    <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                        @trainning.TrainningDays.Count Sessões
+                                    </MudAlert>
+                                }
+                               
+                            </div>
+                               
+                        </MudGrid>
+                           
+                    </MudItem>
+                </MudGrid>
+
+
+            </div>
+                <MudDivider Style="border-width: 2px; margin-top: 8px;" />
+
+
+        }
+        </MudRadioGroup>
+           </DialogContent>
+    <DialogActions>
+        <div class="d-flex justify-content-end w-100">
+            <MudButton Variant="Variant.Text" Color="Color.Secondary" OnClick="Cancel" Class="me-2">
+                Cancelar
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Submit">
+                Confirmar
+            </MudButton>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private int SelectedTrainningId;
+
+    List<TrainningReturnVO> trainningsList = new List<TrainningReturnVO>();
+
+    private void NavigateToEditing(int trainningId)
+    {
+
+    }
+    public void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    public void Submit()
+    {
+        if (SelectedTrainningId != 0)
+        {
+            // Encontra o usuário selecionado com base no ID
+            var trainning = _dbTrainning.Trainnings.FirstOrDefault(user => user.Id == SelectedTrainningId);
+
+            // Trainning trainning = _dbTrainning.Trainnings.Where(x => x.User.Id == SelectedUserId && x.Activate == true).FirstOrDefault();
+            // if (trainning == null)
+            // {
+            //     isAlertVisible = true;
+            //     return;
+            // }
+            ApplicationUser user = _dbUsers.Customers.Where(x => x.Id == UserId).FirstOrDefault();
+            // trainning.User = user;
+            Trainning newTrainning = new Trainning()
+                {
+                    Goal = trainning?.Goal,
+                    FirstDay = trainning?.FirstDay ?? default(DateTime), // Usando o valor padrão se for nulo
+                    LastDay = trainning?.LastDay ?? default(DateTime),
+                    PersonalId = trainning?.PersonalId,
+                    GymId = trainning?.GymId,
+                    Level = trainning?.Level,
+                    Name = trainning?.Name,
+                    FrequencyWeekly = trainning?.FrequencyWeekly ?? 0, // Usando 0 como valor padrão se for nulo
+                    Observation = trainning?.Observation,
+                    Activate = trainning?.Activate ?? false, // Usando false como valor padrão se for nulo
+                    Gender = trainning?.Gender,
+                    TrainningDays = trainning?.TrainningDays
+                };
+            newTrainning.User = user;
+
+            int trainningId = _dbTrainning.AddTrainning(newTrainning);
+            Navigation.NavigateTo($"/aluno/{UserId}/treinos/{trainningId}");
+
+
+        }
+        else
+        {
+            Console.WriteLine("Nenhum usuário foi selecionado.");
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        trainningsList = _dbTrainning.TrainningListToTrainningVOList(_dbTrainning.Trainnings.Where(x => x.IsLibrary == true).ToList());
+    }
+}

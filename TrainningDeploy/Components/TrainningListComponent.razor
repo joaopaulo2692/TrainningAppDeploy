@@ -38,22 +38,43 @@
                             <MudGrid Item Class="d-flex align-items-center" Style="margin-top: 8px; width: 100%;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <!-- MudAlerts lado a lado -->
-                                    <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                    @if (string.IsNullOrEmpty(trainning.Gender))
+                                {
+                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
                                               Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
                                         @trainning.Gender
                                 </MudAlert>
-                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                }
+                                @if (!string.IsNullOrEmpty(trainning.PersonalName))
+                                {
+                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
                                           Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
                                     @trainning.PersonalName
                                 </MudAlert>
-                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                }
+                                @if (!string.IsNullOrEmpty(trainning.Goal))
+                                {
+                                        <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
                                           Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
                                     @trainning.Goal
-                                </MudAlert>
-                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                </MudAlert> 
+                                }
+                                @if (!string.IsNullOrEmpty(trainning.Level))
+                                {
+                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
                                           Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
                                     @trainning.Level
                                 </MudAlert>
+                                }
+                               
+                                @if(trainning.TrainningDays != null)
+                                {
+                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                    @trainning.TrainningDays.Count Sessões
+                                </MudAlert>
+                                }
+                               
                                 <div class="action-icons">
                                     <MudIconButton OnClick="() => NavigateToEditing(trainning.Id)" Icon="@Icons.Material.Outlined.Edit" Style="margin-left: auto;" />
                                 <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
@@ -87,9 +108,15 @@
         background-color: transparent; /* Sem fundo inicial */
     }
 
-        .hover-container:hover {
+     @*    .hover-container:hover {
             background-color: #2a2a3d; /* Cor de destaque no hover */
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+        } *@
+        .hover-container:hover {
+            /* background-color: #2a2a3d; /* Ajuste a cor conforme necessário */ 
+            background-color: rgba(42, 42, 61, 0.2);
+
+            cursor: pointer;
         }
 .hover-container .mud-divider {
             background-color: #e0e0e0; /* Ajuste a cor do divisor conforme necessário */

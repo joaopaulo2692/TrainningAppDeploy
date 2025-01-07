@@ -10,7 +10,11 @@
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudText Typo="Typo.h5" Class="ml-3">TrainningApp</MudText>
+        @* <MudText Typo="Typo.h5" Class="ml-3">TrainningApp</MudText> *@
+        @* <MudText Typo="Typo.h5" Class="ml-3 hide-on-small">TrainningApp</MudText> *@
+        <MudText Typo="Typo.h5" Class="ml-3 d-none d-md-inline">TrainningApp</MudText>
+
+
         <MudSpacer />
          @if (ShowSearchCustomer)
         {
@@ -22,6 +26,7 @@
             @if (!_isDarkMode) {
                 <SearchCustomer IsLightMode=true></SearchCustomer>
             }
+     
         } 
         
         <MudSpacer />

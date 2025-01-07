@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-6YUKay\/Hq1VQlC\/fUw1J47kN2c+Y7sTANKnHdG9MPVE=",
+      "hash": "sha256-PFn9t7ngQdOyShLzDme44caPe0VZTWorG51oBSUJxvc=",
       "url": "css\/app.css"
     },
     {
@@ -57,7 +57,7 @@
       "url": "images\/treino.jpg"
     },
     {
-      "hash": "sha256-gcK4NMI4ic5fMkLJz+ilcCed+8OODGRbn3mA+VOlFXQ=",
+      "hash": "sha256-ThTEPBMCFyK7lkWlKrX6iHn+bOGjYop9l2BXB06RhvM=",
       "url": "index.html"
     },
     {
@@ -97,7 +97,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-ttETwf1HdqZ+3c5Vr0hEx3tPz8Ir460Y7tvprrZLOBs=",
+      "hash": "sha256-fqXoD+LBuAJZnP+luKEXvqYBokiwJ2eHOdtHM0Ajfsc=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -281,11 +281,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-Fqc7+i4gs\/URBxrJIk3uaa+rxMklxlpvfFHa1\/qPDwQ=",
+      "hash": "sha256-Kyx6S\/E37lWNT\/diF0h8Q0HAs+w1PRhudZhGXBRBK0M=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-6Nz2VxKvIldLwFB\/cJbWE4s3VP1mRuAfWXw6agwFi\/k=",
+      "hash": "sha256-puez99VCAHNmb9Zo5ky67qlGYNbAPKjSFf4MHSntQY0=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -301,5 +301,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "iXwgtZce"
+  "version": "+OUPiI\/2"
 };

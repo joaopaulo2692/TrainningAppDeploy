@@ -12,7 +12,7 @@
 
 <MudDialog MaxWidth="MaxWidth.Small" FullWidth="false" Class="custom-dialog rounded-lg" Style="width: 400px;">
     <DialogContent>
-        <MudText Typo="Typo.h6" Class="mb-2">Selecione um usuário</MudText>
+        @* <MudText Typo="Typo.h6" Class="mb-2">Selecione um usuário</MudText> *@
         
         <!-- Campo de Pesquisa -->
         <MudTextField @bind-Value="SearchTerm" Placeholder="Digite para buscar..." Class="mb-2" Immediate="true" 
@@ -116,15 +116,6 @@
             int trainningId = _dbTrainning.AddTrainning(newTrainning);
             Navigation.NavigateTo($"/aluno/{UserId}/treinos/{trainningId}");
 
-            // if (selectedUser != null)
-            // {
-            //     Console.WriteLine($"Confirmando usuário: {selectedUser.Name}, ID: {selectedUser.Id}");
-            //     MudDialog.Close(DialogResult.Ok(selectedUser));
-            // }
-            // else
-            // {
-            //     Console.WriteLine("Usuário não encontrado.");
-            // }
          
         }
         else

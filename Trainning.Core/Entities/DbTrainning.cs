@@ -161,7 +161,7 @@ namespace TrainningApp.Core.Entities
 
         public List<TrainningReturnVO> GetByCustomerId(string userId)
         {
-            List<Trainning> trainnings = Trainnings.Where(x => x.User.Id == userId).ToList();
+            List<Trainning> trainnings = Trainnings.Where(x => x.User != null && x.User.Id == userId).ToList();
             return TrainningListToTrainningVOList(trainnings);
         }
 
@@ -327,6 +327,21 @@ namespace TrainningApp.Core.Entities
                 Gender = "Masculino",
                 Level = "Intermediário",
                 IsLibrary = true,
+                User = new ApplicationUser()
+    },
+                                              new Trainning
+    {
+                Id = 6,
+                CreatedAt = new DateTime(2024, 12, 10),
+                Goal = "Condicionamento Físico",
+                Name = "Treino 2025",
+                Personal = _dbUsers.Personals.Where(x => x.Id == "1").FirstOrDefault(),
+                Activate = true,
+                TrainningDays =  _trainningDay.TrainningDays.Where(x => x.Id == 1 || x.Id == 2 || x.Id == 3).ToList(),
+                Gender = "Feminino",
+                Level = "Intermediário",
+                IsLibrary = true,
+                User = new ApplicationUser()
     },
 
         };

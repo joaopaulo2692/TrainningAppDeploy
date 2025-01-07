@@ -138,6 +138,7 @@ code {
         padding-left: 10px !important; /* Pequeno espaçamento à esquerda para garantir que não fique colado na borda */
         padding-right: 10px !important; /* Pequeno espaçamento à direita para garantir que não fique colado na borda */
     }
+
     .custom-autocomplete, .custom-freq, .custom-nivel {
         width: 100% !important; /* Ajusta largura para preencher o contêiner */
     }
@@ -151,6 +152,17 @@ code {
             margin: 10px;
         }
     }
+
+
+    @media (max-width: 600px) {
+        .hide-on-small {
+            display: none;
+        }
+    }
+
+
+
+ 
 
 
 

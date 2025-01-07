@@ -14,24 +14,22 @@
 <br />
 
 
-<div style="display: flex; justify-content: center; padding: 10px;">
-    <MudPaper Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+
+<div style="display: flex; justify-content: center; width: 100%;">
+    <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
         @foreach (var user in users)
         {
-   
-            <MudGrid AlignItems="AlignItems.Center" Class="profile-container hover-container">
-   
-                <MudItem>
-                    <MudAvatar Size="Size.Large" Image="https://via.placeholder.com/150" Class="mb-2" />
+            <MudGrid AlignItems="AlignItems.Center" Class="profile-container hover-container" Style="display: flex; flex-wrap: wrap; width: calc(100% + 40px); margin-right: -20px;">
+                <MudItem Style="flex-shrink: 0; margin-right: 10px;">
+                    <MudAvatar Size="Size.Medium" Image="https://via.placeholder.com/150" Class="mb-2" />
                 </MudItem>
 
- 
-                <MudItem Class="profile-text">
+                <MudItem Class="profile-text" Style="flex-grow: 1;">
                     <MudText Typo="Typo.h6" Class="font-weight-bold">@user.Name</MudText>
                         <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
                     </MudItem>
 
-                    <MudItem>
+                    <MudItem Style="flex-shrink: 0;">
                         <div class="action-icons">
                             <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" />
                         </div>
@@ -40,17 +38,33 @@
             <MudDivider Class="my-4" />
         }
     </MudPaper>
+
 </div>
 
 <style>
-    /* Oculta os ícones inicialmente */
+    .custom-size {
+        width: 75%;
+        max-width: 100%;
+        transition: width 0.3s ease;
+        min-height: 400px; /* Altura mínima para não ficar muito pequeno em telas grandes */
+        box-sizing: border-box; /* Garante que o padding não afete o tamanho */
+    }
+
+    .profile-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%; /* Garante que o MudGrid ocupe 100% da largura disponível */
+        box-sizing: border-box; /* Garante que o padding do MudPaper não afete o layout */
+        position: relative; /* Evita deslocamento inesperado */
+    }
+
     .hover-container .action-icons {
         visibility: hidden;
         opacity: 0;
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    /* Mostra os ícones no hover */
     .hover-container:hover .action-icons {
         visibility: visible;
         opacity: 1;
@@ -59,13 +73,22 @@
     /* Adiciona efeito de hover ao container */
     .hover-container {
         transition: background-color 0.3s ease;
+        position: relative; /* Para evitar deslocamento */
     }
 
         .hover-container:hover {
-            background-color: #2a2a3d; /* Ajuste a cor conforme necessário */
+             /* background-color: #2a2a3d;   */
+            background-color: rgba(42, 42, 61, 0.2); 
+       
+
             cursor: pointer;
         }
+
+
+
+    }
 </style>
+
 
 
 @code {
