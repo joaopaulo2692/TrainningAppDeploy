@@ -57,7 +57,7 @@
       "url": "images\/treino.jpg"
     },
     {
-      "hash": "sha256-DvEbiLvjnTRgFkqnWlBxrGDv9KntAQ9ON+UG1YBN03E=",
+      "hash": "sha256-gcK4NMI4ic5fMkLJz+ilcCed+8OODGRbn3mA+VOlFXQ=",
       "url": "index.html"
     },
     {
@@ -97,7 +97,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-iSZeh7FNDFYw\/4jQteukHzolk1iAGDYyAijL0qVkvZA=",
+      "hash": "sha256-ttETwf1HdqZ+3c5Vr0hEx3tPz8Ir460Y7tvprrZLOBs=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -281,11 +281,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-vVhXxK0KAQzY2nx8oeee6NVKZgG132SF8k1K2le5q94=",
+      "hash": "sha256-Fqc7+i4gs\/URBxrJIk3uaa+rxMklxlpvfFHa1\/qPDwQ=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-HpxL5PMhZLYJPlXzqWIES+h1FEFKMMU9cEGQFLofeqM=",
+      "hash": "sha256-6Nz2VxKvIldLwFB\/cJbWE4s3VP1mRuAfWXw6agwFi\/k=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -301,5 +301,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "SSynipy9"
+  "version": "iXwgtZce"
 };
