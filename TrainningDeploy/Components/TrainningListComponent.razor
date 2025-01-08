@@ -31,7 +31,14 @@
                     <!-- Nome e alertas -->
                     <MudItem Class="profile-text" Style="width: 100%;">
                         <MudGrid>
-                            <MudText Typo="Typo.h6" Class="font-weight-bold">@trainning.Name</MudText>
+                            @if (string.IsNullOrEmpty(trainning.Name))
+                            {
+                                 <MudText Typo="Typo.h6" Class="font-weight-bold">Treino sem nome</MudText>
+                            }
+                            else{
+                                <MudText Typo="Typo.h6" Class="font-weight-bold">@trainning.Name</MudText>
+                            }
+                            
                             </MudGrid>
 
                             <!-- Alertas e botão alinhados -->

@@ -24,8 +24,18 @@
                     <MudSelectItem Value="state">@state</MudSelectItem>
                 }
             </MudSelect>
+            @if (IsLibrary)
+            {
+                <MudSelect Class="custom-autocomplete" Label="Sexo" @bind-Value="TrainningVO.Gender" TextChanged="OnChanged">
+                    @foreach (var gender in genders)
+                    {
+                        <MudSelectItem Value="gender">@gender</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+          
 
-            <MudSelect Class="custom-nivel" Label="Nível" @bind-Value="TrainningVO.Level" TextChanged="OnChanged">
+            <MudSelect Class="custom-autocomplete" Label="Nível" @bind-Value="TrainningVO.Level" TextChanged="OnChanged">
                 @foreach (var level in levelsTrainningList)
                 {
                     <MudSelectItem Value="level">@level</MudSelectItem>
@@ -101,6 +111,9 @@
     public TrainningReturnVO TrainningVO { get; set; }
 
     [Parameter]
+    public bool IsLibrary { get; set; }
+
+    [Parameter]
     public EventCallback<TrainningReturnVO> TrainningToSave { get; set; }
 
     private bool isActivate = false;
@@ -121,6 +134,11 @@
     private List<string> levelsTrainningList = new List<string>()
     {
         "Adaptativo", "Iniciante", "Intermediário", "Avançado"
+    };
+
+    private List<string> genders = new List<string>()
+    {
+        "Feminino","Masculino"
     };
 
     private List<UserVO> PersonalUsers { get; set;}

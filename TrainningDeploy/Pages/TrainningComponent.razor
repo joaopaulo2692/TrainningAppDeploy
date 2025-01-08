@@ -22,7 +22,7 @@
 }
 
 
-<TrainningInfoBasicComponent TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
+<TrainningInfoBasicComponent IsLibrary="IsLibrary" TrainningToSave="HandleInfoTrainning" TrainningVO="TrainningToEdit"></TrainningInfoBasicComponent>
 
 
 @if(TrainningToEdit != null)
@@ -89,6 +89,8 @@
     public string UserId { get; set; }
     [Parameter]
     public TrainningReturnVO TrainningToEdit { get; set; }
+
+    public bool IsLibrary { get; set; }
 
     private TrainningReturnVO TrainningVO { get; set; }
     [Parameter]
@@ -343,7 +345,7 @@
 
 
 
-    
+
 
     protected override void OnParametersSet()
     {
@@ -353,9 +355,15 @@
 
     protected override void OnInitialized()
     {
-        
+
         TrainningToEdit = _trainning.TrainningToTrainningVO(_trainning.Trainnings.Where(x => x.Id == TrainningId).FirstOrDefault());
         StateHasChanged();
+
+        if (string.IsNullOrEmpty(UserId))
+        {
+            IsLibrary = true;
+        }
+
         if(TrainningToEdit.TrainningDays.Count == null || TrainningToEdit.TrainningDays.Count == 0)
         {
             TrainningToEdit = new TrainningReturnVO()

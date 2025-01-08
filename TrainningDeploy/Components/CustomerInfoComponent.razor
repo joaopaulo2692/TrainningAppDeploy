@@ -1,4 +1,5 @@
 ﻿
+@using TrainningApp.Core.Constants
 @using TrainningApp.Core.DTO.Trainning
 @using TrainningApp.Core.DTO.User
 @using TrainningApp.Core.Entities
@@ -113,6 +114,7 @@
     [Parameter]
     public string? UserId { get; set; }
 
+    string url;
     [Parameter]
     public int ActiveIndex { get; set; }
     List<TrainningReturnVO> trainningVOList;
@@ -123,19 +125,22 @@
     private void NavigateToResumo()
     {
         ActiveIndex =0;
-        Navigation.NavigateTo($"/aluno/{UserId}");
+        url = Constants.GetUrlForCustomer(UserId);
+        Navigation.NavigateTo(url);
     }
 
     private void NavigateToTreino()
     {
         ActiveIndex = 1;
-        Navigation.NavigateTo($"/aluno/{UserId}/treinos");
+        url = Constants.GetUrlForAllTrainning(UserId);
+        Navigation.NavigateTo(url);
     }
 
     private void NavigateToAvaliacoes()
     {
         ActiveIndex = 3;
-        Navigation.NavigateTo($"/aluno/{UserId}/avaliacao/");
+        url = Constants.GetUrlForPhysicalAssessment(UserId);
+        Navigation.NavigateTo(url);
     }
     protected override void OnInitialized()
     {

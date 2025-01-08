@@ -1,24 +1,20 @@
 ﻿@page "/"
+@using TrainningApp.Core.Constants
 @inject NavigationManager Navigation
 @attribute [Layout(typeof(UserLayout))]
 
 
 <PageTitle>Home</PageTitle>
 
-<MudCarousel Class="mud-width-full" Style="height:300px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+<MudCarousel Class="mud-width-full" Style="height:118px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
     <MudCarouselItem Transition="transition" Color="@Color.Primary">
-        <MudImage Src="images/treino-edit.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        <MudImage Src="images/treino-editcopia.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
     </MudCarouselItem>
     <MudCarouselItem Transition="transition" Color="@Color.Secondary">
-        <MudImage Src="images/treino-edit3.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        <MudImage Src="images/treino-edit3copia.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
     </MudCarouselItem>
     <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
-        <MudImage Src="images/treino-edit2.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
-        @*  <div class="d-flex" style="height:100%">
-
-
-        <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
-        </div>  *@
+        <MudImage Src="images/treino-edit2copia.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
     </MudCarouselItem>
 </MudCarousel>
 
@@ -40,15 +36,15 @@
 </MudPaper> *@
 
 <MudPaper Height="400px" Width="100%">
-    <MudText Typo="Typo.h2" Align="Align.Center">Seu novo App de Treinamentos!</MudText>
+    <MudText Typo="Typo.h3" Align="Align.Center">Seu novo App de Treinamentos!</MudText>
     <MudText Typo="Typo.h4" Align="Align.Center">Escolha o seu perfil:</MudText>
     <MudContainer MaxWidth="MaxWidth.Small" Style="margin-top: 40px;">
         <MudGrid Justify="Justify.Center">
             <MudItem>
-                <MudButton @onclick="@NavigateToStudent" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Aluno</MudButton>
+                <MudButton @onclick="@NavigateToCustumers" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Alunos</MudButton>
             </MudItem>
             <MudItem>
-                <MudButton @onclick="@NavigateToPersonal" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Personal</MudButton>
+                <MudButton @onclick="@NavigateToTrainnings" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Treinos</MudButton>
             </MudItem>
         </MudGrid>
     </MudContainer>
@@ -77,13 +73,18 @@
     private bool enableSwipeGesture = true;
     private bool autocycle = true;
     private Transition transition = Transition.Slide;
+    string url;
+    private void NavigateToCustumers()
+    {
+        url = Constants.GetAllCustomer();
+        Navigation.NavigateTo(url);
+    }
+    private void NavigateToTrainnings()
+    {
+        url = Constants.GetAllTrainning();
+        Navigation.NavigateTo(url);
+    }
 
-    private void NavigateToStudent()
-    {
-        Navigation.NavigateTo("/aluno");
-    }
-    private void NavigateToPersonal()
-    {
-        Navigation.NavigateTo("/personal");
-    }
+
+
 }

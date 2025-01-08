@@ -41,7 +41,15 @@
     {
         <div style="display: flex; justify-content: center; margin-bottom: 10px;">
             <MudPaper Height="220px" Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-sizing: border-box;">
-                <MudText Typo="Typo.h4" Style="margin-bottom: 15px;">@trainning.Name</MudText>
+                @if (string.IsNullOrEmpty(trainning.Name))
+                {
+                    <MudText Typo="Typo.h4" Style="margin-bottom: 15px;">Treino sem nome</MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h4" Style="margin-bottom: 15px;">@trainning.Name</MudText>
+                }
+               
                     <MudDivider Style="height: 6px; margin-bottom: 15px;" />
 
                     <MudText Style="margin-bottom: 10px;">
@@ -303,8 +311,8 @@
     }
 
     private bool AddTrainning { get; set; } = false;
-   
-    
+
+
     private bool EditTrainning { get; set; } = false;
     protected override void OnInitialized()
     {
@@ -315,12 +323,16 @@
 
     }
 
+
+
     private void OnDeleteTrainning(TrainningReturnVO trainningToDelete)
     {
-        TrainningReturnVO toDelete = TrainningsList.Where(x => x == trainningToDelete).FirstOrDefault();
-        if (toDelete != null) TrainningsList.Remove(toDelete);
+        // TrainningReturnVO toDelete = TrainningsList.Where(x => x == trainningToDelete).FirstOrDefault();
+        // if (toDelete != null) TrainningsList.Remove(toDelete);
         // _trainning.RemoveById(trainningToDelete.Id);
-
+        Trainning trainningToRemove = _trainning.Trainnings.Where(x => x.Id == trainningToDelete.Id).FirstOrDefault();
+        _trainning.Trainnings.Remove(trainningToRemove);
+        OnInitialized();
     }
 
     private void OndAddTrainning()

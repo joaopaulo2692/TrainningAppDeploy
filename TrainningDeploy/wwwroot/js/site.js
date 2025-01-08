@@ -49,3 +49,4 @@ function initializeWithInstance(dotNetObjectReference) {
             .catch(err => console.error('Erro ao chamar método .NET:', err));
     }, 2000);
 }
+
