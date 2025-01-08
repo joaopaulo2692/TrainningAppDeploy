@@ -90,7 +90,12 @@
         </MudForm>
     </DialogContent>
 </MudDialog>
-
+@if (isAlertVisible)
+{
+    <MudAlert Severity="Severity.Error" Variant="Variant.Filled" OnClose="HideAlert">
+        É necessário inserir o nome e a data!
+    </MudAlert>
+}
 
 @code {
     private PhysicalAssessmentVO model = new PhysicalAssessmentVO();
@@ -103,8 +108,18 @@
     [Parameter]
     public EventCallback<PhysicalAssessmentVO> OnSavePhysical { get; set; }
 
+
+    bool isAlertVisible;
     private async void Save()
     {
+        if(string.IsNullOrEmpty(model.PersonalName) || !model.AssessmentDate.HasValue)
+        {
+            isAlertVisible=true;
+            await Task.Delay(4000); // Espera 4 segundos
+            isAlertVisible = false; // Esconde o alerta
+            StateHasChanged(); // Atualiza a tela para esconder o alerta
+            return;
+        }
         await OnSavePhysical.InvokeAsync(model);
         MudDialog.Close(DialogResult.Ok(model));
     }

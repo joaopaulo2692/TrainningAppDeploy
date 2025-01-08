@@ -20,13 +20,14 @@ namespace TrainningApp.Core.Entities
 
         public List<MuscleVO> MuscleToDTO()
         {
-            return Muscles.Select(x => new MuscleVO
-            {
-                Id = x.Id,
-                Name = x.Name
-
-
-            }).ToList();
+            return Muscles
+             .OrderBy(x => x.Name)  // Ordena pelo nome
+             .Select(x => new MuscleVO
+             {
+                 Id = x.Id,
+                 Name = x.Name
+             })
+             .ToList();
         }
 
         public ExerciseVO GetExerciseById(int exerciseId)
@@ -99,10 +100,29 @@ namespace TrainningApp.Core.Entities
             }
 
             Muscle newMuscle = MuscleVOToMuscle(muscleVO);
-            newMuscle.Id = Muscles.LastOrDefault().Id + 1;
-            if(newMuscle != null)
+            if (Muscles.Count > 0) newMuscle.Id = Muscles.LastOrDefault().Id + 1;
+            else newMuscle.Id = 1;
+            if (newMuscle != null)
             {
                 Muscles.Add(newMuscle);
+                return true;
+            }
+            return false;
+        }
+
+        public bool EditMuscle(MuscleVO muscleVO)
+        {
+            if (Muscles.Select(x => x.Name).Contains(muscleVO.Name))
+            {
+                return false;
+            }
+
+            Muscle newMuscle = MuscleVOToMuscle(muscleVO);
+            if (newMuscle != null)
+            {
+                Muscle muscleTOEdit = Muscles.Where(x => x.Id == muscleVO.Id).FirstOrDefault();
+                muscleTOEdit.Name = muscleVO.Name;
+
                 return true;
             }
             return false;

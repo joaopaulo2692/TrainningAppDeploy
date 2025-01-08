@@ -49,3 +49,11 @@ function initializeWithInstance(dotNetObjectReference) {
             .catch(err => console.error('Erro ao chamar método .NET:', err));
     }, 2000);
 }
+
+window.blazorGetWindowWidth = () => {
+    return window.innerWidth;
+};
+
+window.blazorGetWindowHeight = () => {
+    return window.innerHeight;
+};

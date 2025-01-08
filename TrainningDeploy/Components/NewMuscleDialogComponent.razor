@@ -1,0 +1,107 @@
+﻿@using TrainningApp.Core.DTO.Muscle
+@using TrainningApp.Core.Entities
+@inject DbMusclesAndExercises _dbMuscles
+
+
+<MudDialog MaxWidth="MaxWidth.Small" FullWidth="false" Class="custom-dialog rounded-lg" Style="width: 600px;">
+    <DialogContent>
+
+        <MudTextField T="string" Label="Nome do Músculo" @bind-Value="muscle" Typo="Typo.input"  />
+    </DialogContent>
+    <DialogActions>
+        <div class="d-flex justify-content-end w-100">
+            <MudButton Variant="Variant.Text" Color="Color.Secondary" OnClick="Cancel" Class="me-2">
+                Cancelar
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Submit">
+                Salvar
+            </MudButton>
+        </div>
+    </DialogActions>
+    </MudDialog>
+
+@if (isAlertVisible)
+{
+    <MudAlert Severity="Severity.Error" Variant="Variant.Filled" OnClose="HideAlert">
+        @alertMessage
+    </MudAlert>
+   
+}
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public MuscleVO MuscleVOToEdit { get; set; }
+    string muscle;
+    bool isAlertVisible;
+    string alertMessage;
+
+    protected override void OnInitialized()
+    {
+        if (MuscleVOToEdit != null) muscle = MuscleVOToEdit.Name;
+    }
+
+    public void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    public async void Submit()
+    {
+        bool success = false;
+        if (string.IsNullOrEmpty(muscle))
+        {
+            isAlertVisible = true;
+            alertMessage = "Nome está vazio!";
+            StateHasChanged(); // Atualiza a tela para mostrar o alerta
+            await Task.Delay(4000); // Espera 4 segundos
+            isAlertVisible = false; // Esconde o alerta
+            StateHasChanged(); // Atualiza a tela para esconder o alerta
+            return;
+        }
+        MuscleVO muscleVO = new MuscleVO()
+            {
+                Name = muscle
+            };
+        if(MuscleVOToEdit == null)
+        {
+            success = _dbMuscles.AddMuscle(muscleVO);
+            if (!success)
+            {
+                AlreadyExists();
+                return;
+            }
+        }
+        if (MuscleVOToEdit != null)
+        {
+            muscleVO = new MuscleVO()
+                {
+                    Name = muscle,
+                    Id = MuscleVOToEdit.Id
+                };
+            success = _dbMuscles.EditMuscle(muscleVO);
+            if (!success)
+            {
+                AlreadyExists();
+                return;
+            }
+            
+        }
+        MudDialog.Close(DialogResult.Ok(muscleVO));
+       
+        
+
+    }
+
+    private async void AlreadyExists()
+    {
+
+        isAlertVisible = true;
+        alertMessage = "Músculo já existente";
+        StateHasChanged(); // Atualiza a tela para mostrar o alerta
+        await Task.Delay(4000); // Espera 4 segundos
+        isAlertVisible = false; // Esconde o alerta
+        StateHasChanged(); // Atualiza a tela para esconder o alerta
+        return;
+    }
+ }

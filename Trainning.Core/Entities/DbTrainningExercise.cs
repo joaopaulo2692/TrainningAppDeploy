@@ -136,29 +136,27 @@ namespace TrainningApp.Core.Entities
                             Id = 1,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 1).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 1).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 1,
                             TrainningDayId = 1
-
-
                         },
                         new TrainningExercise
                         {
                             Id = 2,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 2).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 2).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 2,
                             TrainningDayId = 1
                         },
                         new TrainningExercise
                         {
-                            Id= 3,
+                            Id = 3,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 3).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 3).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 3,
                             TrainningDayId = 1
@@ -168,7 +166,7 @@ namespace TrainningApp.Core.Entities
                             Id = 4,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 4).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 4).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 1,
                             TrainningDayId = 1
@@ -178,38 +176,37 @@ namespace TrainningApp.Core.Entities
                             Id = 5,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 5).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 5).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 2,
                             TrainningDayId = 1
                         },
                         new TrainningExercise
-                        {   
+                        {
                             Id = 6,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 6).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 6).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 3,
                             TrainningDayId = 1
                         },
                         new TrainningExercise
                         {
-
-                            Id=7,
+                            Id = 7,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 7).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 7).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 1,
                             TrainningDayId = 1
                         },
                         new TrainningExercise
-                        {   
+                        {
                             Id = 8,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 8).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 8).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 2,
                             TrainningDayId = 1
@@ -219,18 +216,17 @@ namespace TrainningApp.Core.Entities
                             Id = 9,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 9).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 9).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 3,
                             TrainningDayId = 1
                         },
-                         new TrainningExercise
+                        new TrainningExercise
                         {
-
-                            Id=10,
+                            Id = 10,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 7).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 7).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 1,
                             TrainningDayId = 4
@@ -240,7 +236,7 @@ namespace TrainningApp.Core.Entities
                             Id = 11,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 8).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 8).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 2,
                             TrainningDayId = 4
@@ -250,7 +246,7 @@ namespace TrainningApp.Core.Entities
                             Id = 12,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 9).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 9).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 3,
                             TrainningDayId = 4
@@ -260,7 +256,7 @@ namespace TrainningApp.Core.Entities
                             Id = 13,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 1).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 1).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 1,
                             TrainningDayId = 6
@@ -270,7 +266,7 @@ namespace TrainningApp.Core.Entities
                             Id = 14,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 2).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 2).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 2,
                             TrainningDayId = 6
@@ -280,7 +276,7 @@ namespace TrainningApp.Core.Entities
                             Id = 15,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 3).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 3).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 3,
                             TrainningDayId = 7
@@ -290,11 +286,12 @@ namespace TrainningApp.Core.Entities
                             Id = 16,
                             Reps = "10",
                             Set = 3,
-                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 4).FirstOrDefault(),
+                            Exercise = _musclesAndExercises.Exercises.Where(x => x.Id == 4).FirstOrDefault() ?? new Exercise(),
                             Info = "Normal",
                             Ordenation = 1,
                             TrainningDayId = 7
                         }
+
 
             };
         }

@@ -176,12 +176,16 @@
         // Verifica se o resultado foi cancelado
         if (dialogResult.Canceled)
         {
+
             Console.WriteLine("Ação cancelada.");
         }
         else
         {
-            Console.WriteLine("Ação confirmada. Excluindo treino...");
-            RemoveExercise(exerciseToRemove); // Executa a ação de exclusão
+            Exercise exercise = DbMusclesAndExercises.Exercises.Where(x => x.Id == exerciseToRemove.Id).FirstOrDefault();
+             DbMusclesAndExercises.RemoveExercise(exerciseToRemove);
+            exercisesList = DbMusclesAndExercises.ExercisesToDTO();
+            // Console.WriteLine("Ação confirmada. Excluindo treino...");
+            // RemoveExercise(exerciseToRemove); // Executa a ação de exclusão
         }
     }
 

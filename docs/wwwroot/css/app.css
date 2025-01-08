@@ -160,6 +160,18 @@ code {
         }
     }
 
+    @media (max-width: 768px) {
+        .responsive-carousel {
+            height: 200px; /* Altura menor para dispositivos móveis */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .responsive-carousel {
+            height: 150px; /* Altura ainda menor para telas pequenas */
+        }
+    }
+
 
 
  

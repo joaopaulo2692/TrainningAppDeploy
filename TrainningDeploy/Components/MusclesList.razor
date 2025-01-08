@@ -2,10 +2,12 @@
 @using TrainningApp.Core.DTO.Muscle
 @using TrainningApp.Core.Entities
 @inject DbMusclesAndExercises DbMusclesAndExercises
+@inject NavigationManager Navigation
+@inject IDialogService DialogService
 
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
-    <MudButton Variant="Variant.Filled" Color="Color.Success">Novo Músculo</MudButton>
+    <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Color="Color.Success">Novo Músculo</MudButton>
 </div>
 <br />
 <br />
@@ -30,8 +32,8 @@
 
                                 <!-- Ícone de edição alinhado à direita -->
                                  <div class="action-icons">
-                                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Style="margin-left: 16px;" />
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                <MudIconButton OnClick="()=>OpenEditDialog(muscle)" Icon="@Icons.Material.Outlined.Edit" Style="margin-left: 16px;" />
+                                <MudIconButton OnClick="()=>Delete(muscle)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
                                 </div>
                             </MudGrid>
                         </MudItem>
@@ -104,42 +106,67 @@
 
 @code {
     List<MuscleVO> musclesList = new List<MuscleVO>();
-    
 
+    private async Task OpenAddDialog()
+    {
+        var options = new DialogOptions { MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
+        var parameters = new DialogParameters();
+
+        var dialog = DialogService.Show<NewMuscleDialogComponent>("Criar novo músculo", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var selectedMuscle = (MuscleVO)result.Data;  // Substitua "Muscle" pelo tipo correto que o diálogo deve retornar
+            if(selectedMuscle != null)
+            {
+                musclesList = DbMusclesAndExercises.MuscleToDTO();
+            }
+            Console.WriteLine($"Músculo Selecionado: {selectedMuscle.Name}, ID: {selectedMuscle.Id}");
+        }
+        else
+        {
+            Console.WriteLine("O diálogo foi cancelado.");
+        }
+    }
+
+    private async Task OpenEditDialog(MuscleVO muscleToEdit)
+    {
+        var options = new DialogOptions { MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
+        var parameters = new DialogParameters()
+        {
+         {"MuscleVOToEdit",muscleToEdit }
+        };
+
+        var dialog = DialogService.Show<NewMuscleDialogComponent>("Editar músculo", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var selectedMuscle = (MuscleVO)result.Data;  // Substitua "Muscle" pelo tipo correto que o diálogo deve retornar
+            if(selectedMuscle != null)
+            {
+                musclesList = DbMusclesAndExercises.MuscleToDTO();
+            }
+            Console.WriteLine($"Músculo Selecionado: {selectedMuscle.Name}, ID: {selectedMuscle.Id}");
+        }
+        else
+        {
+            Console.WriteLine("O diálogo foi cancelado.");
+        }
+    }
+
+    private void Delete(MuscleVO muscleVO)
+    {
+        Muscle muscle = DbMusclesAndExercises.Muscles.Where(x => x.Id == muscleVO.Id).FirstOrDefault();
+        DbMusclesAndExercises.Muscles.Remove(muscle);
+         musclesList = DbMusclesAndExercises.MuscleToDTO();
+    }
     protected override void OnInitialized()
     {
         musclesList = DbMusclesAndExercises.MuscleToDTO();
-        //         musclesList = new List<MuscleVO>()
-// {
-//     new MuscleVO { Id = 1, Name = "Abdômen" },
-//     new MuscleVO { Id = 2, Name = "Aeróbico" },
-//     new MuscleVO { Id = 3, Name = "Agilidade" },
-//     new MuscleVO { Id = 4, Name = "Alongamento" },
-//     new MuscleVO { Id = 5, Name = "Antebraço" },
-//     new MuscleVO { Id = 6, Name = "Aquecimento" },
-//     new MuscleVO { Id = 7, Name = "Bíceps" },
-//     new MuscleVO { Id = 8, Name = "Cardiovasculares" },
-//     new MuscleVO { Id = 9, Name = "Coordenação motora" },
-//     new MuscleVO { Id = 10, Name = "Core" },
-//     new MuscleVO { Id = 11, Name = "Dorsal" },
-//     new MuscleVO { Id = 12, Name = "Funcionais" },
-//     new MuscleVO { Id = 13, Name = "Glúteo" },
-//     new MuscleVO { Id = 14, Name = "Lombar" },
-//     new MuscleVO { Id = 15, Name = "Mobilidade" },
-//     new MuscleVO { Id = 16, Name = "Movimentos complexos" },
-//     new MuscleVO { Id = 17, Name = "Movimentos cíclicos" },
-//     new MuscleVO { Id = 18, Name = "Ombro" },
-//     new MuscleVO { Id = 19, Name = "Outros" },
-//     new MuscleVO { Id = 20, Name = "Panturrilha" },
-//     new MuscleVO { Id = 21, Name = "Peitoral" },
-//     new MuscleVO { Id = 22, Name = "Perna" },
-//     new MuscleVO { Id = 23, Name = "Punho" },
-//     new MuscleVO { Id = 24, Name = "Quadril" },
-//     new MuscleVO { Id = 25, Name = "Resistência" },
-//     new MuscleVO { Id = 26, Name = "Tornozelo" },
-//     new MuscleVO { Id = 27, Name = "Trapézio" },
-//     new MuscleVO { Id = 28, Name = "Tríceps" }
-// };
 
     }
 }
