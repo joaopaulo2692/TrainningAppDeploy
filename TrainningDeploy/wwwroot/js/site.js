@@ -50,3 +50,10 @@ function initializeWithInstance(dotNetObjectReference) {
     }, 2000);
 }
 
+window.blazorGetWindowWidth = () => {
+    return window.innerWidth;
+};
+
+window.blazorGetWindowHeight = () => {
+    return window.innerHeight;
+};

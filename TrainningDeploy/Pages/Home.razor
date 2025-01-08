@@ -2,21 +2,39 @@
 @using TrainningApp.Core.Constants
 @inject NavigationManager Navigation
 @attribute [Layout(typeof(UserLayout))]
-
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Home</PageTitle>
 
-<MudCarousel Class="mud-width-full" Style="height:118px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
-    <MudCarouselItem Transition="transition" Color="@Color.Primary">
-        <MudImage Src="images/treino-editcopia.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
-    </MudCarouselItem>
-    <MudCarouselItem Transition="transition" Color="@Color.Secondary">
-        <MudImage Src="images/treino-edit3copia.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
-    </MudCarouselItem>
-    <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
-        <MudImage Src="images/treino-edit2copia.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
-    </MudCarouselItem>
-</MudCarousel>
+@if(width < 768)
+{
+    <MudCarousel Class="mud-width-full" Style="height:118px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+        <MudCarouselItem Transition="transition" Color="@Color.Primary">
+            <MudImage Src="@image1" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        </MudCarouselItem>
+        <MudCarouselItem Transition="transition" Color="@Color.Secondary">
+            <MudImage Src="@image2" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        </MudCarouselItem>
+        <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
+            <MudImage Src="@image3" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        </MudCarouselItem>
+    </MudCarousel>
+}
+else
+{
+    <MudCarousel Class="mud-width-full" Style="height:300px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+        <MudCarouselItem Transition="transition" Color="@Color.Primary">
+            <MudImage Src="@image1" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        </MudCarouselItem>
+        <MudCarouselItem Transition="transition" Color="@Color.Secondary">
+            <MudImage Src="@image2" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        </MudCarouselItem>
+        <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
+            <MudImage Src="@image3" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        </MudCarouselItem>
+    </MudCarousel>
+}
+
 
 
 @* <MudPaper Height="400px" Width="100%">
@@ -34,10 +52,10 @@
         </MudGrid>
     </MudContainer>
 </MudPaper> *@
-
+<br/>
 <MudPaper Height="400px" Width="100%">
     <MudText Typo="Typo.h3" Align="Align.Center">Seu novo App de Treinamentos!</MudText>
-    <MudText Typo="Typo.h4" Align="Align.Center">Escolha o seu perfil:</MudText>
+    @* <MudText Typo="Typo.h4" Align="Align.Center">Escolha o seu perfil:</MudText> *@
     <MudContainer MaxWidth="MaxWidth.Small" Style="margin-top: 40px;">
         <MudGrid Justify="Justify.Center">
             <MudItem>
@@ -74,6 +92,11 @@
     private bool autocycle = true;
     private Transition transition = Transition.Slide;
     string url;
+    private string image1;
+    private string image2;
+    private string image3;
+    int width = 767;
+
     private void NavigateToCustumers()
     {
         url = Constants.GetAllCustomer();
@@ -85,6 +108,35 @@
         Navigation.NavigateTo(url);
     }
 
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var width = await JSRuntime.InvokeAsync<int>("blazorGetWindowWidth");
+    //     var height = await JSRuntime.InvokeAsync<int>("blazorGetWindowHeight");
+    // }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Obtém a largura da tela
+        width = await JSRuntime.InvokeAsync<int>("blazorGetWindowWidth");
+
+        // Verifica se o dispositivo é um celular (por exemplo, largura menor que 768px)
+        if (width < 768)
+        {
+            // Defina as imagens específicas para celular
+            image1 = "images/treino-editcopia.jpg";
+            image2 = "images/treino-edit3copia.jpg";
+            image3 = "images/treino-edit2copia.jpg";
+
+        }
+        else
+        {
+            // Defina as imagens específicas para desktop
+            image1 = "images/treino-edit.jpg";
+            image2 = "images/treino-edit3.jpg";
+            image3 = "images/treino-edit2.jpg";
+
+        }
+    }
 
 
 }
