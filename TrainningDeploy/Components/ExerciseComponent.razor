@@ -24,12 +24,6 @@
                              ResetValueOnEmptyText="@resetValueOnEmptyText"
                              CoerceText="@coerceText" CoerceValue="@coerceValue" />
 
-          @*   @if (exerciseList.Where(x => x.Name == exerciseSelected).FirstOrDefault() != null)
-            {
-                if (exerciseList[0].Video == null) exerciseNotHasVideo = true;
-                else if (exerciseList[0].Video == "") exerciseNotHasVideo = true;
-                else if (exerciseList[0].Video != null && exerciseList[0].Video != "") exerciseNotHasVideo = false;
-            } *@
             <MudAutocomplete T="ExerciseVO"
                              Label="Exercício"
                              @bind-Value="exerciseVO"
@@ -39,7 +33,8 @@
                              CoerceText="@coerceText"
                              CoerceValue="@coerceValue"
                              HelperText="@(hasError ? errorMessage : null)"
-                             Error="@hasError">
+                             Error="@hasError"
+                             TextChanged="Verification">
             </MudAutocomplete>
 
             @if (hasError)
@@ -124,8 +119,8 @@
 <style>
     .custom-dialog {
         max-width: 800px;
-        margin: 20px auto; /* Adiciona 20px de margem superior e inferior e centraliza horizontalmente */
-        width: 90%; /* Ajusta a largura para 100% menos as margens laterais *
+        margin: 20px auto; 
+        width: 90%; 
     }
 </style>
 
@@ -139,18 +134,20 @@
     public bool EditExibition { get; set; }
 
     [Parameter]
-    public TrainningExerciseVO EditExercise { get; set; }  // Recebe o exercício para edição
+    public TrainningExerciseVO EditExercise { get; set; }  
+
+
 
 
     private void OnRepSave(List<string> reptitions)
     {
         reps = reptitions.ToList();
-        // Lógica de salvar ou processar as reps
+
     }
 
     private void OnWeightSave(List<string> weightsList)
     {
-        // Lógica de salvar ou processar o peso
+
         weights = weightsList.ToList();
     }
 
@@ -200,10 +197,12 @@
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-    // private void Close() =>MudDialog.Close(DialogResult.Ok(true));
+  
     private void Close() {
         MudDialog.Close();
     }
+
+
 
 
     private void OpenVideo()
@@ -280,13 +279,15 @@
         MudDialog.Close(DialogResult.Ok(trainningExerciseVO));
     }
 
+   
+
     protected override void OnInitialized()
     {
         exerciseList = _dbMusclesAndExercise.ExercisesToDTO();
         exerciseListCopy = exerciseList.ToList();
         musclesList = _dbMusclesAndExercise.MuscleToDTO();
 
-        
+
 
         if (EditExercise != null)
         {
@@ -345,29 +346,20 @@
         }
     }
 
-    // private async Task<IEnumerable<string>> SearchExercise(string value, CancellationToken token)
-    // {
-    //     exerciseList = exerciseListCopy;
-    //     await Task.Delay(5, token); // Simulação de chamada assíncrona
-    //     StateHasChanged();
-    //     MuscleVO muscleVO = musclesList.Where(x => x.Name == muscleSelected).FirstOrDefault();
+    private void Verification()
+    {
 
-
-    //     if (muscleVO != null) exerciseList = exerciseList.Where(x => x.Muscles.Contains(muscleVO.Name)).ToList();
-    //     if (string.IsNullOrEmpty(value))
-    //         return exerciseList.Select(x => x.Name);
-    //     ExerciseVO exerciseVO = exerciseList.Where(x => x.Name == value).FirstOrDefault();
-    //     if (exerciseVO != null)
-    //     {
-    //         if (exerciseVO.Video == null) exerciseNotHasVideo = true;
-    //         else if (exerciseVO.Video == "") exerciseNotHasVideo = true;
-    //         else if (exerciseVO.Video != null && exerciseVO.Video != "") exerciseNotHasVideo = false;
-
-    //     }
-    //     StateHasChanged();
-
-    //     return exerciseList.Select(x => x.Name).Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-    // }
+        if (exerciseVO.Video != null && exerciseVO.Video != string.Empty)
+        {
+            exerciseNotHasVideo = false;
+            StateHasChanged();
+        }
+        else
+        {
+            exerciseNotHasVideo = true;
+            StateHasChanged();
+        }
+    }
 
     private async Task<IEnumerable<ExerciseVO>> SearchExercise(string value, CancellationToken token)
     {
@@ -427,172 +419,5 @@
         }
     }
 
-    // List<ExerciseVO> exerciseList = new List<ExerciseVO>
-    // {
-    //     // new ExerciseReturnVO { Id = 1, Name = "Supino reto", Muscles = new List<string>{"Peito" },Video = "https://www.youtube.com/embed/dQw4w9WgXcQ"  },
-    //     // new ExerciseReturnVO { Id = 2, Name = "Tríceps testa" ,Muscles = new List<string>{"Tríceps" } },
-    //     // new ExerciseReturnVO { Id = 3, Name = "Rosca" ,Muscles = new List<string>{"Bíceps" } }
-    //      new ExerciseVO
-    // {
-    //     Id = 1,
-    //     Name = "Supino",
-    //     Muscles = new List<string> { "Peito", "Tríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 2,
-    //     Name = "Agachamento",
-    //     Muscles = new List<string> { "Pernas", "Glúteos", "Quadríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 3,
-    //     Name = "Rosca Direta",
-    //     Muscles = new List<string> { "Bíceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 4,
-    //     Name = "Levantamento Terra",
-    //     Muscles = new List<string> { "Dorsais", "Glúteos", "Pernas" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 5,
-    //     Name = "Desenvolvimento com Halteres",
-    //     Muscles = new List<string> { "Ombros", "Tríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 6,
-    //     Name = "Remada Curvada",
-    //     Muscles = new List<string> { "Costas", "Bíceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 7,
-    //     Name = "Cadeira Extensora",
-    //     Muscles = new List<string> { "Quadríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 8,
-    //     Name = "Flexão de Braço",
-    //     Muscles = new List<string> { "Peito", "Tríceps", "Ombros" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 9,
-    //     Name = "Crucifixo",
-    //     Muscles = new List<string> { "Peito" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 10,
-    //     Name = "Abdominal",
-    //     Muscles = new List<string> { "Abdômen" }
-    // }
-    // };
-
-    // List<ExerciseVO> exerciseListCopy = new List<ExerciseVO>
-    // {
-    //     // new ExerciseVO { Id = 1, Name = "Supino reto", Muscles = new List<string>{"Peito" }, Video = "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-    //     // new ExerciseVO { Id = 2, Name = "Tríceps testa" ,Muscles = new List<string>{"Tríceps" } },
-    //     // new ExerciseVO { Id = 3, Name = "Rosca" ,Muscles = new List<string>{"Bíceps" } }
-    //             new ExerciseVO
-    // {
-    //     Id = 1,
-    //     Name = "Supino",
-    //     Muscles = new List<string> { "Peito", "Tríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 2,
-    //     Name = "Agachamento",
-    //     Muscles = new List<string> { "Pernas", "Glúteos", "Quadríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 3,
-    //     Name = "Rosca Direta",
-    //     Muscles = new List<string> { "Bíceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 4,
-    //     Name = "Levantamento Terra",
-    //     Muscles = new List<string> { "Dorsais", "Glúteos", "Pernas" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 5,
-    //     Name = "Desenvolvimento com Halteres",
-    //     Muscles = new List<string> { "Ombros", "Tríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 6,
-    //     Name = "Remada Curvada",
-    //     Muscles = new List<string> { "Costas", "Bíceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 7,
-    //     Name = "Cadeira Extensora",
-    //     Muscles = new List<string> { "Quadríceps" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 8,
-    //     Name = "Flexão de Braço",
-    //     Muscles = new List<string> { "Peito", "Tríceps", "Ombros" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 9,
-    //     Name = "Crucifixo",
-    //     Muscles = new List<string> { "Peito" }
-    // },
-    // new ExerciseVO
-    // {
-    //     Id = 10,
-    //     Name = "Abdominal",
-    //     Muscles = new List<string> { "Abdômen" }
-    // }
-    // };
-
-    // List<MuscleVO> musclesList = new List<MuscleVO>
-    // {
-    //     // new MuscleVO{Id = 1, Name ="Peito",exerciseIds=new List<int>(){1} },
-    //     // new MuscleVO{Id = 2, Name ="Tríceps",exerciseIds=new List<int>(){2} },
-    //     // new MuscleVO{Id = 3, Name ="Bíceps",exerciseIds=new List<int>(){3} },
-    //       new MuscleVO { Id = 1, Name = "Abdômen" },
-    // new MuscleVO { Id = 2, Name = "Aeróbico" },
-    // new MuscleVO { Id = 3, Name = "Agilidade" },
-    // new MuscleVO { Id = 4, Name = "Alongamento" },
-    // new MuscleVO { Id = 5, Name = "Antebraço" },
-    // new MuscleVO { Id = 6, Name = "Aquecimento" },
-    // new MuscleVO { Id = 7, Name = "Bíceps" },
-    // new MuscleVO { Id = 8, Name = "Cardiovasculares" },
-    // new MuscleVO { Id = 9, Name = "Coordenação motora" },
-    // new MuscleVO { Id = 10, Name = "Core" },
-    // new MuscleVO { Id = 11, Name = "Dorsal" },
-    // new MuscleVO { Id = 12, Name = "Funcionais" },
-    // new MuscleVO { Id = 13, Name = "Glúteo" },
-    // new MuscleVO { Id = 14, Name = "Lombar" },
-    // new MuscleVO { Id = 15, Name = "Mobilidade" },
-    // new MuscleVO { Id = 16, Name = "Movimentos complexos" },
-    // new MuscleVO { Id = 17, Name = "Movimentos cíclicos" },
-    // new MuscleVO { Id = 18, Name = "Ombro" },
-    // new MuscleVO { Id = 19, Name = "Outros" },
-    // new MuscleVO { Id = 20, Name = "Panturrilha" },
-    // new MuscleVO { Id = 21, Name = "Peito" },
-    // new MuscleVO { Id = 22, Name = "Perna" },
-    // new MuscleVO { Id = 23, Name = "Punho" },
-    // new MuscleVO { Id = 24, Name = "Quadril" },
-    // new MuscleVO { Id = 25, Name = "Resistência" },
-    // new MuscleVO { Id = 26, Name = "Tornozelo" },
-    // new MuscleVO { Id = 27, Name = "Trapézio" },
-    // new MuscleVO { Id = 28, Name = "Tríceps" }
-    // };
+   
 }
