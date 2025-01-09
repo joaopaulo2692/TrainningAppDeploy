@@ -14,7 +14,7 @@
 
 
 <div style="display: flex; justify-content: center; padding: 10px;">
-    <MudPaper Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+    <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
         @foreach (var exercise in exercisesList)
         {
             <!-- Contêiner externo para hover e MudDivider -->
@@ -67,6 +67,21 @@
 </div>
 
 <style>
+
+    .profile-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%; /* Garante que o MudGrid ocupe 100% da largura disponível */
+        box-sizing: border-box; /* Garante que o padding do MudPaper não afete o layout */
+        position: relative; /* Evita deslocamento inesperado */
+    }
+       .custom-size {
+        width: 75%;
+        max-width: 100%;
+        transition: width 0.3s ease;
+        box-sizing: border-box; /* Garante que o padding não afete o tamanho */
+    }
 
         /* Estiliza o contêiner para hover */
     .hover-container {

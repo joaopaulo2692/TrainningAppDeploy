@@ -120,6 +120,13 @@ code {
 }
 
 @media (max-width: 768px) {
+
+    .custom-size-trainning {
+        max-width: 100% !important; /* Removendo o limite de max-width para telas pequenas */
+        padding-left: 10px !important; /* Pequeno espaçamento à esquerda para garantir que não fique colado na borda */
+        padding-right: 10px !important; /* Pequeno espaçamento à direita para garantir que não fique colado na borda */
+    }
+
     .form-grid {
         grid-template-columns: repeat(1, 1fr) !important; /* Apenas uma coluna */
     }

@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-6x4Bi9FvHZ+0TXZENnM86jS6\/w6iNiCs7c8Z0u+CheM=",
+      "hash": "sha256-rQEFF6wpbAiBWA9vfzF1\/b2vvoSTXvYMv68yg9j\/RxY=",
       "url": "css\/app.css"
     },
     {
@@ -69,7 +69,7 @@
       "url": "images\/treino.jpg"
     },
     {
-      "hash": "sha256-iCj6gNPPfYiF552x4AnLxOIAqTB054Tg5JiYdl1e0K4=",
+      "hash": "sha256-0BRsT5sVKTWbQKxk4N6gCrNK4Th9jNi0uF3b0uYtNDM=",
       "url": "index.html"
     },
     {
@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-cQWMw5dix7wubr96LtQwoNuGxWCPERhMO2KS+XDDsFM=",
+      "hash": "sha256-PuGEqq9qcMd8nwavIk7+4JSZNNkFLUNZnUFBz7FyPg4=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -233,7 +233,7 @@
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-pCC6RB+Q+AiDh7qF0D9uTEaIGB3GFPnNdduf\/pSmjcY=",
+      "hash": "sha256-3Xl0259DJjohdLogDN\/C9Np+O1fv65jjOphKovN\/14A=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -269,7 +269,7 @@
       "url": "_framework\/System.Runtime.InteropServices.JavaScript.wasm"
     },
     {
-      "hash": "sha256-vDQ8vET1dxV4JmFHOZnDOt4iX\/\/3JKzyBPvgPMzc02s=",
+      "hash": "sha256-xWcYjVzrQr+laKZItTRQUnW0P89hd2Ruq6jCqDH3SFo=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -293,11 +293,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-9Uy36fsLKEInec\/757yd27yG5y4XMRfUHt8eFhXmC2U=",
+      "hash": "sha256-Kw4JrNmnXscllJkmT3JT9B7mHMmuTde3QRKQePSbAqw=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-sPC41WOUm3EgbKjgK\/yrlDwx8ngMWis5HU3CO5UhIQg=",
+      "hash": "sha256-3yV\/KpmQMeJT6X4Ou2fIfBoNvmzo51MIoLRJ9vHlHcc=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -313,5 +313,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "uxXUm+VD"
+  "version": "GCfPACRh"
 };

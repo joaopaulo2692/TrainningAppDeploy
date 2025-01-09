@@ -13,13 +13,52 @@
 <br />
 <br />
 
-
-
-<div style="display: flex; justify-content: center; width: 100%;">
+<div style="display: flex; justify-content: center; padding: 10px;">
     <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
         @foreach (var user in users)
         {
-            <MudGrid AlignItems="AlignItems.Center" Class="profile-container hover-container" Style="display: flex; flex-wrap: wrap; width: calc(100% + 40px); margin-right: -20px;">
+            <!-- Contêiner externo para hover e MudDivider -->
+            <div class="hover-container"
+                 Style="transition: background-color 0.3s ease; padding: 0; margin-bottom: 2px; cursor: pointer;">
+
+                <MudGrid AlignItems="AlignItems.Center"
+                         Class="profile-container"
+                         Style="padding: 20px 30px 5px 30px;">
+                    <!-- Menos espaço inferior -->
+                    <!-- Nome do exercício com ícone de edição ao lado -->
+                    <MudItem Class="profile-text" Style="width: 100%;">
+                        <MudGrid Class="d-flex align-items-center" Style="width: 100%;">
+
+                            <MudItem Style="flex-shrink: 0; margin-right: 10px;">
+                                <MudAvatar Size="Size.Medium" Image="https://via.placeholder.com/150" Class="mb-2" />
+                            </MudItem>
+
+                            <MudItem Class="profile-text" Style="flex-grow: 1;">
+                                <MudText Typo="Typo.h6" Class="font-weight-bold">@user.Name</MudText>
+                                    <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
+                                </MudItem>
+
+                                <MudItem Style="flex-shrink: 0;">
+                                    <div class="action-icons">
+                                        <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" />
+                                    </div>
+                                </MudItem>
+                            </MudGrid>
+                        </MudItem>
+                    </MudGrid>
+
+                    <!-- Divisor alinhado com menos espaço -->
+                    <MudDivider Class="mt-0" Style="margin-top: -2px;" />
+                </div>
+        }
+    </MudPaper>
+</div>
+
+@* <div style="display: flex; justify-content: center; width: 100%;">
+    <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+        @foreach (var user in users)
+        {
+            <MudGrid AlignItems="AlignItems.Center" Class="profile-container hover-container" Style="display: flex; flex-wrap: wrap; width: calc(100% + 40px); margin-right: -20px; " >
                 <MudItem Style="flex-shrink: 0; margin-right: 10px;">
                     <MudAvatar Size="Size.Medium" Image="https://via.placeholder.com/150" Class="mb-2" />
                 </MudItem>
@@ -34,12 +73,13 @@
                             <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" />
                         </div>
                     </MudItem>
+                 
                 </MudGrid>
-            <MudDivider Class="my-4" />
+            <MudDivider Class="my-0" />
         }
     </MudPaper>
-
-</div>
+    
+</div> *@
 
 <style>
     .custom-size {
@@ -84,9 +124,8 @@
             cursor: pointer;
         }
 
-
-
     }
+
 </style>
 
 

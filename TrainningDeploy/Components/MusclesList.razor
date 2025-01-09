@@ -12,7 +12,7 @@
 <br />
 <br />
 <div style="display: flex; justify-content: center; padding: 10px;">
-    <MudPaper Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+    <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
         @foreach (var muscle in musclesList)
         {
             <!-- Contêiner externo para hover e MudDivider -->
@@ -21,7 +21,7 @@
 
                 <MudGrid AlignItems="AlignItems.Center"
                          Class="profile-container"
-                         Style="padding: 20px 30px 5px 30px;">
+                         Style="padding: 25px 30px 5px 30px;">
                     <!-- Menos espaço inferior -->
                     <!-- Nome do exercício com ícone de edição ao lado -->
                     <MudItem Class="profile-text" Style="width: 100%;">
@@ -48,6 +48,14 @@
 
 
 <style>
+
+     .custom-size {
+        width: 75%;
+        max-width: 100%;
+        transition: width 0.3s ease;
+        box-sizing: border-box; /* Garante que o padding não afete o tamanho */
+    }
+
     /* Oculta os ícones inicialmente */
     .hover-container .action-icons {
         visibility: hidden;
