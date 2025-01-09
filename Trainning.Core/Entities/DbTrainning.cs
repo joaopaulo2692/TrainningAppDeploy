@@ -24,7 +24,10 @@ namespace TrainningApp.Core.Entities
 
         public void CheckActivateAndDisable(Trainning trainning)
         {
-            List<Trainning> trainningsByUser = Trainnings.Where(x => x.User.Id == trainning.User.Id).ToList();
+            List<Trainning> trainningsByUser = Trainnings
+    .Where(x => x.User != null && x.User.Id == trainning.User.Id)
+    .ToList();
+
             Trainning trainningActivate = trainningsByUser.Where(x => x.Activate == true).FirstOrDefault();
 
             if(trainningActivate != trainning && trainning.Activate)
@@ -47,7 +50,11 @@ namespace TrainningApp.Core.Entities
             if (trainning != null)
             {
                 trainning.Activate = trainningVO.Activate;
-                CheckActivateAndDisable(trainning);
+                if (!trainning.IsLibrary)
+                {
+                    CheckActivateAndDisable(trainning);
+                }
+               
                 // Atualiza as propriedades do Trainning existente              
                 trainning.Type = trainningVO.Type;
                 trainning.FrequencyWeekly = trainningVO.FrequencyWeekly;

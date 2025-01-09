@@ -19,74 +19,76 @@
 
 
 <div style="display: flex; justify-content: center; padding: 10px;">
-    <MudPaper  Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+    <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
         @foreach (var trainning in trainningsList)
         {
             <!-- Contêiner externo para hover e MudDivider -->
             <div class="hover-container"
                  Style="transition: background-color 0.3s ease; padding: 0; margin-bottom: 2px; cursor: pointer;">
 
-                <MudGrid AlignItems="AlignItems.Center" Class="profile-container" Style="padding: 20px 30px 5px 30px;">
-                    <!-- Menos espaço inferior -->
+                <MudGrid AlignItems="AlignItems.Center" Class=" profile-container" Style="padding: 30px 30px;">
                     <!-- Nome e alertas -->
                     <MudItem Class="profile-text" Style="width: 100%;">
-                        <MudGrid>
-                            @if (string.IsNullOrEmpty(trainning.Name))
-                            {
-                                 <MudText Typo="Typo.h6" Class="font-weight-bold">Treino sem nome</MudText>
-                            }
-                            else{
-                                <MudText Typo="Typo.h6" Class="font-weight-bold">@trainning.Name</MudText>
-                            }
-                            
-                            </MudGrid>
 
-                            <!-- Alertas e botão alinhados -->
-                            <MudGrid Item Class="d-flex align-items-center" Style="margin-top: 8px; width: 100%;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <!-- MudAlerts lado a lado -->
-                                    @if (string.IsNullOrEmpty(trainning.Gender))
+                        <!-- Contêiner de nome e ícones alinhados -->
+                        <MudGrid Style="margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+                            <!-- Nome do treino -->
+                            <MudText Typo="Typo.h6" Class="font-weight-bold">
+                                @if (string.IsNullOrEmpty(trainning.Name))
                                 {
-                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
-                                              Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
-                                        @trainning.Gender
-                                </MudAlert>
+                                    <MudText Typo="Typo.h6" Class="font-weight-bold">Treino sem nome</MudText>
                                 }
-                                @if (!string.IsNullOrEmpty(trainning.PersonalName))
+                                else
                                 {
-                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
-                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                    <MudText Typo="Typo.h6" Class="font-weight-bold"> @trainning.Name</MudText>
+                                   
+                                }
+                            </MudText>
+
+                            <!-- Ícones de ação alinhados à direita -->
+                            <div class="action-icons" Style="display: flex; gap: 8px;">
+                                <MudIconButton OnClick="() => NavigateToEditing(trainning.Id)" Icon="@Icons.Material.Outlined.Edit" />
+                                <MudIconButton OnClick="() => DeleteDialogAsync(trainning)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                            </div>
+                        </MudGrid>
+
+                        <!-- Alertas -->
+                        <MudGrid Item Class="d-flex align-items-center" Style="gap: 8px; margin: 0;">
+                            @if (string.IsNullOrEmpty(trainning.Gender))
+                            {
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 13px; line-height: 1;">
+                                    @trainning.Gender
+                                </MudAlert>
+                            }
+                            @if (!string.IsNullOrEmpty(trainning.PersonalName))
+                            {
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 13px; line-height: 1;">
                                     @trainning.PersonalName
                                 </MudAlert>
-                                }
-                                @if (!string.IsNullOrEmpty(trainning.Goal))
-                                {
-                                        <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
-                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                            }
+                            @if (!string.IsNullOrEmpty(trainning.Goal))
+                            {
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 13px; line-height: 1;">
                                     @trainning.Goal
-                                </MudAlert> 
-                                }
-                                @if (!string.IsNullOrEmpty(trainning.Level))
-                                {
-                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
-                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                                </MudAlert>
+                            }
+                            @if (!string.IsNullOrEmpty(trainning.Level))
+                            {
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 13px; line-height: 1;">
                                     @trainning.Level
                                 </MudAlert>
-                                }
-                               
-                                @if(trainning.TrainningDays != null)
-                                {
-                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
-                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
+                            }
+                            @if (trainning.TrainningDays != null)
+                            {
+                                <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
+                                          Style="border-radius: 8px; padding: 3px 6px; font-size: 13px; line-height: 1;">
                                     @trainning.TrainningDays.Count Sessões
                                 </MudAlert>
-                                }
-                               
-                                <div class="action-icons">
-                                    <MudIconButton OnClick="() => NavigateToEditing(trainning.Id)" Icon="@Icons.Material.Outlined.Edit" Style="margin-left: auto;" />
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
-                                </div>
-                            </div>
+                            }
                         </MudGrid>
                     </MudItem>
                 </MudGrid>
@@ -98,12 +100,31 @@
     </MudPaper>
 </div>
 
+
 <style>
+
+
+     .profile-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%; /* Garante que o MudGrid ocupe 100% da largura disponível */
+        box-sizing: border-box; /* Garante que o padding do MudPaper não afete o layout */
+        position: relative; /* Evita deslocamento inesperado */
+    }
+       .custom-size {
+        width: 75%;
+        max-width: 100%;
+        transition: width 0.3s ease;
+        box-sizing: border-box; /* Garante que o padding não afete o tamanho */
+    }
+
     /* Oculta os ícones inicialmente */
     .hover-container .action-icons {
         visibility: hidden;
         opacity: 0;
         transition: opacity 0.3s ease, visibility 0.3s ease;
+
     }
 
     /* Mostra os ícones quando em hover */
@@ -115,10 +136,6 @@
         background-color: transparent; /* Sem fundo inicial */
     }
 
-     @*    .hover-container:hover {
-            background-color: #2a2a3d; /* Cor de destaque no hover */
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra opcional */
-        } *@
         .hover-container:hover {
             /* background-color: #2a2a3d; /* Ajuste a cor conforme necessário */ 
             background-color: rgba(42, 42, 61, 0.2);
