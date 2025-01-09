@@ -29,47 +29,51 @@
     @* <MudTabPanel Text="Treino A" @* Key="@drop.GetHashCode()"> 
      @* <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small"> *@
     @* @foreach (var item in exercises) *@
-    @foreach (var item in ParameterTrainningExercises)
+    @if (ParameterTrainningExercises != null)
     {
-       
-        @* <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Ordenation" Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%"> *@
-        <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Id"
-                  Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%; border-radius: 24px;">
-           
+        @foreach (var item in ParameterTrainningExercises)
+        {
 
-             <div class="sortable-handle">
-            <!-- Campo Exercício -->
-            <MudTextField ShrinkLabel @bind-Value="item.ExerciseName" Label="Exercício" Variant="Variant.Text"
-                           Style="max-width: 200px; height: 32px; font-size: 0.875rem;" />
-             </div>
+            @* <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Ordenation" Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%"> *@
+            <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Id"
+                      Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%; border-radius: 24px;">
+
+
+                <div class="sortable-handle">
+                    <!-- Campo Exercício -->
+                    <MudTextField ShrinkLabel @bind-Value="item.ExerciseName" Label="Exercício" Variant="Variant.Text"
+                                   Style="max-width: 200px; height: 32px; font-size: 0.875rem;" />
+                 </div>
                  <div class="extra-fields">
-             <!-- Demais Campos -->
-             <MudTextField ShrinkLabel @bind-Value="item.Set" Label="Série" Variant="Variant.Text"
-                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-             <MudTextField ShrinkLabel @bind-Value="item.Reps" Label="Rep" Variant="Variant.Text"
-                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-             <MudTextField ShrinkLabel @bind-Value="item.Weight" Label="Carga" Variant="Variant.Text"
-                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-             <MudTextField ShrinkLabel @bind-Value="item.Interval" Label="Intervalo" Variant="Variant.Text"
-                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-             <MudTextField ShrinkLabel @bind-Value="item.Info" Label="Info" Variant="Variant.Text"
-                           Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-           
-            </div>
-            
-             <!-- Botões -->
-             <MudButton Variant="Variant.Filled" Color="Color.Warning"
-                        Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => SelectEditExercise(item)">
-                 Editar
-             </MudButton>
-             <MudButton Variant="Variant.Filled" Color="Color.Error"
-                        Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => RemoveExercise(item)">
-                 Deletar
-             </MudButton>
-         </MudPaper>
-         
-      
+                     <!-- Demais Campos -->
+                     <MudTextField ShrinkLabel @bind-Value="item.Set" Label="Série" Variant="Variant.Text"
+                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="item.Reps" Label="Rep" Variant="Variant.Text"
+                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="item.Weight" Label="Carga" Variant="Variant.Text"
+                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="item.Interval" Label="Intervalo" Variant="Variant.Text"
+                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <MudTextField ShrinkLabel @bind-Value="item.Info" Label="Info" Variant="Variant.Text"
+                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+
+                 </div>
+
+                 <!-- Botões -->
+                 <MudButton Variant="Variant.Filled" Color="Color.Warning"
+                            Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => SelectEditExercise(item)">
+                     Editar
+                 </MudButton>
+                 <MudButton Variant="Variant.Filled" Color="Color.Error"
+                            Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => RemoveExercise(item)">
+                     Deletar
+                 </MudButton>
+             </MudPaper>
+
+
+        }
     }
+    
 </div>
 
 

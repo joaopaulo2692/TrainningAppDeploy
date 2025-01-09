@@ -22,6 +22,16 @@ namespace TrainningApp.Core.Entities
         private readonly DbTrainningExercise _trainningExercise;
 
 
+        public void CheckActivateAndDisable(Trainning trainning)
+        {
+            List<Trainning> trainningsByUser = Trainnings.Where(x => x.User.Id == trainning.User.Id).ToList();
+            Trainning trainningActivate = trainningsByUser.Where(x => x.Activate == true).FirstOrDefault();
+
+            if(trainningActivate != trainning && trainning.Activate)
+            {
+                trainningActivate.Activate = false;
+            }
+        }
         
 
         public void UpdateTrainningInfo(TrainningReturnVO trainningVO)
@@ -31,11 +41,14 @@ namespace TrainningApp.Core.Entities
 
             // Localiza o Trainning na lista pelo ID
             var trainning = Trainnings.FirstOrDefault(x => x.Id == trainningVO.Id);
+           
+
 
             if (trainning != null)
             {
-                // Atualiza as propriedades do Trainning existente
                 trainning.Activate = trainningVO.Activate;
+                CheckActivateAndDisable(trainning);
+                // Atualiza as propriedades do Trainning existente              
                 trainning.Type = trainningVO.Type;
                 trainning.FrequencyWeekly = trainningVO.FrequencyWeekly;
                 trainning.Gender = trainningVO.Gender;
@@ -80,6 +93,7 @@ namespace TrainningApp.Core.Entities
 
         public int AddTrainning(Trainning trainning)
         {
+            CheckActivateAndDisable(trainning);
             int id = Trainnings.Max(x => x.Id);
             id++;
             trainning.Id = id;
@@ -155,7 +169,7 @@ namespace TrainningApp.Core.Entities
                 trainningReturnVOList.Add(trainningReturnVO);
             }
 
-            return trainningReturnVOList;
+            return trainningReturnVOList.OrderByDescending(x => x.Activate == true).ThenByDescending(x => x.CreatedAt).ToList();
         }
 
 

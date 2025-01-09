@@ -45,7 +45,7 @@
             <MudNumericField Class="custom-freq" @bind-Value="TrainningVO.FrequencyWeekly" Label="Frequência" Variant="Variant.Text" Min="0" Max="10" TextChanged="OnChanged" />
 
             <!-- Linha 3: MudSwitch -->
-            <MudSwitch @bind-Value="TrainningVO.Activate" Label="Ativado" Color="Color.Secondary" Class="switch-field" @oninput="OnChanged" />
+            <MudSwitch @bind-Value="TrainningVO.Activate" Label="Ativado" Color="Color.Secondary" Class="switch-field" @oninput="HandleSwitchChange" />
 
             <!-- Linha 4: Observação -->
             <MudTextField Label="Observação" @bind-Value="TrainningVO.Observation" TextChanged="OnChanged" />
@@ -142,6 +142,15 @@
     };
 
     private List<UserVO> PersonalUsers { get; set;}
+
+    private async Task HandleSwitchChange(ChangeEventArgs args)
+    {
+        bool newValue = Convert.ToBoolean(args.Value);
+        TrainningVO.Activate = newValue;
+        _dbTrainning.UpdateTrainningInfo(TrainningVO);
+        Console.WriteLine($"Novo valor: {TrainningVO.Activate}");
+        // Adicione lógica adicional aqui, se necessário
+    }
 
     private void OnChanged()
     {

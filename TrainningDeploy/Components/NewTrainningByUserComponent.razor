@@ -114,7 +114,9 @@
             newTrainning.User = user;
 
             int trainningId = _dbTrainning.AddTrainning(newTrainning);
-            Navigation.NavigateTo($"/aluno/{UserId}/treinos/{trainningId}");
+            string url = Constants.GetUrlForTrainning(UserId, trainningId);
+            // Navigation.NavigateTo($"/aluno/{UserId}/treinos/{trainningId}");
+            Navigation.NavigateTo(url);
 
          
         }

@@ -366,18 +366,29 @@
 
         if(TrainningToEdit.TrainningDays.Count == null || TrainningToEdit.TrainningDays.Count == 0)
         {
-            TrainningToEdit = new TrainningReturnVO()
-                {
-                    TrainningDays = new List<TrainningDayReturnVO>()
-                {
-                    new TrainningDayReturnVO()
-                    {
-                        Name = "A",
-                        Ordenation = 1,
-                        TrainningExercises = new List<TrainningExerciseVO>(),
-                    }
-                }
-                };
+          
+        
+        
+            TrainningDay trainningDay = _trainningDay.AddNewTrainningDay("A", TrainningToEdit.Id);
+            _trainning.AddTrainningDay(trainningDay, TrainningId);
+            TrainningToEdit = _trainning.GetById(TrainningId);
+            // TrainningToEdit.TrainningDays = new List<TrainningDayReturnVO>()
+            //     {
+            //         _trainningDay.TrainningDayToVO(trainningDay)
+            //     };
+            // TrainningToEdit = new TrainningReturnVO()
+            //     {
+            //         Id = TrainningToEdit.Id,
+            //         TrainningDays = new List<TrainningDayReturnVO>()
+            //     {
+            //         new TrainningDayReturnVO()
+            //         {
+            //             Name = "A",
+            //             Ordenation = 1,
+            //             TrainningExercises = new List<TrainningExerciseVO>(),
+            //         }
+            //     }
+            //     };
         }
         
 
