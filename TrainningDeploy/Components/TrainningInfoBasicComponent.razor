@@ -8,49 +8,67 @@
 
 <div class="parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
     <h3>Dados do Treino</h3>
-    <MudPaper Class="pa-16 ma-2 custom-size" Elevation="3" Style="max-width: 70%; width: 70% ">
-        <div class="form-grid">
-            <!-- Linha 1: Nome e Responsável -->
-            <MudTextField T="string" Label="Nome" @bind-Value="TrainningVO.Name" Typo="Typo.input" TextChanged="OnChanged" />
-            <MudAutocomplete T="string" Label="Responsável" @bind-Value="TrainningVO.PersonalName" SearchFunc="@SearchByPersonal"
-                             ResetValueOnEmptyText="@resetValueOnEmptyText"
-                             CoerceText="@coerceText" CoerceValue="@coerceValue" Class="custom-autocomplete" TextChanged="OnChanged" />
+    @if (showTrainningInfo)
+    {
+        <MudIconButton OnClick="OnChangeViewTrainningInfo" Icon="@Icons.Material.Filled.KeyboardArrowUp"></MudIconButton>
+    }
+    else
+    {
+        <MudIconButton OnClick="OnChangeViewTrainningInfo" Icon="@Icons.Material.Filled.KeyboardArrowDown"></MudIconButton>
+    }
 
 
-            <!-- Linha 2: Tipo de Treino, Nível e Frequência -->
-            <MudSelect Label="Tipo de Treino" @bind-Value="TrainningVO.Type" TextChanged="OnChanged">
-                @foreach (var state in typesTrainningList)
-                {
-                    <MudSelectItem Value="state">@state</MudSelectItem>
-                }
-            </MudSelect>
-            @if (IsLibrary)
-            {
-                <MudSelect Class="custom-autocomplete" Label="Sexo" @bind-Value="TrainningVO.Gender" TextChanged="OnChanged">
-                    @foreach (var gender in genders)
+
+
+
+    @if (showTrainningInfo)
+    {
+        <MudPaper Class="pa-16 ma-2 custom-size" Elevation="3" Style="max-width: 70%; width: 70% ">
+            <div class="form-grid">
+                <!-- Linha 1: Nome e Responsável -->
+                <MudTextField T="string" Label="Nome" @bind-Value="TrainningVO.Name" Typo="Typo.input" TextChanged="OnChanged" />
+                <MudAutocomplete T="string" Label="Responsável" @bind-Value="TrainningVO.PersonalName" SearchFunc="@SearchByPersonal"
+                                 ResetValueOnEmptyText="@resetValueOnEmptyText"
+                                 CoerceText="@coerceText" CoerceValue="@coerceValue" Class="custom-autocomplete" TextChanged="OnChanged" />
+
+
+                <!-- Linha 2: Tipo de Treino, Nível e Frequência -->
+                <MudSelect Label="Tipo de Treino" @bind-Value="TrainningVO.Type" TextChanged="OnChanged">
+                    @foreach (var state in typesTrainningList)
                     {
-                        <MudSelectItem Value="gender">@gender</MudSelectItem>
+                        <MudSelectItem Value="state">@state</MudSelectItem>
                     }
                 </MudSelect>
-            }
-          
-
-            <MudSelect Class="custom-autocomplete" Label="Nível" @bind-Value="TrainningVO.Level" TextChanged="OnChanged">
-                @foreach (var level in levelsTrainningList)
+                @if (IsLibrary)
                 {
-                    <MudSelectItem Value="level">@level</MudSelectItem>
+                    <MudSelect Class="custom-autocomplete" Label="Sexo" @bind-Value="TrainningVO.Gender" TextChanged="OnChanged">
+                        @foreach (var gender in genders)
+                        {
+                            <MudSelectItem Value="gender">@gender</MudSelectItem>
+                        }
+                    </MudSelect>
                 }
-            </MudSelect>
 
-            <MudNumericField Class="custom-freq" @bind-Value="TrainningVO.FrequencyWeekly" Label="Frequência" Variant="Variant.Text" Min="0" Max="10" TextChanged="OnChanged" />
 
-            <!-- Linha 3: MudSwitch -->
-            <MudSwitch @bind-Value="TrainningVO.Activate" Label="Ativado" Color="Color.Secondary" Class="switch-field" @oninput="HandleSwitchChange" />
+                <MudSelect Class="custom-autocomplete" Label="Nível" @bind-Value="TrainningVO.Level" TextChanged="OnChanged">
+                    @foreach (var level in levelsTrainningList)
+                    {
+                        <MudSelectItem Value="level">@level</MudSelectItem>
+                    }
+                </MudSelect>
 
-            <!-- Linha 4: Observação -->
-            <MudTextField Label="Observação" @bind-Value="TrainningVO.Observation" TextChanged="OnChanged" />
-        </div>
-    </MudPaper>
+                <MudNumericField Class="custom-freq" @bind-Value="TrainningVO.FrequencyWeekly" Label="Frequência" Variant="Variant.Text" Min="0" Max="10" TextChanged="OnChanged" />
+
+                <!-- Linha 3: MudSwitch -->
+                <MudSwitch @bind-Value="TrainningVO.Activate" Label="Ativado" Color="Color.Secondary" Class="switch-field" @oninput="HandleSwitchChange" />
+
+                <!-- Linha 4: Observação -->
+                <MudTextField Label="Observação" @bind-Value="TrainningVO.Observation" TextChanged="OnChanged" />
+            </div>
+        </MudPaper>
+    }
+    
+
 </div>
 
 <style>
@@ -116,6 +134,8 @@
     [Parameter]
     public EventCallback<TrainningReturnVO> TrainningToSave { get; set; }
 
+
+    private bool showTrainningInfo = true;
     private bool isActivate = false;
     private bool resetValueOnEmptyText;
     private bool coerceText;
@@ -142,6 +162,12 @@
     };
 
     private List<UserVO> PersonalUsers { get; set;}
+
+
+    private void OnChangeViewTrainningInfo()
+    {
+        showTrainningInfo = showTrainningInfo == true ? false : true;
+    }
 
     private async Task HandleSwitchChange(ChangeEventArgs args)
     {
