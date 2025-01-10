@@ -220,9 +220,17 @@
     private async Task HandleRemoveTrainningDay(int trainningDayIdToRemove)
     {
         TrainningDayReturnVO trainningDay = TrainningToEdit.TrainningDays.Where(x => x.Id == trainningDayIdToRemove).FirstOrDefault();
-
-        _trainningDay.RemoveById(trainningDayIdToRemove);
+        if(TrainningToEdit.TrainningDays.Count == 1)
+        {
+            _trainningDay.RemoveById(trainningDayIdToRemove, true);
+        }
+        else
+        {
+            _trainningDay.RemoveById(trainningDayIdToRemove);
+        }
+        
         TrainningToEdit = _trainning.GetById(TrainningToEdit.Id);
+        _selectedTabIndex = _selectedTabIndex != 1 ?_selectedTabIndex -- : _selectedTabIndex;
         StateHasChanged();
 
 

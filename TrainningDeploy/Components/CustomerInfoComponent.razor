@@ -31,33 +31,35 @@
 
 <br />
 
-@* <MudTabs Elevation="1" Rounded="true" PanelClass="pa-0">
-    <MudTabPanel Text="RESUMO" ToolTip="Resumos">
-             <CustomerResumeComponent UserSelected="UserVOSelected "></CustomerResumeComponent> 
-    </MudTabPanel>
-    <MudTabPanel Text="TREINO" ToolTip="Treinos">
-            <TrainningsComponent UserId="@UserId" TrainningsList="trainningVOList"></TrainningsComponent>
-    </MudTabPanel>
-    <MudTabPanel Text="AVALIAÇÕES FÍSICAS" ToolTip="Avaliações Físicas">
-       <PhysicalAssessment></PhysicalAssessment>
-    </MudTabPanel>
-</MudTabs> *@
 
-    <MudTabs Elevation="1" Rounded="true" PanelClass="pa-0" ActivePanelIndex="ActiveIndex">
+        <MudTabs Elevation="1" A Rounded="true" Class="custom-tab-panel" ActivePanelIndex="ActiveIndex">
+        <MudTabPanel  Text="RESUMO" ToolTip="Resumos" @onclick="NavigateToResumo">
+
+        </MudTabPanel>
+
+        <MudTabPanel Text="TREINO" ToolTip="Treinos" @onclick="NavigateToTreino">
+
+        </MudTabPanel>
+
+        <MudTabPanel Text="AVALIAÇÕES FÍSICAS" ToolTip="Avaliações Físicas" @onclick="NavigateToAvaliacoes">
+
+        </MudTabPanel>
+    </MudTabs>
+
+@*     <MudTabs Class="custom-tabs" Elevation="1" Rounded="true" PanelClass="custom-tab-panel" ActivePanelIndex="ActiveIndex">
         <MudTabPanel Text="RESUMO" ToolTip="Resumos" @onclick="NavigateToResumo">
             <!-- Conteúdo da aba -->
         </MudTabPanel>
 
         <MudTabPanel Text="TREINO" ToolTip="Treinos" @onclick="NavigateToTreino">
-            @* <TrainningsComponent UserId="@UserId" TrainningsList="trainningVOList"></TrainningsComponent> *@
+            <!-- Conteúdo da aba -->
         </MudTabPanel>
 
-        <MudTabPanel Text="AVALIAÇÕES FÍSICAS" ToolTip="Avaliações Físicas" @onclick="NavigateToAvaliacoes">
-            @* <PhysicalAssessment></PhysicalAssessment> *@
+        <MudTabPanel Text="AVALIAÇÕES" ToolTip="Avaliações Físicas" @onclick="NavigateToAvaliacoes">
+            <!-- Conteúdo da aba -->
         </MudTabPanel>
     </MudTabs>
-
-
+ *@
 
 
 
@@ -71,7 +73,12 @@
     /* Ajusta o conteúdo do MudTabPanel para ser mais compacto nos lados */
     /* Ajusta a largura e o padding para diminuir o tamanho do MudTabPanel */
 
-  
+        /* Estilo para MudTabs */
+        /* Reduz o espaçamento interno no container das tabs */
+        /* Ajusta o espaçamento lateral do MudTabs */
+        /* Reduz o espaçamento interno no container das tabs */
+     
+
 
 
     .responsive-tabs .mud-tab-panel {

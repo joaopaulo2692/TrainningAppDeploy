@@ -5,7 +5,7 @@
 @inject DbUsers _dbUsers
 @inject NavigationManager Navigation
 
-<MudDialog MaxWidth="MaxWidth.Small" FullWidth="false" Class="custom-dialog rounded-lg" Style="width: 800px;">
+<MudDialog MaxWidth="MaxWidth.Small" FullWidth="false" Class="custom-dialog rounded-lg" Style="width: 350px;">
        <DialogContent>
         <MudDivider></MudDivider>
            <MudRadioGroup T="int" @bind-Value="SelectedTrainningId">
@@ -30,13 +30,14 @@
                             <MudGrid Item Class="d-flex align-items-center" Style="margin-top: 8px; width: 100%;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <!-- MudAlerts lado a lado -->
-                                    @if (!string.IsNullOrEmpty(trainning.Gender))
+                         @*          @if (!string.IsNullOrEmpty(trainning.Gender))
                                 {
                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
                                               Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
                                         @trainning.Gender
                                     </MudAlert>
-                                }
+                                } *@
+                                    @*
                                 @if (!string.IsNullOrEmpty(trainning.PersonalName))
                                 {
                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"
@@ -50,7 +51,7 @@
                                               Style="border-radius: 8px; padding: 3px 6px; font-size: 15px; line-height: 1;">
                                         @trainning.Goal
                                     </MudAlert>
-                                }
+                                } *@
                                 @if (!string.IsNullOrEmpty(trainning.Level))
                                 {
                                     <MudAlert NoIcon="true" Severity="Severity.Info" HideIcon="true" Square="false"

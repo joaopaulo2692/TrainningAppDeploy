@@ -62,11 +62,17 @@ namespace TrainningApp.Core.Entities
             TrainningDaysUpdated?.Invoke();
         }
 
-        public bool RemoveById(int trainningDayId)
+        public bool RemoveById(int trainningDayId, bool? isOnlyOneTrainning = false)
         {
             var trainningDay = TrainningDays.FirstOrDefault(x => x.Id == trainningDayId);
             if (trainningDay == null) return false;
 
+            if(trainningDay.Name == "A" && isOnlyOneTrainning == true)
+            {
+                trainningDay.TrainningExercises = new List<TrainningExercise>();
+                TrainningDaysUpdated?.Invoke(); // Notifica a alteração
+                return true;
+            }
             TrainningDays.Remove(trainningDay);
             char newLetter = 'A';
             foreach (var trainnDay in TrainningDays)

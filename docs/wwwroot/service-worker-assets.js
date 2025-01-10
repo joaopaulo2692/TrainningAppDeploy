@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-MFQP6VJJ2lW3O3PK11GkK0qUdpAkSqZFynf6YqYIUYA=",
+      "hash": "sha256-nnW9IYJM\/DxbxnWRsvNODvHuIj6YLayJTEJXbU8oZxU=",
       "url": "css\/app.css"
     },
     {
@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-rR\/fLrKcQC\/ZTezvEDhOnIfL63U63wR0szgyvNRmLVw=",
+      "hash": "sha256-ImTrnE6ZlXs91ZG4nevNqY14nkaujhNuullnBI91OBE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -125,7 +125,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.Forms.wasm"
     },
     {
-      "hash": "sha256-1wqjBZGLT+kBxDZEhsqGuBOhfkzLuEC\/JU6SYKVwtjI=",
+      "hash": "sha256-uJTUIf\/e3maJySQ+iEL9YaRpoecsKrGLvhWjlltvZrU=",
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -293,11 +293,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-\/tUE8Vk\/dnYPde+2dW0pVsr55A9Tcj8FLNx29XyVVes=",
+      "hash": "sha256-\/Y3PN\/assuVQaiemMUioeiRPmA\/u246R7gm0QPDYvPc=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-pSdv2mGtfW1K9OYJ6oBQmj4UxjGDcS6wOziF+c6CXeA=",
+      "hash": "sha256-WWdXZYddGL1km3iNv7p6ohB0LIJRVezEP61ktG9T7dU=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -313,5 +313,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "1rsQSsWy"
+  "version": "r6voAhuA"
 };

@@ -37,6 +37,13 @@
     <br />
     <br />
     <br />
+
+    @if (TrainningsList == null || TrainningsList.Count == 0)
+    {
+        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+            <h3>Nenhum Treino Adicionado</h3>
+        </div>
+    }
     @foreach (TrainningReturnVO trainning in TrainningsList)
     {
         <div style="display: flex; justify-content: center; margin-bottom: 10px;">

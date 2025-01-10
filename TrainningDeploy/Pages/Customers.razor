@@ -33,10 +33,11 @@
                         <MudText Typo="Typo.h6" Class="font-weight-bold">@user.Name</MudText>
                             <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
                         </MudItem>
-
+                        <div class="action-icons">
                         <MudItem Style="flex-shrink: 0;">
                             <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" Style="min-width: 40px;" />
                         </MudItem>
+                        </div>
                     </MudGrid>
 
                     <!-- Divisor alinhado com menos espaço -->

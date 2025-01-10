@@ -119,7 +119,8 @@ code {
 
 }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {*/
+@media (max-width: 1208px) {
 
     .custom-size-trainning {
         max-width: 100% !important; /* Removendo o limite de max-width para telas pequenas */
@@ -186,8 +187,16 @@ code {
             padding: 6px 12px !important; /* Reduz o padding */
         }
     }
- 
 
 
+    /*@media (min-width: 767px) and (max-width: 1199px) {
+        .form-grid {
+            grid-template-columns: 1fr 1fr !important;*/ /* Duas colunas para telas médias */
+    /*}*/
+
+    /*.custom-autocomplete, .custom-freq, .custom-nivel {
+            width: 100% !important;*/ /* Ajusta a largura para telas médias */
+    /*}*/
+    /*}*/
 
 
