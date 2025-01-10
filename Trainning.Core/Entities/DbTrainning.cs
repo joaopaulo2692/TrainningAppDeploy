@@ -25,8 +25,8 @@ namespace TrainningApp.Core.Entities
         public void CheckActivateAndDisable(Trainning trainning)
         {
             List<Trainning> trainningsByUser = Trainnings
-    .Where(x => x.User != null && x.User.Id == trainning.User.Id)
-    .ToList();
+            .Where(x => x.User != null && x.User.Id == trainning.User.Id)
+            .ToList();
 
             Trainning trainningActivate = trainningsByUser.Where(x => x.Activate == true).FirstOrDefault();
 
@@ -100,12 +100,13 @@ namespace TrainningApp.Core.Entities
 
         public int AddTrainning(Trainning trainning)
         {
-            CheckActivateAndDisable(trainning);
+            
             int id = Trainnings.Max(x => x.Id);
             id++;
             trainning.Id = id;
             trainning.CreatedAt = DateTime.Now;
             Trainnings.Add(trainning);
+            CheckActivateAndDisable(trainning);
             return id;
         }
 

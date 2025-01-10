@@ -23,27 +23,19 @@
 
                 <MudGrid AlignItems="AlignItems.Center"
                          Class="profile-container"
-                         Style="padding: 20px 30px 5px 30px;">
-                    <!-- Menos espaço inferior -->
+                         Style="padding: 20px 30px 5px 30px; display: flex; align-items: center; flex-wrap: nowrap;">
                     <!-- Nome do exercício com ícone de edição ao lado -->
-                    <MudItem Class="profile-text" Style="width: 100%;">
-                        <MudGrid Class="d-flex align-items-center" Style="width: 100%;">
+                    <MudItem Style="flex-shrink: 0; margin-right: 10px;">
+                        <MudAvatar Size="Size.Medium" Image="https://via.placeholder.com/150" Class="mb-2" />
+                    </MudItem>
 
-                            <MudItem Style="flex-shrink: 0; margin-right: 10px;">
-                                <MudAvatar Size="Size.Medium" Image="https://via.placeholder.com/150" Class="mb-2" />
-                            </MudItem>
+                    <MudItem Class="profile-text" Style="flex-grow: 1; min-width: 0;">
+                        <MudText Typo="Typo.h6" Class="font-weight-bold">@user.Name</MudText>
+                            <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
+                        </MudItem>
 
-                            <MudItem Class="profile-text" Style="flex-grow: 1;">
-                                <MudText Typo="Typo.h6" Class="font-weight-bold">@user.Name</MudText>
-                                    <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
-                                </MudItem>
-
-                                <MudItem Style="flex-shrink: 0;">
-                                    <div class="action-icons">
-                                        <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" />
-                                    </div>
-                                </MudItem>
-                            </MudGrid>
+                        <MudItem Style="flex-shrink: 0;">
+                            <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" Style="min-width: 40px;" />
                         </MudItem>
                     </MudGrid>
 
@@ -53,6 +45,7 @@
         }
     </MudPaper>
 </div>
+
 
 @* <div style="display: flex; justify-content: center; width: 100%;">
     <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">

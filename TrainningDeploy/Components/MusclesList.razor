@@ -21,30 +21,27 @@
 
                 <MudGrid AlignItems="AlignItems.Center"
                          Class="profile-container"
-                         Style="padding: 25px 30px 5px 30px;">
-                    <!-- Menos espaço inferior -->
-                    <!-- Nome do exercício com ícone de edição ao lado -->
-                    <MudItem Class="profile-text" Style="width: 100%;">
-                        <MudGrid Class="d-flex align-items-center" Style="width: 100%;">
+                         Style="padding: 25px 30px 5px 30px; display: flex; align-items: center; flex-wrap: nowrap;">
+                    <!-- Nome do músculo -->
+                    <MudText Typo="Typo.h6" Class="font-weight-bold" 
+                             Style="flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        @muscle.Name
+                    </MudText>
 
-                            <!-- MudText ocupa o espaço até o ícone de edição -->
-                            <MudText Typo="Typo.h6" Class="font-weight-bold" Style="flex-grow: 1;">@muscle.Name</MudText>
+                    <!-- Botões de ação -->
+                    <div class="action-icons" Style="display: flex; margin-left: auto;">
+                        <MudIconButton OnClick="()=>OpenEditDialog(muscle)" Icon="@Icons.Material.Outlined.Edit" Style="margin-left: 16px;" />
+                        <MudIconButton OnClick="()=>Delete(muscle)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                    </div>
+                </MudGrid>
 
-                                <!-- Ícone de edição alinhado à direita -->
-                                 <div class="action-icons">
-                                <MudIconButton OnClick="()=>OpenEditDialog(muscle)" Icon="@Icons.Material.Outlined.Edit" Style="margin-left: 16px;" />
-                                <MudIconButton OnClick="()=>Delete(muscle)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
-                                </div>
-                            </MudGrid>
-                        </MudItem>
-                    </MudGrid>
-
-                    <!-- Divisor alinhado com menos espaço -->
-                    <MudDivider Class="mt-0" Style="margin-top: -2px;" />
-                </div>
+                <!-- Divisor alinhado -->
+                <MudDivider Class="mt-0" Style="margin-top: -2px;" />
+            </div>
         }
     </MudPaper>
 </div>
+
 
 
 <style>
