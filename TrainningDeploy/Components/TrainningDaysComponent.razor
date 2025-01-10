@@ -10,8 +10,10 @@
 
 
 <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
-     <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton>
-    <MudButton Disabled=DisableTrainningRemove OnClick="RemoveTrainningDay" Variant="Variant.Filled" Color="Color.Error" Style="margin-right: 20px;">Remover Sessão</MudButton>
+@*      <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 10px;">Adicionar Exercício</MudButton>
+    <MudButton Disabled=DisableTrainningRemove OnClick="RemoveTrainningDay" Variant="Variant.Filled" Color="Color.Error" Style="margin-right: 10px;">Remover Sessão</MudButton> *@
+    <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.AddCircleOutline" Style="margin-right: 10px;">Exercício</MudButton>
+    <MudButton Disabled=DisableTrainningRemove OnClick="RemoveTrainningDay" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" Style="margin-right: 10px;">Sessão</MudButton>
     @if (exercises == null)
     {
         @* <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" Style="margin-right: 20px;">Adicionar Exercício</MudButton> *@
@@ -59,15 +61,11 @@
 
                  </div>
 
-                 <!-- Botões -->
-                 <MudButton Variant="Variant.Filled" Color="Color.Warning"
-                            Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => SelectEditExercise(item)">
-                     Editar
-                 </MudButton>
-                 <MudButton Variant="Variant.Filled" Color="Color.Error"
-                            Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => RemoveExercise(item)">
-                     Deletar
-                 </MudButton>
+                
+                 <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.TopRight">
+                     <MudMenuItem OnClick="() => SelectEditExercise(item)">Editar</MudMenuItem>
+                     <MudMenuItem Style="color: red;" OnClick="() => RemoveExercise(item)">Remover</MudMenuItem>
+                 </MudMenu>
              </MudPaper>
 
 
@@ -75,9 +73,30 @@
     }
     
 </div>
+<!-- Botões Antigos de Editar e Deletar-->
+@*     <MudButton Variant="Variant.Filled" Color="Color.Warning"
+                            Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => SelectEditExercise(item)">
+                     Editar
+                 </MudButton>
+                 <MudButton Variant="Variant.Filled" Color="Color.Error"
+                            Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => RemoveExercise(item)">
+                     Deletar
+                 </MudButton> *@
+@* <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/> *@
 
 
 <style>
+
+    .responsive-button {
+        font-size: 16px; /* Tamanho padrão */
+        padding: 8px 16px;
+    }
+
+    .menu-item-remove {
+        color: red;
+        font-weight: bold;
+    }
+
 .extra-fields {
     display: flex;
     gap: 8px;
@@ -129,6 +148,23 @@
     public List<TrainningExerciseVO> exercises = new List<TrainningExerciseVO>();
 
     private DotNetObjectReference<TrainningDaysComponent> _objectReference;
+    private MudMenu menuRef;
+
+
+    private void Action1()
+    {
+        Console.WriteLine("Opção 1 selecionada");
+    }
+
+    private void Action2()
+    {
+        Console.WriteLine("Opção 2 selecionada");
+    }
+
+    private void Action3()
+    {
+        Console.WriteLine("Opção 3 selecionada");
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -143,6 +179,9 @@
     {
         _objectReference?.Dispose();
     }
+
+
+
 
     private async Task RefazerOrdem()
     {

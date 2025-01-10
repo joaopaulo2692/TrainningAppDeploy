@@ -180,7 +180,12 @@ code {
     }
 
 
-
+    @media (max-width: 600px) {
+        .responsive-button {
+            font-size: 12px !important; /* Reduz o tamanho da fonte */
+            padding: 6px 12px !important; /* Reduz o padding */
+        }
+    }
  
 
 

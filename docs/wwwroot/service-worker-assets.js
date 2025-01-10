@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-rQEFF6wpbAiBWA9vfzF1\/b2vvoSTXvYMv68yg9j\/RxY=",
+      "hash": "sha256-MFQP6VJJ2lW3O3PK11GkK0qUdpAkSqZFynf6YqYIUYA=",
       "url": "css\/app.css"
     },
     {
@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-PuGEqq9qcMd8nwavIk7+4JSZNNkFLUNZnUFBz7FyPg4=",
+      "hash": "sha256-rR\/fLrKcQC\/ZTezvEDhOnIfL63U63wR0szgyvNRmLVw=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -189,7 +189,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-JqfeZnmXRoY4MKLx0s1Fqpm7Czd9rDCpERcEihaFn4k=",
+      "hash": "sha256-zW6jVK+z3bDPtVT91Lqv1YeIK+68sUjvgW+CTs9sJko=",
       "url": "_framework\/MudBlazor.wasm"
     },
     {
@@ -293,11 +293,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-Kw4JrNmnXscllJkmT3JT9B7mHMmuTde3QRKQePSbAqw=",
+      "hash": "sha256-\/tUE8Vk\/dnYPde+2dW0pVsr55A9Tcj8FLNx29XyVVes=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-3yV\/KpmQMeJT6X4Ou2fIfBoNvmzo51MIoLRJ9vHlHcc=",
+      "hash": "sha256-pSdv2mGtfW1K9OYJ6oBQmj4UxjGDcS6wOziF+c6CXeA=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -313,5 +313,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "GCfPACRh"
+  "version": "1rsQSsWy"
 };
