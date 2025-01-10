@@ -197,7 +197,7 @@
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-  
+
     private void Close() {
         MudDialog.Close();
     }
@@ -207,10 +207,15 @@
 
     private void OpenVideo()
     {
-        videoOn = true;
+        // videoOn = true;
+        videoOn = videoOn == false ? true : false;
         /* https://www.youtube.com/watch?v=GiAWATi5D0U
         https://www.youtube.com/embed/GiAWATi5D0U */
-        exerciseVO.Video = StaticMethods.ConvertToEmbedUrl(exerciseVO.Video);
+        if (!exerciseVO.Video.Contains("embed"))
+        {
+            exerciseVO.Video = StaticMethods.ConvertToEmbedUrl(exerciseVO.Video);
+        }
+       
         /* exerciseVO.Video = exerciseVO.Video.Replace("watch?v=", "embed/"); */
         // ExerciseVO exerciseVO = exerciseList.FirstOrDefault();
         StateHasChanged();

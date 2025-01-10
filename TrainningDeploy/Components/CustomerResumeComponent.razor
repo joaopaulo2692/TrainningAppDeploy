@@ -20,16 +20,13 @@
                 <MudTextField T="string" Label="CPF" @bind-Value="UserSelected.Cpf" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Telefone" @bind-Value="UserSelected.Phone" Typo="Typo.input" TextChanged="OnChanged" />
+                <MudDatePicker Label="Data Nascimento" Date="UserSelected.Birthday"  DateChanged="OnChangedDate" />
             </MudItem>
+           
 
             <!-- Linha 2: Data Nascimento, Objetivo e Email -->
             <MudItem xs="6" sm="4">
-                <MudDatePicker Label="Data Nascimento" Date="UserSelected.Birthday" DateChanged="OnChangedDate" />
-
-
-
-
+                <MudTextField T="string" Label="Telefone" @bind-Value="UserSelected.Phone" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
             <MudItem xs="6" sm="4">
                 <MudSelect Label="Objetivo" @bind-Value="UserSelected.Goal" TextChanged="OnChanged">
@@ -169,6 +166,7 @@
 
 
     }
+
 
     private void OnChanged()
     {
