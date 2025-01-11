@@ -34,9 +34,9 @@
                              CoerceValue="@coerceValue"
                              HelperText="@(hasError ? errorMessage : null)"
                              Error="@hasError"
-                             TextChanged="Verification">
+                                >
             </MudAutocomplete>
-
+            @* TextChanged="Verification" *@
             @if (hasError)
             {
                 <MudText Color="Color.Error" Typo="Typo.caption">@errorMessage</MudText>
@@ -215,7 +215,7 @@
         {
             exerciseVO.Video = StaticMethods.ConvertToEmbedUrl(exerciseVO.Video);
         }
-       
+
         /* exerciseVO.Video = exerciseVO.Video.Replace("watch?v=", "embed/"); */
         // ExerciseVO exerciseVO = exerciseList.FirstOrDefault();
         StateHasChanged();
@@ -284,7 +284,7 @@
         MudDialog.Close(DialogResult.Ok(trainningExerciseVO));
     }
 
-   
+
 
     protected override void OnInitialized()
     {
@@ -378,7 +378,8 @@
             exerciseList = exerciseList.Where(x => x.Muscles.Contains(muscleVO.Name)).ToList();
 
         if (string.IsNullOrEmpty(value))
-            return exerciseList;
+            exerciseVO = new ExerciseVO();
+        return exerciseList;
 
         var filteredList = exerciseList.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
@@ -390,6 +391,10 @@
                 exerciseNotHasVideo = true;
             else
                 exerciseNotHasVideo = false;
+        }
+        else
+        {
+            exerciseVO = new ExerciseVO() { Name = value };
         }
         StateHasChanged();
         return filteredList;

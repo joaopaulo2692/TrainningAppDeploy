@@ -1,5 +1,6 @@
 ﻿@using TrainningDeploy.Components
 @inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 
 
@@ -12,11 +13,13 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         @* <MudText Typo="Typo.h5" Class="ml-3">TrainningApp</MudText> *@
         @* <MudText Typo="Typo.h5" Class="ml-3 hide-on-small">TrainningApp</MudText> *@
-        <MudText Typo="Typo.h5" Class="ml-3 d-none d-md-inline">TrainningApp</MudText>
+        @* <MudText Typo="Typo.h5" Class="ml-3 d-none d-md-inline">TrainningApp</MudText> *@
+        <MudText Typo="Typo.h5" Class="ml-3 d-inline">TrainningApp</MudText>
+
 
 
         <MudSpacer />
-         @if (ShowSearchCustomer)
+         @if (ShowSearchCustomer && !IsHomePage)
         {
             
             @if (_isDarkMode)
@@ -50,6 +53,7 @@
 </div>
 
 @code {
+    private bool IsHomePage => NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == "";
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
@@ -91,9 +95,12 @@
     private readonly PaletteLight _lightPalette = new()
         {
             Black = "#110e2d",
-            AppbarText = "#424242",
-            AppbarBackground = "rgba(255,255,255,0.8)",
+            AppbarText = "#fafafa",
+            // AppbarText = "#424242",
+            // AppbarBackground = "rgba(255,255,255,0.8)",
+            AppbarBackground = "#1e88e5",
             DrawerBackground = "#ffffff",
+
             GrayLight = "#e8e8e8", // Ajuste aqui a cor do cinza claro
             GrayLighter = "#f9f9f9", // Ajuste aqui o cinza mais claro, se necessário
             Background = "#F5F5F5" // Cor cinza para o fundo no modo claro

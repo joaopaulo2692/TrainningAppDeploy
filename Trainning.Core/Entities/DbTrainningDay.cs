@@ -172,7 +172,7 @@ namespace TrainningApp.Core.Entities
                         Id = 6,
                         Name = "A",
                         Ordenation = 1,
-                        TrainningId = 1,
+                        TrainningId = 5,
                         TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.TrainningDayId == 6).ToList()
                     },
                     new TrainningDay
@@ -180,7 +180,7 @@ namespace TrainningApp.Core.Entities
                         Id = 7,
                         Name = "B",
                         Ordenation = 1,
-                        TrainningId = 1,
+                        TrainningId = 5,
                         TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.TrainningDayId == 7).ToList()
                     },
                      new TrainningDay
@@ -188,7 +188,7 @@ namespace TrainningApp.Core.Entities
                         Id = 8,
                         Name = "C",
                         Ordenation = 1,
-                        TrainningId = 1,
+                        TrainningId = 5,
                         TrainningExercises = _trainningExercise.TrainningExercises.Where(x => x.TrainningDayId == 8).ToList()
                     },
 

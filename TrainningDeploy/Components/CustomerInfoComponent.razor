@@ -8,10 +8,13 @@
 @inject DbTrainning _dbTrainning
 @inject NavigationManager Navigation
 
-<MudGrid AlignItems="AlignItems.Center" Class="profile-container">
+<MudGrid AlignItems="AlignItems.Center" Class="profile-container" Style="background-color: var(--mud-palette-primary-light);">
     <!-- Avatar -->
     <MudItem>
-        <MudAvatar Size="Size.Large" Image="https://via.placeholder.com/150" Class="mb-2" />
+        @* <MudAvatar Size="Size.Large" Image="https://via.placeholder.com/150" Class="mb-2" /> *@
+        <MudAvatar Size="Size.Large" Class="mb-2">
+            <MudImage Src="images/perfil.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+        </MudAvatar>
     </MudItem>
 
     <!-- Texto ao lado do avatar -->
@@ -32,8 +35,8 @@
 <br />
 
 
-        <MudTabs Elevation="1" A Rounded="true" Class="custom-tab-panel" ActivePanelIndex="ActiveIndex">
-        <MudTabPanel  Text="RESUMO" ToolTip="Resumos" @onclick="NavigateToResumo">
+        <MudTabs Elevation="1" Rounded="true" Class="custom-tab-panel " ActivePanelIndex="ActiveIndex">
+        <MudTabPanel Text="RESUMO" ToolTip="Resumos" @onclick="NavigateToResumo">
 
         </MudTabPanel>
 
@@ -77,7 +80,7 @@
         /* Reduz o espaçamento interno no container das tabs */
         /* Ajusta o espaçamento lateral do MudTabs */
         /* Reduz o espaçamento interno no container das tabs */
-     
+
 
 
 
@@ -128,6 +131,11 @@
 
     public UserVO UserVOSelected { get; set; }
 
+    [CascadingParameter] private MudThemeProvider ThemeProvider { get; set; }
+
+    private string BackgroundColor => IsDarkMode ? "#64b5f6" : "#1e88e5";
+
+    private bool IsDarkMode => ThemeProvider?.IsDarkMode ?? false;
 
     private void NavigateToResumo()
     {
@@ -158,6 +166,7 @@
     protected override void OnParametersSet()
     {
         UserVOSelected = _dbUser.GetCustomerById(UserId);
+        StateHasChanged();
         base.OnParametersSet();
     }
 }

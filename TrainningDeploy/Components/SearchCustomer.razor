@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject DbUsers _dbUsers
 
+<div class="extra-fields">
 <MudAutocomplete T="UserVO"
                  Label="Buscar aluno"
                  Value="@selectedUser"
@@ -15,8 +16,7 @@
                  CoerceText="@coerceText"
                  CoerceValue="@coerceValue"
                  Class="@(IsLightMode ? "custom-autocompleteLightModeSearch" : "custom-autocompleteSearch")" />
-
-
+</div>
 
 
 
@@ -47,6 +47,7 @@
         .custom-autocompleteLightModeSearch .mud-input-control,
     .custom-autocompleteLightModeSearch .mud-input-underline {
             background-color: #dcdcdc !important; /* Cor de fundo para o modo claro */
+            /* background-color: #dcdcdc !important; /* Cor de fundo para o modo claro */ */
             color: black !important; /* Cor do texto */
             border-color: grey !important; /* Cor da borda */
         }
