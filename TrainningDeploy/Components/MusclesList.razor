@@ -31,7 +31,7 @@
                     <!-- Botões de ação -->
                     <div class="action-icons" Style="display: flex; margin-left: auto;">
                         <MudIconButton OnClick="()=>OpenEditDialog(muscle)" Icon="@Icons.Material.Outlined.Edit" Style="margin-left: 16px;" />
-                        <MudIconButton OnClick="()=>Delete(muscle)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                        <MudIconButton OnClick="()=>DeleteDialogAsync(muscle)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
                     </div>
                 </MudGrid>
 
@@ -160,6 +160,34 @@
         else
         {
             Console.WriteLine("O diálogo foi cancelado.");
+        }
+    }
+
+    private async Task DeleteDialogAsync(MuscleVO muscleVOToRemove)
+    {
+        var parameters = new DialogParameters
+    {
+        { nameof(DialogRemove.ContentText), "Você quer realmente apagar esse grupo muscular?" },
+        { nameof(DialogRemove.ButtonText), "Deletar" },
+        { nameof(DialogRemove.Color), Color.Error }
+    };
+
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        // Exibe o diálogo e aguarda o resultado
+        var dialogReference = DialogService.Show<DialogRemove>("Deletar", parameters, options);
+
+        var dialogResult = await dialogReference.Result; // Aguarda até o usuário interagir com o diálogo
+
+        // Verifica se o resultado foi cancelado
+        if (dialogResult.Canceled)
+        {
+
+            Console.WriteLine("Ação cancelada.");
+        }
+        else
+        {
+            Delete(muscleVOToRemove);
         }
     }
 

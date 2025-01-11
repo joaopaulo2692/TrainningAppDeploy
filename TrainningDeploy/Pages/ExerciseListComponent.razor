@@ -28,7 +28,7 @@
                     <!-- Nome e alertas -->
                     <MudItem Class="profile-text" Style="width: 100%;">
                         <MudGrid>
-                            <MudText Typo="Typo.h6" Class="font-weight-bold">@exercise.Name</MudText>
+                            <MudText Typo="Typo.body1" Style="font-weight: bold;" Class="font-weight-bold">@exercise.Name</MudText>
                             </MudGrid>
 
                             <!-- Alertas e botão alinhados -->
@@ -47,8 +47,8 @@
 
                                 <!-- Ícones que aparecem no hover -->
                                 <div class="action-icons">
-                                    <MudIconButton OnClick="()=>EditExercise(exercise)" Icon="@Icons.Material.Outlined.Edit" />
-                                    <MudIconButton OnClick="()=>DeleteDialogAsync(exercise)" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                    <MudIconButton OnClick="()=>EditExercise(exercise)" Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" />
+                                    <MudIconButton OnClick="()=>DeleteDialogAsync(exercise)" Size="Size.Small" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
                                 </div>
                             </div>
                         </MudGrid>

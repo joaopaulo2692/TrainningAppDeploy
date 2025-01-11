@@ -1,0 +1,120 @@
+﻿@page "/personais"
+@inject NavigationManager NavigationManager
+@using TrainningApp.Core.Constants
+@using TrainningApp.Core.DTO.User
+@using TrainningApp.Core.Entities
+@inject DbUsers _dbUsers
+
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="AddNewCustumer">Novo Personal</MudButton>
+</div>
+<br />
+<br />
+
+
+<div style="display: flex; justify-content: center; padding: 10px;">
+    <MudPaper Class="custom-size" Width="75%" Style="padding: 20px; display: flex; flex-direction: column; position: relative; overflow-y: auto; box-sizing: border-box;">
+        @foreach (var user in users)
+        {
+            <!-- Contêiner externo para hover e MudDivider -->
+            <div class="hover-container"
+                 Style="transition: background-color 0.3s ease; padding: 0; margin-bottom: 2px; cursor: pointer;">
+
+                <MudGrid AlignItems="AlignItems.Center"
+                         Class="profile-container"
+                         Style="padding: 20px 30px 5px 30px; display: flex; align-items: center; flex-wrap: nowrap;">
+                    <!-- Nome do exercício com ícone de edição ao lado -->
+                    <MudItem Style="flex-shrink: 0; margin-right: 10px;">
+                        <MudAvatar Size="Size.Medium" Class="mb-2">
+                            <MudImage Src="images/perfil.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+                        </MudAvatar>
+                    </MudItem>
+
+                    <MudItem Class="profile-text" Style="flex-grow: 1; min-width: 0;">
+                        <MudText Typo="Typo.h6" Class="font-weight-bold">@((user.Name.Length > 10 ? user.Name.Substring(0, 10) + "..." : user.Name))</MudText>
+                        <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
+                        </MudItem>
+@*                         <div class="action-icons">
+                            <MudItem Style="flex-shrink: 0;">
+                                <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" Style="min-width: 40px;" />
+                            </MudItem>
+                        </div> *@
+                    </MudGrid>
+
+                    <!-- Divisor alinhado com menos espaço -->
+                    <MudDivider Class="mt-0" Style="margin-top: -2px;" />
+                </div>
+        }
+    </MudPaper>
+</div>
+
+
+
+<style>
+    .custom-size {
+        width: 75%;
+        max-width: 100%;
+        transition: width 0.3s ease;
+        box-sizing: border-box; /* Garante que o padding não afete o tamanho */
+    }
+
+    .profile-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%; /* Garante que o MudGrid ocupe 100% da largura disponível */
+        box-sizing: border-box; /* Garante que o padding do MudPaper não afete o layout */
+        position: relative; /* Evita deslocamento inesperado */
+    }
+
+    .hover-container .action-icons {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .hover-container:hover .action-icons {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* Adiciona efeito de hover ao container */
+    .hover-container {
+        transition: background-color 0.3s ease;
+        position: relative; /* Para evitar deslocamento */
+    }
+
+        .hover-container:hover {
+            /* background-color: #2a2a3d;   */
+            background-color: rgba(42, 42, 61, 0.2);
+            cursor: pointer;
+        }
+
+    }
+</style>
+
+
+
+@code {
+    List<UserVO> users = new List<UserVO>();
+
+    private void AddNewCustumer()
+    {
+        string id = _dbUsers.AddNewCustomer();
+        NavigateToEditPage(id);
+    }
+
+    private void NavigateToEditPage(string user)
+    {
+        string url = Constants.GetUrlForCustomer(user);
+        NavigationManager.NavigateTo(url); // Substitua "/edit-page" pela rota desejada
+    }
+    protected override void OnInitialized()
+    {
+        List<ApplicationUser> appUser = _dbUsers.Personals.ToList();
+        users = _dbUsers.UsersToDTO(appUser);
+       
+        users = users.OrderBy(x => x.Name).ToList();
+    }
+}

@@ -11,17 +11,13 @@
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        @* <MudText Typo="Typo.h5" Class="ml-3">TrainningApp</MudText> *@
-        @* <MudText Typo="Typo.h5" Class="ml-3 hide-on-small">TrainningApp</MudText> *@
-        @* <MudText Typo="Typo.h5" Class="ml-3 d-none d-md-inline">TrainningApp</MudText> *@
+        
         <MudText Typo="Typo.h5" Class="ml-3 d-inline">TrainningApp</MudText>
-
-
 
         <MudSpacer />
          @if (ShowSearchCustomer && !IsHomePage)
         {
-            
+        <div class="extra-fields">
             @if (_isDarkMode)
             {
                 <SearchCustomer IsLightMode=false></SearchCustomer>
@@ -29,10 +25,11 @@
             @if (!_isDarkMode) {
                 <SearchCustomer IsLightMode=true></SearchCustomer>
             }
-     
+          </div>
         } 
-        
         <MudSpacer />
+        <MudIconButton OnClick="ToggleShowSearch" Icon="@Icons.Material.Filled.Search"
+                       Style="font-size: 32px; color: white; background-color: transparent;" />
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
         @* <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" /> *@
     </MudAppBar>
@@ -58,6 +55,13 @@
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
     public bool ShowSearchCustomer { get; set; } = true;
+    bool ToggleSearch = false;
+
+
+    private void ToggleShowSearch()
+    {
+        ToggleSearch = !ToggleSearch;
+    }
 
     protected override void OnInitialized()
     {

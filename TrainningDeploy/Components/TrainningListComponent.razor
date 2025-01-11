@@ -33,17 +33,17 @@
                         <!-- Contêiner de nome e ícones alinhados -->
                         <MudGrid Style="margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
                             <!-- Nome do treino -->
-                            <MudText Typo="Typo.h6" Class="font-weight-bold">
+                            
                                 @if (string.IsNullOrEmpty(trainning.Name))
                                 {
-                                    <MudText Typo="Typo.h6" Class="font-weight-bold">Treino sem nome</MudText>
+                                <MudText Typo="Typo.body1" Class="font-weight-bold" Style="font-weight: bold;">Treino sem nome</MudText>
                                 }
                                 else
                                 {
-                                    <MudText Typo="Typo.h6" Class="font-weight-bold"> @trainning.Name</MudText>
+                                <MudText Typo="Typo.body1" Class="font-weight-bold" Style="font-weight: bold;"> @trainning.Name</MudText>
                                    
                                 }
-                            </MudText>
+                   
 
                             <!-- Ícones de ação alinhados à direita -->
                             <div class="action-icons" Style="display: flex; gap: 8px;">

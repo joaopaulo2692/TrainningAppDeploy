@@ -178,7 +178,6 @@ namespace TrainningApp.Core.Entities
             Muscles = new List<Muscle>()
             {
                   new Muscle { Id = 1, Name = "Abdômen" },
-                  new Muscle { Id = 4, Name = "Alongamento" },
                   new Muscle { Id = 5, Name = "Antebraço" },
                   new Muscle { Id = 6, Name = "Aquecimento" },
                   new Muscle { Id = 7, Name = "Bíceps" },

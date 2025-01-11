@@ -4,7 +4,7 @@
 @inject NavigationManager Navigation
 @inject DbUsers _dbUsers
 
-<div class="extra-fields">
+
 <MudAutocomplete T="UserVO"
                  Label="Buscar aluno"
                  Value="@selectedUser"
@@ -16,7 +16,7 @@
                  CoerceText="@coerceText"
                  CoerceValue="@coerceValue"
                  Class="@(IsLightMode ? "custom-autocompleteLightModeSearch" : "custom-autocompleteSearch")" />
-</div>
+
 
 
 

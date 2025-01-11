@@ -173,7 +173,7 @@ namespace TrainningApp.Core.Entities
             // Inicializando Customers com 20 nomes fixos
             Customers = new List<ApplicationUser>
 {
-    new ApplicationUser { Id = "1", Name = "Alice", Age = 25, Gender = "Feminino", Email = "alice@gmail.com", Cpf = "222222222", Heigth = 1.65f, Weight = 55, Birthday = new DateTime(1998, 5, 15) },
+    new ApplicationUser { Id = "1", Name = "Alice Rodrigues", Age = 25, Gender = "Feminino", Email = "alice@gmail.com", Cpf = "222222222", Heigth = 1.65f, Weight = 55, Birthday = new DateTime(1998, 5, 15) },
     new ApplicationUser { Id = "2", Name = "Bob", Age = 30, Gender = "Masculino", Email = "bob@gmail.com", Cpf = "333333333", Heigth = 1.75f, Weight = 70, Birthday = new DateTime(1995, 8, 22) },
     new ApplicationUser { Id = "3", Name = "Clara", Age = 28, Gender = "Feminino", Email = "clara@gmail.com", Cpf = "444444444", Heigth = 1.68f, Weight = 58, Birthday = new DateTime(1997, 3, 10) },
     new ApplicationUser { Id = "4", Name = "David", Age = 35, Gender = "Masculino", Email = "david@gmail.com", Cpf = "555555555", Heigth = 1.80f, Weight = 80, Birthday = new DateTime(1990, 1, 5) },
