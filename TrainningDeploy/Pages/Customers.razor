@@ -32,7 +32,11 @@
                     </MudItem>
 
                     <MudItem Class="profile-text" Style="flex-grow: 1; min-width: 0;">
-                        <MudText Typo="Typo.h6" Class="font-weight-bold">@((user.Name.Length > 10 ? user.Name.Substring(0, 10) + "..." : user.Name))</MudText>
+                        <MudText Typo="Typo.h6" Class="font-weight-bold">
+                            @((!string.IsNullOrEmpty(user.Name) && user.Name.Length > 10
+                                ? user.Name.Substring(0, 10) + "..."
+                                : user.Name ?? ""))
+                        </MudText>
                             <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
                         </MudItem>
                         <div class="action-icons">

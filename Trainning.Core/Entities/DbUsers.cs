@@ -78,6 +78,17 @@ namespace TrainningApp.Core.Entities
             NotifyCustomersChanged();
             return id.ToString();
         }
+
+        public string AddNewPersonal()
+        {
+            int id = Personals.Max(x => int.Parse(x.Id));
+            id++;
+            ApplicationUser userDb = new ApplicationUser() { Id = id.ToString() };
+            Personals.Add(userDb);
+            NotifyCustomersChanged();
+            return id.ToString();
+        }
+
         public void AddCustomer(UserVO user)
         {
             int id = int.Parse(Customers.Max(x => x.Id)) + 1;
@@ -86,7 +97,41 @@ namespace TrainningApp.Core.Entities
             Customers.Add(userDb);
             NotifyCustomersChanged();
         }
+        public void UpdatePersonal(UserVO user)
+        {
+            ApplicationUser userDb = Personals.Where(x => x.Id == user.Id).FirstOrDefault();
+            if (userDb != null)
+            {
+                userDb.Name = user.Name;
+                userDb.Age = user.Age;
+                userDb.Cpf = user.Cpf;
+                userDb.Email = user.Email;
+                userDb.Gender = user.Gender;
+                userDb.Birthday = user.Birthday;
+                userDb.Heigth = user.Heigth;
+                userDb.Weight = user.Weight;
+                userDb.UpdatedAt = DateTime.Now; // Atualiza a data de modificação
+                userDb.Age = user.Birthday != null ? (int)((DateTime.Now - user.Birthday).TotalDays / 365.25) : 0;
+                userDb.Cep = user.Cep;
+                userDb.City = user.City;
+                userDb.Address = user.Address;
+                userDb.NumberHouse = user.NumberHouse;
+                userDb.Neighborhood = user.Neighborhood;
+                userDb.Complement = user.Complement;
+                userDb.Phone = user.Phone;
+                userDb.Goal = user.Goal;
+                userDb.Observation = user.Observation;
 
+
+                NotifyCustomersChanged();
+                // Se outros campos de ApplicationUser forem relevantes para atualização, ajuste aqui.
+            }
+            else
+            {
+                throw new InvalidOperationException($"Customer with ID {user.Id} not found.");
+            }
+
+        }
         public void UpdateCustomer(UserVO user)
         {
             ApplicationUser userDb = Customers.Where(x => x.Id == user.Id).FirstOrDefault();
@@ -138,6 +183,14 @@ namespace TrainningApp.Core.Entities
         public UserVO GetCustomerById(string id)
         {
             ApplicationUser user = Customers.Where(x => x.Id == id).FirstOrDefault();
+            if (user == null) return new UserVO();
+
+            return UserToVO(user);
+        }
+
+        public UserVO GetPersonalById(string id)
+        {
+            ApplicationUser user = Personals.Where(x => x.Id == id).FirstOrDefault();
             if (user == null) return new UserVO();
 
             return UserToVO(user);

@@ -7,7 +7,7 @@
 
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
-    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="AddNewCustumer">Novo Personal</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="AddNewPersonal">Novo Personal</MudButton>
 </div>
 <br />
 <br />
@@ -32,14 +32,18 @@
                     </MudItem>
 
                     <MudItem Class="profile-text" Style="flex-grow: 1; min-width: 0;">
-                        <MudText Typo="Typo.h6" Class="font-weight-bold">@((user.Name.Length > 10 ? user.Name.Substring(0, 10) + "..." : user.Name))</MudText>
+                        <MudText Typo="Typo.h6" Class="font-weight-bold">
+                            @((!string.IsNullOrEmpty(user.Name) && user.Name.Length > 10
+                                ? user.Name.Substring(0, 10) + "..."
+                                : user.Name ?? ""))
+                        </MudText>
                         <MudText Typo="Typo.body2" Class="text-muted">@user.Age anos, @user.Gender</MudText>
                         </MudItem>
-@*                         <div class="action-icons">
+                        <div class="action-icons">
                             <MudItem Style="flex-shrink: 0;">
                                 <MudIconButton OnClick="() => NavigateToEditPage(user.Id)" Icon="@Icons.Material.Outlined.Edit" Style="min-width: 40px;" />
                             </MudItem>
-                        </div> *@
+                        </div>
                     </MudGrid>
 
                     <!-- Divisor alinhado com menos espaço -->
@@ -99,9 +103,9 @@
 @code {
     List<UserVO> users = new List<UserVO>();
 
-    private void AddNewCustumer()
+    private void AddNewPersonal()
     {
-        string id = _dbUsers.AddNewCustomer();
+        string id = _dbUsers.AddNewPersonal();
         NavigateToEditPage(id);
     }
 

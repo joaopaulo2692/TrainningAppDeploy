@@ -2,8 +2,15 @@
 @using TrainningApp.Core.DTO.User
 @using TrainningApp.Core.Entities
 @page "/aluno/{UserId}"
+@page "/personal/{UserId}"
 @inject DbUsers _dbUsers
-<CustomerInfoComponent ActiveIndex=0 UserId="@UserId"></CustomerInfoComponent>
+@inject NavigationManager NavigationManager
+
+@if (IsCustomer)
+{
+    <CustomerInfoComponent ActiveIndex=0 UserId="@UserId"></CustomerInfoComponent>
+}
+
 <br />
 <br />
 <div class="parent-container">
@@ -126,7 +133,9 @@
 
 
 @code {
-
+    string link = "https://localhost:7142";
+    // private bool IsCustomer => NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == link + $"/aluno/{UserId}";
+    private bool IsCustomer => NavigationManager.ToBaseRelativePath(NavigationManager.Uri).Contains("aluno");
     [Parameter]
     public string? UserId { get; set; }
 
@@ -156,13 +165,18 @@
 
     protected override void OnInitialized()
     {
-        UserSelected = _dbUsers.GetCustomerById(UserId);
-        // if (UserSelected == null)
-        // {
-        //     UserSelected = new UserVO();  // Inicializa se for null
-        // }
-        goal = UserSelected.Goal;
-        birthDay = UserSelected.Birthday;
+        // string uri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        // link = link + uri;
+        if (IsCustomer)
+        {
+            UserSelected = _dbUsers.GetCustomerById(UserId);
+            goal = UserSelected.Goal;
+            birthDay = UserSelected.Birthday;
+        }
+        else
+        {
+            UserSelected = _dbUsers.GetPersonalById(UserId);
+        }
 
 
     }
@@ -170,26 +184,46 @@
 
     private void OnChanged()
     {
-        UserSelected.Birthday = birthDay.Value;
-        _dbUsers.UpdateCustomer(UserSelected);
+        // UserSelected.Birthday = birthDay.Value;
+        if (IsCustomer)
+        {
+            _dbUsers.UpdateCustomer(UserSelected);
+        }
+        else
+        {
+            _dbUsers.UpdatePersonal(UserSelected);
+        }
         StateHasChanged();
     }
 
     private void OnChangedDate(DateTime? newDate)
     {
-        // birthDay = newDate; // Atualiza a variável com o valor selecionado
         UserSelected.Birthday = newDate.Value;
-        _dbUsers.UpdateCustomer(UserSelected);
+        if (IsCustomer)
+        {
+            _dbUsers.UpdateCustomer(UserSelected);
+        }
+        else
+        {
+            _dbUsers.UpdatePersonal(UserSelected);
+        }
+
     }
 
     protected override void OnParametersSet()
     {
-        UserSelected = _dbUsers.GetCustomerById(UserId);
-        // if (UserSelected == null)
-        // {
-        //     UserSelected = new UserVO();  // Inicializa se for null
-        // }
-        goal = UserSelected.Goal;
-        birthDay = UserSelected.Birthday;
+        // UserSelected = _dbUsers.GetCustomerById(UserId);
+        // goal = UserSelected.Goal;
+        // birthDay = UserSelected.Birthday;
+        if (IsCustomer)
+        {
+            UserSelected = _dbUsers.GetCustomerById(UserId);
+            goal = UserSelected.Goal;
+            birthDay = UserSelected.Birthday;
+        }
+        else
+        {
+            UserSelected = _dbUsers.GetPersonalById(UserId);
+        }
     }
 }

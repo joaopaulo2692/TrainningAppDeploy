@@ -10,13 +10,13 @@
 {
     <MudCarousel Class="mud-width-full" Style="height:118px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
         <MudCarouselItem Transition="transition" Color="@Color.Primary">
-            <MudImage Src="@image1" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+            <MudImage Src="@image1" Alt="Mony the dog" Elevation="25"  />
         </MudCarouselItem>
         <MudCarouselItem Transition="transition" Color="@Color.Secondary">
-            <MudImage Src="@image2" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+            <MudImage Src="@image2" Alt="Mony the dog" Elevation="25" />
         </MudCarouselItem>
         <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
-            <MudImage Src="@image3" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+            <MudImage Src="@image3" Alt="Mony the dog" Elevation="25" />
         </MudCarouselItem>
     </MudCarousel>
 }
@@ -24,13 +24,13 @@ else
 {
     <MudCarousel Class="mud-width-full" Style="height:300px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
         <MudCarouselItem Transition="transition" Color="@Color.Primary">
-            <MudImage Src="@image1" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+            <MudImage Src="@image1" Alt="Mony the dog" Elevation="25"  />
         </MudCarouselItem>
         <MudCarouselItem Transition="transition" Color="@Color.Secondary">
-            <MudImage Src="@image2" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+            <MudImage Src="@image2" Alt="Mony the dog" Elevation="25"  />
         </MudCarouselItem>
         <MudCarouselItem Transition="transition" Color="@Color.Tertiary">
-            <MudImage Src="@image3" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+            <MudImage Src="@image3" Alt="Mony the dog" Elevation="25"  />
         </MudCarouselItem>
     </MudCarousel>
 }
@@ -53,21 +53,37 @@ else
     </MudContainer>
 </MudPaper> *@
 <br/>
-<MudPaper Height="400px" Width="100%">
-    <MudText Typo="Typo.h3" Align="Align.Center">Área do Personal</MudText>
-    @* <MudText Typo="Typo.h3" Align="Align.Center">Seu novo App de Treinamentos!</MudText> *@
-    @* <MudText Typo="Typo.h4" Align="Align.Center">Escolha o seu perfil:</MudText> *@
-    <MudContainer MaxWidth="MaxWidth.Small" Style="margin-top: 40px;">
-        <MudGrid Justify="Justify.Center">
-            <MudItem>
-                <MudButton @onclick="@NavigateToCustumers" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Alunos</MudButton>
+<MudPaper Height="100%" Width="100%" Class="responsive-layout">
+    <MudContainer MaxWidth="MaxWidth.Large" Class="container-layout">
+        <MudGrid Justify="Justify.Center" AlignItems="AlignItems.Center" Spacing="2" Class=" grid-layout">
+            <!-- Imagem centralizada -->
+            <MudItem xs="12" sm="8" md="6" lg="12">
+                <MudImage Src="images/novalogoeditada.png" Elevation="25" Class="image-layout rounded-lg" />
             </MudItem>
-            <MudItem>
-                <MudButton @onclick="@NavigateToTrainnings" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="spacing">Treinos</MudButton>
+
+            <!-- Botões -->
+            <MudItem xs="12" sm="12" md="4" lg="4">
+                <MudButton @onclick="@NavigateToCustumers" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="button-layout">
+                    Alunos
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="4" lg="4">
+                <MudButton @onclick="@NavigateToPersonals" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="button-layout">
+                    Personais
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="4" lg="4">
+                <MudButton @onclick="@NavigateToTrainnings" Variant="Variant.Outlined" Color="Color.Info" Size="Size.Large" Class="button-layout">
+                    Treinos
+                </MudButton>
             </MudItem>
         </MudGrid>
     </MudContainer>
 </MudPaper>
+
+
+
+
 
 
 <style>
@@ -79,6 +95,33 @@ else
 
     .spacing {
         transition: transform 0.3s ease-in-out; /* Define uma transição suave para todos os botões */
+    }
+
+    .responsive-layout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+    }
+
+    .container-layout {
+        text-align: center;
+    }
+
+    .grid-layout {
+        row-gap: 20px;
+    }
+
+    .image-layout {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+
+    }
+
+    .button-layout {
+        margin: 10px;
     }
 
 </style>
@@ -106,6 +149,12 @@ else
     private void NavigateToTrainnings()
     {
         url = Constants.GetAllTrainning();
+        Navigation.NavigateTo(url);
+    }
+
+    private void NavigateToPersonals()
+    {
+        url = Constants.GetAllPersonals();
         Navigation.NavigateTo(url);
     }
 

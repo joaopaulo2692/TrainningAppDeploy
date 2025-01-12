@@ -188,6 +188,24 @@ code {
         }
     }
 
+    @media (min-width: 1200px) {
+        .grid-layout {
+            grid-template-columns: repeat(3, 1fr); /* Três colunas para telas grandes */
+            grid-template-rows: auto 1fr; /* Imagem na primeira linha, botões na segunda */
+            gap: 10px; /* Menor espaçamento entre os itens */
+        }
+
+        .image-layout {
+            max-width: 300px; /* Limita a largura da imagem */
+            margin-bottom: 20px; /* Espaço entre imagem e botões */
+        }
+
+        .button-layout {
+            font-size: 1.2rem;
+            padding: 12px 24px;
+            margin: 5px; /* Reduzido para um espaçamento mais próximo */
+        }
+    }
 
     /*@media (min-width: 767px) and (max-width: 1199px) {
         .form-grid {
