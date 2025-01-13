@@ -26,7 +26,9 @@
 
 
 
-<div id="sortable-list" class="sortable-container parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+@* <div id="sortable-list" class="sortable-container parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;"> *@
+<div id="sortable-list" class="sortable-container " style="align-items: center justify-content: center display: flex;">
+@* <div > *@
     
     @* <MudTabPanel Text="Treino A" @* Key="@drop.GetHashCode()"> 
      @* <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small"> *@
@@ -52,22 +54,27 @@
                 <div class="sortable-handle">
                     <!-- Campo Exercício -->
                     <MudTextField ShrinkLabel @bind-Value="item.ExerciseName" Label="Exercício" Variant="Variant.Text"
-                                   Style="max-width: 200px; height: 32px; font-size: 0.875rem;" />
+                                   Style="max-width: 300px; height: 32px; font-size: 0.875rem;" />
                  </div>
-                 <div class="extra-fields">
-                     <!-- Demais Campos -->
-                     <MudTextField ShrinkLabel @bind-Value="item.Set" Label="Série" Variant="Variant.Text"
-                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                 <div class="reps-set">
+                 <MudTextField ShrinkLabel @bind-Value="item.Set" Label="Série" Variant="Variant.Text"
+                               Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
                      <MudTextField ShrinkLabel @bind-Value="item.Reps" Label="Rep" Variant="Variant.Text"
                                    Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-                     <MudTextField ShrinkLabel @bind-Value="item.Weight" Label="Carga" Variant="Variant.Text"
-                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-                     <MudTextField ShrinkLabel @bind-Value="item.Interval" Label="Intervalo" Variant="Variant.Text"
-                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
-                     <MudTextField ShrinkLabel @bind-Value="item.Info" Label="Info" Variant="Variant.Text"
-                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                     <div class="extra-fields">
+                         <!-- Demais Campos -->
 
-                 </div>
+                         <MudTextField ShrinkLabel @bind-Value="item.Weight" Label="Carga" Variant="Variant.Text"
+                                       Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                         <MudTextField ShrinkLabel @bind-Value="item.Interval" Label="Intervalo" Variant="Variant.Text"
+                                       Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                         <MudTextField ShrinkLabel @bind-Value="item.Info" Label="Info" Variant="Variant.Text"
+                                       Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+
+                     </div>
+                </div>
+                
+                
 
                 
                  <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.TopRight">
@@ -94,6 +101,13 @@
 
 
 <style>
+    .parent {
+        display: flex;
+        justify-content: center; /* Centraliza horizontalmente */
+        align-items: stretch; /* Faz com que os itens filhos estiquem verticalmente */
+        height: 100%; /* Certifique-se de que o contêiner tenha uma altura definida */
+    }
+
 
     .responsive-button {
         font-size: 16px; /* Tamanho padrão */
@@ -103,6 +117,13 @@
     .menu-item-remove {
         color: red;
         font-weight: bold;
+    }
+
+    .reps-set {
+        display: flex;
+        gap: 8px;
+        flex-wrap: nowrap; /* Evita quebra de linha */
+        align-items: center; /* Alinha os campos verticalmente */
     }
 
 .extra-fields {

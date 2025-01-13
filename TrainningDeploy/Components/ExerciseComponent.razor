@@ -25,9 +25,10 @@
                              CoerceText="@coerceText" CoerceValue="@coerceValue" />
 
             <MudAutocomplete T="ExerciseVO"
-                             Label="Exercício"
-                             @bind-Value="exerciseVO"
-                             SearchFunc="@SearchExercise"
+                             Label="Exercício"   
+                             Value="exerciseVO"
+                             ValueChanged="OnValueChanged"
+                             SearchFunc="@SearchExercise"                            
                              ResetValueOnEmptyText="@resetValueOnEmptyText"
                              MaxItems="50"
                              CoerceText="@coerceText"
@@ -137,6 +138,17 @@
     public TrainningExerciseVO EditExercise { get; set; }  
 
 
+    private async Task OnValueChanged(ExerciseVO selectedValue)
+    {
+        if (selectedValue != null)
+        {
+            exerciseVO = selectedValue;
+            if (string.IsNullOrEmpty(exerciseVO.Video))
+                exerciseNotHasVideo = true;
+            else
+                exerciseNotHasVideo = false;
+        }
+    }
 
 
     private void OnRepSave(List<string> reptitions)
@@ -378,8 +390,11 @@
             exerciseList = exerciseList.Where(x => x.Muscles.Contains(muscleVO.Name)).ToList();
 
         if (string.IsNullOrEmpty(value))
+        {
             exerciseVO = new ExerciseVO();
-        return exerciseList;
+            return exerciseList;
+        }
+        
 
         var filteredList = exerciseList.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)).ToList();
 

@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-nnW9IYJM\/DxbxnWRsvNODvHuIj6YLayJTEJXbU8oZxU=",
+      "hash": "sha256-95VB33ZC0toaBHLwL1Uq3cJ2cDgnorPsdI9ktVJSR7A=",
       "url": "css\/app.css"
     },
     {
@@ -41,6 +41,26 @@
       "url": "images\/instrutor-na-academia2.jpg"
     },
     {
+      "hash": "sha256-9ORkS9K7Ptjr6YnAP1nXHWEMtW719i8gHk8V81VZM1Y=",
+      "url": "images\/logo.png"
+    },
+    {
+      "hash": "sha256-cYQzN0HA020XZz4r9ZMQqkjfr0zwGawxbe74mxiBkLg=",
+      "url": "images\/logoeditada.png"
+    },
+    {
+      "hash": "sha256-Tn+4fvVAK07YtmvrN+FlU5hlCN8uoPHo1EOYXmiWKwc=",
+      "url": "images\/novalogo.png"
+    },
+    {
+      "hash": "sha256-XK6nYuE185HFhONgEBGqcPyVlxaJXQn0xjz7mdiyS5E=",
+      "url": "images\/novalogoeditada.png"
+    },
+    {
+      "hash": "sha256-laZ5ALgbdiYkeRcpskkWTBb7g1YzuL8WsqX2qcdy76o=",
+      "url": "images\/perfil.jpg"
+    },
+    {
       "hash": "sha256-f0JrpmUnOUYZI9aZGhH4X2YorhiPUYbcgab9OVzGj9k=",
       "url": "images\/treino-edit.jpg"
     },
@@ -69,7 +89,7 @@
       "url": "images\/treino.jpg"
     },
     {
-      "hash": "sha256-0BRsT5sVKTWbQKxk4N6gCrNK4Th9jNi0uF3b0uYtNDM=",
+      "hash": "sha256-3dQF9W5CVee7\/u2lwu356Qq7CGeYHHrzISsIEVbPsQI=",
       "url": "index.html"
     },
     {
@@ -109,7 +129,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-ImTrnE6ZlXs91ZG4nevNqY14nkaujhNuullnBI91OBE=",
+      "hash": "sha256-\/nHTBK2GNhKrZsCjo7Q3mVdfmeKI4Fq0zEo+7ZaAPx0=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -293,11 +313,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-\/Y3PN\/assuVQaiemMUioeiRPmA\/u246R7gm0QPDYvPc=",
+      "hash": "sha256-39qXSxNt+Hx1OronDDQXquhsJqyK8yxiKpDtYighpJQ=",
       "url": "_framework\/TrainningApp.Core.wasm"
     },
     {
-      "hash": "sha256-WWdXZYddGL1km3iNv7p6ohB0LIJRVezEP61ktG9T7dU=",
+      "hash": "sha256-Tpl6inC84PldK1lyR3l\/eNDgOIbLNpBkdTOo8L+l\/do=",
       "url": "_framework\/TrainningDeploy.wasm"
     },
     {
@@ -313,5 +333,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "r6voAhuA"
+  "version": "rWRbUX6c"
 };
