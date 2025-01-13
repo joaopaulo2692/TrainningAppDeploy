@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "TrainningDeploy",
   "resources": {
-    "hash": "sha256-lg9PBAnLo9PRg64+XII30AWPqa/3nHhr+56IW7Y0UvE=",
+    "hash": "sha256-hTTQlFQ8nssJ7WfqOSZgv51SXwq1tuFz6IAN9v4HKI0=",
     "jsModuleNative": {
       "dotnet.native.8.0.11.rj2m0pcs7a.js": "sha256-p7ClT8o5uqssszvzfZUGhBlLOOkeUrpskkbm2FHab3g="
     },
@@ -60,8 +60,8 @@
       "System.Text.RegularExpressions.wasm": "sha256-Acl4OkHEpf6hrm8m745uoAc3D4cBm+e1rl42TGs/Ybk=",
       "System.Threading.wasm": "sha256-4C3ndI/Xg3W8vOvl13jkctoRhnF8IMqWfWFATomhvjM=",
       "System.wasm": "sha256-UsIFTsNRr1Sw/A0hEbTyYbQo5eHUNmMuOWT6/xaM3TE=",
-      "TrainningApp.Core.wasm": "sha256-g/fiS+gTxW4MUVHoglHpJCUu9jZbTDTaJ6R6H/zX7Gg=",
-      "TrainningDeploy.wasm": "sha256-wKpubsGjenVjbAvnBRqy90XvYeI0P69/AQa0Dx2vzKo="
+      "TrainningApp.Core.wasm": "sha256-cvN2KUaF0o8fHVOZm/irCLQGt0MRjfaTp1uTr6ptENk=",
+      "TrainningDeploy.wasm": "sha256-5ziTm6cvsSC4LVijb3wUaTwgDKM1Z3bCSfHsXNZxRds="
     }
   },
   "cacheBootResources": true,
