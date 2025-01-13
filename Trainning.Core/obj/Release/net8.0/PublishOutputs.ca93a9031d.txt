@@ -1,0 +1,3 @@
+C:\Users\joaop\source\repos\tentativa\TrainningDeploy\TrainningDeploy\publish\TrainningApp.Core.dll
+C:\Users\joaop\source\repos\tentativa\TrainningDeploy\TrainningDeploy\publish\TrainningApp.Core.deps.json
+C:\Users\joaop\source\repos\tentativa\TrainningDeploy\TrainningDeploy\publish\TrainningApp.Core.pdb
