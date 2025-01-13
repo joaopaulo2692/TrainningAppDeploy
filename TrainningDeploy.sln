@@ -7,11 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainningApp.Core", "Trainn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainningDeploy", "TrainningDeploy\TrainningDeploy.csproj", "{5FCB94E4-F64E-4A18-A673-427AB224D89E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{C7409E5A-4E94-4912-94C9-F016F923483E}"
-	ProjectSection(SolutionItems) = preProject
-		vercel.json = vercel.json
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
