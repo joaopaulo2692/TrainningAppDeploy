@@ -111,7 +111,7 @@
 
     private void NavigateToEditPage(string user)
     {
-        string url = Constants.GetUrlForCustomer(user);
+        string url = Constants.GetUrlForPersonal(user);
         NavigationManager.NavigateTo(url); // Substitua "/edit-page" pela rota desejada
     }
     protected override void OnInitialized()

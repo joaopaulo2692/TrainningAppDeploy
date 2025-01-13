@@ -18,6 +18,6 @@ namespace TrainningApp.Core.DTO.TrainningExercise
         public string Info { get; set; }
         public int ExerciseId { get; set; }
         public int TrainningDayId { get; set; }
-
+        public List<string> MuscleName { get; set; }
     }
 }

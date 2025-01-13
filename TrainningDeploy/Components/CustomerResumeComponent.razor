@@ -20,9 +20,15 @@
     <MudPaper Class="pa-8 ma-2 custom-size custom-padding" Elevation="3">
         <MudGrid>
             <!-- Linha 1: Nome, CPF e Telefone -->
+  
             <MudItem xs="6" sm="4">
-                <MudTextField T="string" Label="Nome" @bind-Value="UserSelected.Name" Typo="Typo.input" TextChanged="OnChanged" />
+                <MudTextField Required=true HelperText="@(hasError ? errorMessageName : null)" RequiredError="Requerido"
+                              Error="@hasError" T="string" Label="Nome" @bind-Value="UserSelected.Name" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
+           @*  @if (hasError)
+            {
+                <MudText Color="Color.Error" Typo="Typo.caption">@errorMessageName</MudText>
+            } *@
             <MudItem xs="6" sm="4">
                 <MudTextField T="string" Label="CPF" @bind-Value="UserSelected.Cpf" Typo="Typo.input" TextChanged="OnChanged" />
             </MudItem>
@@ -142,6 +148,9 @@
     [Parameter]
     public UserVO UserSelected { get; set; }
 
+    private MudForm form;
+    private bool hasError = false;
+    private string errorMessageName = "Nome é obrigatório!";
     List<TrainningReturnVO> trainningVO;
     // private string name;
     // private string email;
@@ -185,6 +194,15 @@
     private void OnChanged()
     {
         // UserSelected.Birthday = birthDay.Value;
+        if (string.IsNullOrEmpty(UserSelected.Name))
+        {
+            hasError = true;
+            return;
+        }
+        else
+        {
+            hasError = false;
+        }
         if (IsCustomer)
         {
             _dbUsers.UpdateCustomer(UserSelected);

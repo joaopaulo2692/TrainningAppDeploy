@@ -27,6 +27,20 @@
 
 
 @* <div id="sortable-list" class="sortable-container parent-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;"> *@
+
+@if (ParameterTrainningExercises == null || ParameterTrainningExercises.Count == 0)
+{
+    @*    <div>
+            <h3>Nenhum Exercício Adicionado</h3>
+        </div> *@
+    <br />
+    <div style="display: flex; justify-content: center; ">
+        <MudImage Src="images/no-exercises3.png" Alt="Mony the dog" Elevation="25" Style="max-height: 18%;" />
+    </div>
+
+
+
+}
 <div id="sortable-list" class="sortable-container " style="align-items: center justify-content: center display: flex;">
 @* <div > *@
     
@@ -34,18 +48,13 @@
      @* <MudTabs @bind-ActivePanelIndex="_selectedTabIndex" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @key="_uniqueKey" Class="dropzone-small"> *@
     @* @foreach (var item in exercises) *@
 
-    @if (ParameterTrainningExercises == null || ParameterTrainningExercises.Count == 0)
-    {
-        <div>
-            <h3>Nenhum Exercício Adicionado</h3>
-        </div>
-    }
+   
 
     @if (ParameterTrainningExercises != null)
     {
         @foreach (var item in ParameterTrainningExercises)
         {
-
+            <div style="display: flex; justify-content: center; align-items: center;">
             @* <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Ordenation" Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%"> *@
             <MudPaper Class="custom-size pa-6 ma-2" data-id="@item.Id"
                       Style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; max-width: 100%; width: 100%; border-radius: 24px;">
@@ -53,14 +62,14 @@
 
                 <div class="sortable-handle">
                     <!-- Campo Exercício -->
-                    <MudTextField ShrinkLabel @bind-Value="item.ExerciseName" Label="Exercício" Variant="Variant.Text"
+                    <MudTextField ShrinkLabel @bind-Value="item.ExerciseName"  Label="Exercício" Variant="Variant.Text"
                                    Style="max-width: 300px; height: 32px; font-size: 0.875rem;" />
                  </div>
                  <div class="reps-set">
                  <MudTextField ShrinkLabel @bind-Value="item.Set" Label="Série" Variant="Variant.Text"
-                               Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" TextChanged="() => OnChanged(item)" />
                      <MudTextField ShrinkLabel @bind-Value="item.Reps" Label="Rep" Variant="Variant.Text"
-                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" />
+                                   Style="max-width: 100px; height: 32px; font-size: 0.875rem;" TextChanged="() => OnChanged(item)" />
                      <div class="extra-fields">
                          <!-- Demais Campos -->
 
@@ -83,11 +92,23 @@
                  </MudMenu>
              </MudPaper>
 
-
+             </div>
         }
+
+
     }
     
+
+   
+
 </div>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    <MudChart ChartType="ChartType.Donut" LegendPosition="@Position.Bottom" Width="300px" Height="300px"
+              InputData="@countMuscles.ToArray()" InputLabels="@musclesList.ToArray()">
+    </MudChart>
+</div>
+
 <!-- Botões Antigos de Editar e Deletar-->
 @*     <MudButton Variant="Variant.Filled" Color="Color.Warning"
                             Style="font-size: 0.75rem; padding: 4px 8px; min-width: auto; height: 32px;" OnClick="() => SelectEditExercise(item)">
@@ -168,7 +189,10 @@
     [Parameter]
     public EventCallback<int> OnRemoveTrainningDay { get; set; }
 
+    private List<string> muscleNames = new List<string>();
 
+    List<string> musclesList = new List<string>();
+    List<double> countMuscles = new List<double>();
 
     public bool IsToEdited = false;
 
@@ -218,8 +242,83 @@
         await JS.InvokeVoidAsync("updateSortableOrder", "sortable-list");
     }
 
+    private void ChartCalculate()
+    {
+        // musclesList = new List<string>();
+        // countMuscles = new List<double>();
+        // muscleNames = new List<string>();
+        // foreach (var exercise in ParameterTrainningExercises)
+        // {
+        //     foreach (var muscle in exercise.MuscleName)
+        //     {
+        //         muscleNames.Add(muscle);
+        //     }
+        // }
+        // muscleNames = muscleNames.Order().ToList();
+
+        // foreach (var muscles in muscleNames)
+        // {
+        //     if (!musclesList.Contains(muscles))
+        //     {
+
+        //         musclesList.Add(muscles);
+        //         countMuscles.Add(1);
+        //     }
+        //     else
+        //     {
+        //         int index = musclesList.IndexOf(muscles);
+        //         countMuscles[index]++;
+        //     }
+
+        // }
+        var musclesCount = new Dictionary<string, double>();
+        musclesList = new List<string>();
+        countMuscles = new List<double>();
+        foreach (var exercise in ParameterTrainningExercises)
+        {
+            // var reps = 0;
+            // if (!string.IsNullOrEmpty(exercise.Reps) && exercise.Reps.Contains("/"))
+            // {
+            //     var repsPart = exercise.Reps.Split('/')[0]; // Pega a parte antes do "/"
+            //     reps = int.TryParse(repsPart, out var parsedReps) ? parsedReps : 0;
+            // }
+            // else if (!string.IsNullOrEmpty(exercise.Reps))
+            // {
+            //     reps = int.TryParse(exercise.Reps, out var parsedReps) ? parsedReps : 0;
+            // }
+            foreach (var muscle in exercise.MuscleName)
+            {
+                if (musclesCount.ContainsKey(muscle))
+                {
+                    // musclesCount[muscle]++;
+                    musclesCount[muscle] += musclesCount[muscle] * exercise.Set;
+                }
+                else
+                {
+                    musclesCount[muscle] = 1;
+                    musclesCount[muscle] = exercise.Set;
+                }
+            }
+        }
+
+        // Ordenar por nome
+        var orderedMuscles = musclesCount.OrderBy(x => x.Key).ToList();
+
+        // Separar em listas se necessário
+        musclesList = orderedMuscles.Select(x => x.Key).ToList();
+        countMuscles = orderedMuscles.Select(x => x.Value).ToList();
+        StateHasChanged();
+    }
+
+    protected override void OnParametersSet()
+    {
+        ChartCalculate();
+    }
+
     protected override void OnInitialized()
     {
+
+        ChartCalculate();
         exercises = new List<TrainningExerciseVO>
         {
             new TrainningExerciseVO { Reps = "10", Set = 3, ExerciseName = "Supino", Info = "Normal", Ordenation = 1 },
@@ -228,25 +327,13 @@
         };
     }
 
-    // [JSInvokableAttribute]
-    // public void UpdateOrdenation(string[] newOrder)
-    // {
-    //     for (int i = 0; i < newOrder.Length; i++)
-    //     {
-    //         // var item = exercises.FirstOrDefault(x => x.Ordenation.ToString() == newOrder[i]);
-    //         var item = ParameterTrainningExercises.FirstOrDefault(x => x.Ordenation.ToString() == newOrder[i]);
-    //         if (item != null)
-    //         {
-    //             item.Ordenation = i + 1; // Atualiza a ordenação
-    //         }
-    //     }
+    private void OnChanged(TrainningExerciseVO item)
+    {
+        _trainningExercise.EditById(item); // Persiste as mudanças
+        ChartCalculate();
 
-    //     // Reordena a lista na memória
-    //     exercises = exercises.OrderBy(x => x.Ordenation).ToList();
+}
 
-    //     // Atualiza a interface
-    //     StateHasChanged();
-    // }
 
     [JSInvokableAttribute]
     public void UpdateOrdenation(string[] newOrder)
@@ -361,6 +448,7 @@
     {
         _trainningExercise.RemoveById(exercise.Id);
         await OnModification.InvokeAsync();
+        ChartCalculate();
         StateHasChanged();
     }
 

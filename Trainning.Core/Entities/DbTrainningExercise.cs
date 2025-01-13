@@ -25,7 +25,7 @@ namespace TrainningApp.Core.Entities
                 .OrderBy(exercise => exercise.Ordenation) // Ordena pela propriedade Ordenation
                 .Select(exercise => new TrainningExerciseVO
                 {
-                    ExerciseName = exercise.Exercise.Name,
+                    ExerciseName = exercise.Exercise?.Name,
                     Id = exercise.Id,
                     Info = exercise.Info,
                     Interval = exercise.Interval,
@@ -34,7 +34,8 @@ namespace TrainningApp.Core.Entities
                     Set = exercise.Set,
                     Weight = exercise.Weight,
                     ExerciseId = exercise.Exercise.Id,
-                    TrainningDayId = exercise.TrainningDayId
+                    TrainningDayId = exercise.TrainningDayId,
+                    MuscleName = exercise.Exercise?.Muscles?.Select(x => x.Name).ToList(),
                 })
                 .ToList();
         }

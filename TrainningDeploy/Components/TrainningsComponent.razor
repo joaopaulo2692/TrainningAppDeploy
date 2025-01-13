@@ -40,8 +40,12 @@
 
     @if (TrainningsList == null || TrainningsList.Count == 0)
     {
-        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+        @* <div style="display: flex; justify-content: center; margin-bottom: 10px;">
             <h3>Nenhum Treino Adicionado</h3>
+        </div> *@
+        <br />
+        <div style="display: flex; justify-content: center; height: 100vh;">
+            <MudImage Src="images/no-trainning3.png" Alt="Mony the dog" Elevation="25" Style="max-height: 30%;" />
         </div>
     }
     @foreach (TrainningReturnVO trainning in TrainningsList)

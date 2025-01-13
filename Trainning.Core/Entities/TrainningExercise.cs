@@ -17,7 +17,6 @@ namespace TrainningApp.Core.Entities
         public string Info { get; set; }
         public int ExerciseId { get; set; }
         public int TrainningDayId { get; set; }
-
         public virtual Exercise Exercise { get; set; }
         public virtual TrainningDay TrainningDay { get; set; }
 

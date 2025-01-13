@@ -45,6 +45,33 @@
     </div>
 }
 
+
+
+
+
+
+<MudGrid Justify="Justify.Center" AlignItems="AlignItems.Center">
+    <MudItem >
+        <MudCheckBox @bind-Value="bfBool" Color="Color.Primary">Bf</MudCheckBox>
+    </MudItem>
+    <MudItem >
+        <MudCheckBox @bind-Value="weistsBool" Color="Color.Primary">Cintura</MudCheckBox>
+    </MudItem>
+    <MudItem >
+        <MudCheckBox @bind-Value="hipsBool" Color="Color.Primary">Quadril</MudCheckBox>
+    </MudItem>
+    <MudItem >
+        <MudCheckBox @bind-Value="armsBool" Color="Color.Primary">Braços</MudCheckBox>
+    </MudItem>
+    <MudItem >
+        <MudCheckBox @bind-Value="legsBool" Color="Color.Primary">Pernas</MudCheckBox>
+    </MudItem>
+</MudGrid>
+
+<div>
+    <MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="Index" LegendPosition="@Position.Bottom" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+</div>
+
 <style>
     .hover-container {
         display: flex;
@@ -94,8 +121,181 @@
 
 @code {
 
+
+
+    bool weightBool = true;
+    bool hipsBool = true;
+    bool weistsBool = true;
+    bool bfBool = true;
+    bool armsBool = true;
+    bool legsBool = true;
     [Parameter]
     public string? UserId { get; set; }
+
+    private int Index = -1;
+    // public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
+    public string[] XAxisLabels = new string[12];
+    public List<ChartSeries> Series = new List<ChartSeries>();
+    // public List<ChartSeries> Series = new List<ChartSeries>()
+    // {
+    //     new ChartSeries() { Name = "BF", Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15 } },
+    //     new ChartSeries() { Name = "Braço", Data = new double[] { 19, 24, 35, 13, 28, 15, 13, 16, 31 } },
+    //     new ChartSeries() { Name = "Perna", Data = new double[] { 8, 6, 11, 13, 4, 16, 10, 16, 18 } },
+    //     new ChartSeries() { Name = "Peso", Data = new double[] { 8, 6, 11, 13, 4, 16, 10, 16, 18 } },
+    //     new ChartSeries() { Name = "Cintura", Data = new double[] { 8, 6, 11, 13, 4, 16, 10, 16, 18 } },
+    //     new ChartSeries() { Name = "Quadril", Data = new double[] { 8, 6, 11, 13, 4, 16, 10, 16, 18 } },
+    // };
+
+    private void OnCategoryChanged(string category, bool newValue)
+    {
+        // Atualize o valor da categoria de acordo com o nome
+        switch (category)
+        {
+            case "Peso":
+                weightBool = newValue;
+                break;
+            case "Bf":
+                bfBool = newValue;
+                break;
+            case "Cintura":
+                weistsBool = newValue;
+                break;
+            case "Quadril":
+                hipsBool = newValue;
+                break;
+            case "Braços":
+                armsBool = newValue;
+                break;
+            case "Pernas":
+                legsBool = newValue;
+                break;
+        }
+
+        // Chame o método para recalcular o gráfico
+        ChartCalculate();
+    }
+
+
+    private void OnWeightChanged(bool newValue)
+    {
+        weightBool = newValue;
+        ChartCalculate();
+        // Qualquer lógica adicional para o "Peso"
+    }
+
+    private void OnBfChanged(bool newValue)
+    {
+        bfBool = newValue;
+        ChartCalculate();
+        // Qualquer lógica adicional para o "Bf"
+    }
+
+    private void OnWaistsChanged(bool newValue)
+    {
+        weistsBool = newValue;
+        ChartCalculate();
+        // Qualquer lógica adicional para a "Cintura"
+    }
+
+    private void OnHipsChanged(bool newValue)
+    {
+        hipsBool = newValue;
+        ChartCalculate();
+        // Qualquer lógica adicional para o "Quadril"
+    }
+
+    private void OnArmsChanged(bool newValue)
+    {
+        armsBool = newValue;
+        ChartCalculate();
+        // Qualquer lógica adicional para os "Braços"
+    }
+
+    private void OnLegsChanged(bool newValue)
+    {
+        legsBool = newValue;
+        ChartCalculate();
+        // Qualquer lógica adicional para as "Pernas"
+    }
+
+
+
+    private void ChartCalculate()
+    {
+        var bf = new List<double>();
+        var arms = new List<double>();
+        var legs = new List<double>();
+        var weights = new List<double>();
+        var waists = new List<double>();
+        var hips = new List<double>();
+        var xAxisLabels = new List<string>();
+
+        foreach (var physicalIndex in physicalList)
+        {
+            int month = physicalIndex.AssessmentDate.Value.Month;
+            string monthAbbreviation = new DateTime(1, month, 1).ToString("MMM", System.Globalization.CultureInfo.InvariantCulture);
+
+            Console.WriteLine(monthAbbreviation); // Saída: Jan
+
+            xAxisLabels.Add(monthAbbreviation);
+
+            bf.Add(double.Parse(physicalIndex.BodyFatPercentage.ToString()));
+            decimal armsDecimal = (physicalIndex.LeftArmFlexed + physicalIndex.RightArmFlexed) / 2;
+            arms.Add(double.Parse(armsDecimal.ToString()));
+            decimal legsDecimal = (physicalIndex.RightThigh + physicalIndex.LeftThigh) / 2; // Corrigido caso fosse confusão de variável
+            legs.Add(double.Parse(legsDecimal.ToString()));
+            weights.Add(double.Parse(physicalIndex.Weight.ToString()));
+            waists.Add(double.Parse(physicalIndex.Waist.ToString()));
+            hips.Add(double.Parse(physicalIndex.Hips.ToString()));
+        }
+
+        XAxisLabels = xAxisLabels.ToArray(); // Converte a lista para array se necessário
+
+        Series = new List<ChartSeries>();
+        Series = new List<ChartSeries>();
+
+        if (bfBool)
+        {
+            Series.Add(new ChartSeries() { Name = "BF", Data = bf.ToArray() });
+        }
+
+        if (armsBool)
+        {
+            Series.Add(new ChartSeries() { Name = "Braço", Data = arms.ToArray() });
+        }
+
+        if (legsBool)
+        {
+            Series.Add(new ChartSeries() { Name = "Perna", Data = legs.ToArray() });
+        }
+
+        if (weightBool)
+        {
+            Series.Add(new ChartSeries() { Name = "Peso", Data = weights.ToArray() });
+        }
+
+        if (weistsBool)
+        {
+            Series.Add(new ChartSeries() { Name = "Cintura", Data = waists.ToArray() });
+        }
+
+        if (hipsBool)
+        {
+            Series.Add(new ChartSeries() { Name = "Quadril", Data = hips.ToArray() });
+        }
+
+        // {
+
+        //     new ChartSeries() { Name = "BF", Data = bf.ToArray() },
+        //     new ChartSeries() { Name = "Braço", Data = arms.ToArray() },
+        //     new ChartSeries() { Name = "Perna", Data = legs.ToArray() },
+        //     new ChartSeries() { Name = "Peso", Data = weights.ToArray() },
+        //     new ChartSeries() { Name = "Cintura", Data = waists.ToArray() },
+        //     new ChartSeries() { Name = "Quadril", Data = hips.ToArray() },
+        // };
+
+        StateHasChanged();
+    }
 
     private async Task DeleteDialogAsync(PhysicalAssessmentVO physicalToRemove)
     {
@@ -133,7 +333,7 @@
     {
         physicalList.Remove(physicalToRemove);
     }
-    
+
 
     private void EditPhysicalToList(PhysicalAssessmentVO physicalToEdit)
     {
@@ -199,6 +399,12 @@
         }
     }
 
+
+
+    protected override void OnParametersSet()
+    {
+
+    }
 
     protected override void OnInitialized()
     {
@@ -320,6 +526,9 @@
                 AssessmentDate = new DateTime(2024, 9, 15)
             }
         };
+        ChartCalculate();
+
+
     }
 
 }

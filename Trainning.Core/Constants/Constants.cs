@@ -57,7 +57,7 @@ namespace TrainningApp.Core.Constants
 
         public static string GetAllPersonals()
         {
-            return $"/TrainningAppDeploy//personais";
+            return $"/TrainningAppDeploy/personais";
 
         }
 
